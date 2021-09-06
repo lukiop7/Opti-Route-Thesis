@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TestRoutingModule } from './test-routing.module';
 import { TestModuleComponent } from './test-module/test-module.component';
 import { TestCRUDComponent } from './test-crud/test-crud.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { TestCRUDComponent } from './test-crud/test-crud.component';
     CommonModule,
     TestRoutingModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    LeafletModule
   ]
 })
 export class TestModule { }
