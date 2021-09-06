@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using OptiRoute.Shared.Infrastructure.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -38,6 +39,7 @@ namespace OptiRoute.WebApi
                         .WithOrigins(frontendClientURL)
                 );
             });
+            services.AddErrorHandling();
 
             services.AddControllers().AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -59,6 +61,8 @@ namespace OptiRoute.WebApi
         public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
         {
             app.UseCors("FrontendClient");
+            app.UseErrorHandling();
+
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseSwaggerDocumentation();

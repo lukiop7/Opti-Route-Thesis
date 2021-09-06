@@ -21,11 +21,10 @@ namespace OptiRoute.Modules.Main.Infrastructure.Repositories
             return await DbSet.FirstOrDefaultAsync();
         }
 
-        public async Task<Test> AddTestAsync(Test newTest)
+        public async Task AddTestAsync(Test newTest)
         {
             await base.AddAsync(newTest);
             await Context.SaveChangesAsync();
-            return await Context.Tests.FirstOrDefaultAsync(t => t.Name == newTest.Name);           
         }
     }
 }

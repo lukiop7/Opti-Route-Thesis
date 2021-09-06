@@ -1,3 +1,4 @@
+import { SharedModule } from './shared/shared.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -6,17 +7,19 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ApiTestComponent } from './modules/api-test/api-test.component';
+import { TestMainComponent } from './layout/components/test-main/test-main.component';
+import { AuthGuard } from './core/services/auth-guard.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ApiTestComponent
+    TestMainComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    SharedModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -25,7 +28,7 @@ import { ApiTestComponent } from './modules/api-test/api-test.component';
             }
         })
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

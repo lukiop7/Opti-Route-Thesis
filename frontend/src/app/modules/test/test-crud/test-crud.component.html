@@ -1,0 +1,23 @@
+<form [formGroup]="testForm" (ngSubmit)="onSubmit()">
+  <label class="zmk-ex-label">"Age"</label>
+  <input
+    type="text"
+    class="form-control zmk-placeholder-style"
+    placeholder="age"
+    [formControl]="age"
+    name="age"
+  />
+  <label class="zmk-ex-label">"Name"</label>
+  <input
+  type="text"
+  class="form-control zmk-placeholder-style"
+  placeholder="name"
+  [formControl]="name"
+  name="name"
+/>
+<button class="btn btn-primary" >Send
+  <ng-container *ngIf="loading">
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  </ng-container>
+</button>
+  </form>

@@ -10,6 +10,6 @@ namespace OptiRoute.Modules.Main.Domain.Interfaces
     public interface ITestRepository
     {
         Task<Test> GetTask();
-        Task<Test> AddTestAsync(Test newTest);
+        Task AddTestAsync(Test newTest);
     }
 }

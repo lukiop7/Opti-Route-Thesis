@@ -24,9 +24,9 @@ namespace OptiRoute.Modules.Main.Application.Services
         {
             var newTest = mapper.Map<Test>(createTestRequestDto);
 
-            var createdTest = await testRepository.AddTestAsync(newTest);
+             await testRepository.AddTestAsync(newTest);
 
-            var testResponse = mapper.Map<CreateTestResponseDto>(createdTest);
+            var testResponse = mapper.Map<CreateTestResponseDto>(newTest);
 
             return testResponse;
         }
