@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OptiRoute.Modules.Main.Application;
+using OptiRoute.Shared.SolutionDrawer;
 using OptiRoute.Shared.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace OptiRoute.WebApi
             services.AddControllers();
 
             services.AddMain();
+            services.AddSolutionDrawer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
