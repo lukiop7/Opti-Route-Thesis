@@ -14,11 +14,13 @@ namespace OptiRoute.Shared.SolutionDrawer
         private readonly NavigationList<Brush> RouteBrushes;
         private readonly int Height;
         private readonly int Width;
+        private readonly int ColorsOffset;
         public SolutionDrawer() 
         {
             Radius = 3;
             Height = 1000;
             Width = 1000;
+            ColorsOffset = 49;
             RouteBrushes = new NavigationList<Brush>() {
                     Brushes.Black,
                     Brushes.Blue,
@@ -30,6 +32,7 @@ namespace OptiRoute.Shared.SolutionDrawer
         }
         public DrawSolutionResponseDto DrawSolution(Solution solution, string path)
         {
+
             path += DateTime.Now.ToString("yyyyMMddHHmmss") +".png";
             var routes = solution.Routes;
             var depot = solution.Depot;
@@ -43,20 +46,22 @@ namespace OptiRoute.Shared.SolutionDrawer
                     Rectangle ImageSize = new Rectangle(0, 0, Width, Height);
                     g.FillRectangle(Brushes.White, ImageSize);
 
-                    Pen linePen = new Pen(RouteBrushes.Current);
+
                     Pen pointsPen = new Pen(Brushes.Red);
                     Pen depotPen = new Pen(Brushes.Orange);
 
                     g.FillCircle(Brushes.Orange, (depot.X + offset) * scale, (depot.Y + offset) * scale, Radius);
                     g.DrawCircle(depotPen, (depot.X + offset) * scale, (depot.Y + offset) * scale, Radius);
 
-                    foreach (var route in routes)
-                    { 
-                        var customers = route.Customers;
+                    for (int r = 0; r < routes.Count; r++)
+                    {
+                        Pen linePen = new Pen(Color.FromKnownColor((KnownColor)(r+ColorsOffset)));
+
+                        var customers = routes[r].Customers;
                         for (int i = 0; i < customers.Count; i++)
                         {
-                            g.FillCircle(Brushes.Red, (customers[i].X+ offset) * scale, (customers[i].Y + offset) * scale, Radius);
-                            g.DrawCircle(pointsPen, (customers[i].X + offset) * scale, (customers[i].Y + offset) * scale, Radius);
+                            g.FillCircle(linePen.Brush, (customers[i].X+ offset) * scale, (customers[i].Y + offset) * scale, Radius);
+                            g.DrawCircle(linePen, (customers[i].X + offset) * scale, (customers[i].Y + offset) * scale, Radius);
 
                             if(i ==0)
                                 g.DrawLine(linePen,  (depot.X + offset) * scale, (depot.Y + offset) * scale, (customers[i].X + offset) * scale, (customers[i].Y + offset) * scale);
@@ -67,8 +72,8 @@ namespace OptiRoute.Shared.SolutionDrawer
                                 g.DrawLine(linePen, (customers[i].X + offset) * scale, (customers[i].Y + offset) * scale, (customers[i + 1].X + offset) * scale, (customers[i + 1].Y + offset) * scale);
 
                         }
-                        linePen.Brush = RouteBrushes.MoveNext;
                     }
+                    WriteDistance(g,solution);
 
                     bmp.Save(path, ImageFormat.Png);
                 }
@@ -78,6 +83,18 @@ namespace OptiRoute.Shared.SolutionDrawer
             {
                 return new DrawSolutionResponseDto { SuccessfullyDrawn = false };
             }
+        }
+
+        private void WriteDistance(Graphics g, Solution solution)
+        {
+            Font font = new Font("Arial", 20, FontStyle.Italic, GraphicsUnit.Pixel);
+            Color color = Color.Black;
+            Point atpoint = new Point(Width/2, Height/5);
+            SolidBrush brush = new SolidBrush(color);
+            StringFormat sf = new StringFormat();
+            sf.Alignment = StringAlignment.Center;
+            sf.LineAlignment = StringAlignment.Center;
+            g.DrawString($"Distance: {Math.Round(solution.Distance,2)}, Vehicles: {solution.Routes.Count}", font, brush, atpoint, sf);
         }
     }
 }

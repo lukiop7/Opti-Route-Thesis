@@ -8,11 +8,11 @@ namespace AlgorithmCoreVRPTW.Solver.Services
 {
     public class VRPTWSolver : ISolver
     {
-        public IInitial Initial { get; set; } = new ClarkeWrightInitial(); 
+        public IMethod Initial { get; set; } = new ClarkeWrightInitial(); 
 
-        public void Solve(Problem problem)
+        public Solution Solve(Problem problem)
         {
-            Initial.Solve(problem);
+          return Initial.Solve(problem);
         }
     }
 }

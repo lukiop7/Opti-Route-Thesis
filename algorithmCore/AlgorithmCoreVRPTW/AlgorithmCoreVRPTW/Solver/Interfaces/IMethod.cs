@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AlgorithmCoreVRPTW.Solver.Interfaces
 {
-    public interface IInitial
+    public interface IMethod
     {
         Solution Solve(Problem problem);
     }

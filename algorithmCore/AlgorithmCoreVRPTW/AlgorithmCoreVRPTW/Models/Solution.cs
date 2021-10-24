@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AlgorithmCoreVRPTW.Models
@@ -9,5 +10,12 @@ namespace AlgorithmCoreVRPTW.Models
         public bool Feasible { get; set; }
         public Depot Depot { get; set; }
         public List<Route> Routes { get; set; } = new List<Route>();
+        public double Distance
+        {
+            get
+            {
+              return  Routes.Sum(x => x.Distance);
+            }
+        }
     }
 }

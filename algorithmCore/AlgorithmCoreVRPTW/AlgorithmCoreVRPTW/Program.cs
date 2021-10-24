@@ -13,7 +13,7 @@ namespace AlgorithmCoreVRPTW
     {
         static void Main(string[] args)
         {
-            string inputFile = @"G:\STUDIA\INŻYNIERKA\BEngThesisApp\materials\solomon\r1\r101_25.txt";
+            string inputFile = @"G:\STUDIA\INŻYNIERKA\BEngThesisApp\materials\solomon\c1\c101.txt";
             string outputSolutionFilePath = @"G:\STUDIA\INŻYNIERKA\BEngThesisApp\Results\";
 
             ISolutionDrawer solutionDrawer = new SolutionDrawer();
@@ -22,16 +22,16 @@ namespace AlgorithmCoreVRPTW
 
             var benchmarkProblem = fileReader.ReadBenchmarkFile(inputFile);
 
-            solver.Solve(benchmarkProblem);
+            Solution solution = solver.Solve(benchmarkProblem);
             
 
-            Solution solution = new Solution()
-            {
-                Depot = benchmarkProblem.Depot,
-                Feasible = true,
-            };
-            solution.Routes.Add(new Route { Distance = int.MaxValue, Customers = benchmarkProblem.Customers.Take(benchmarkProblem.Customers.Count/2).ToList() });
-            solution.Routes.Add(new Route { Distance = int.MaxValue, Customers = benchmarkProblem.Customers.Skip(benchmarkProblem.Customers.Count / 2).ToList() });
+            //Solution solution = new Solution()
+            //{
+            //    Depot = benchmarkProblem.Depot,
+            //    Feasible = true,
+            //};
+            //solution.Routes.Add(new Route { Distance = int.MaxValue, Customers = benchmarkProblem.Customers.Take(benchmarkProblem.Customers.Count/2).ToList() });
+            //solution.Routes.Add(new Route { Distance = int.MaxValue, Customers = benchmarkProblem.Customers.Skip(benchmarkProblem.Customers.Count / 2).ToList() });
 
             solutionDrawer.DrawSolution(solution, outputSolutionFilePath);
         }

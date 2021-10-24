@@ -7,7 +7,9 @@ namespace AlgorithmCoreVRPTW.Solver.Interfaces
 {
     public interface ISolver
     {
-         IInitial Initial { get; set; }
-         void Solve(Problem problem);
+         IMethod Initial { get; set; }
+         IMethod LocalSearch { get; set; }
+
+         Solution Solve(Problem problem);
     }
 }

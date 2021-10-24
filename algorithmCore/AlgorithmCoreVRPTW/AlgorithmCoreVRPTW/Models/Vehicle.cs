@@ -18,5 +18,7 @@ namespace AlgorithmCoreVRPTW.Models
         public int Capacity { get; set; }
         public int CurrentLoad { get; set; }
         public double CurrentTime { get; set; }
+        public double DistanceFromDepot { get; set; }
+        public double DistanceToDepot { get; set; }
     }
 }
