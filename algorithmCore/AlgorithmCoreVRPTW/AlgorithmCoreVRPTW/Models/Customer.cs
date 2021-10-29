@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AlgorithmCoreVRPTW.Models
 {
@@ -33,6 +31,7 @@ namespace AlgorithmCoreVRPTW.Models
         {
             return Math.Sqrt((Math.Pow(this.X - destination.X, 2) + Math.Pow(this.Y - destination.Y, 2)));
         }
+
         public double CalculateDistanceBetween(Depot destination)
         {
             return Math.Sqrt((Math.Pow(this.X - destination.X, 2) + Math.Pow(this.Y - destination.Y, 2)));

@@ -1,15 +1,14 @@
 ﻿using AlgorithmCoreVRPTW.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AlgorithmCoreVRPTW.Solver.Interfaces
 {
     public interface ISolver
     {
-         IMethod Initial { get; set; }
-         IMethod LocalSearch { get; set; }
+        IMethod Initial { get; set; }
+        IImprovement LocalSearch { get; set; }
 
-         Solution Solve(Problem problem);
+        Solution Solve(Problem problem);
+
+        Solution Create(Problem problem);
     }
 }

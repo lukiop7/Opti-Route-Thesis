@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AlgorithmCoreVRPTW.Models
 {
-   public class Depot
+    public class Depot
     {
         public static Depot Parse(string input)
         {
@@ -16,6 +14,7 @@ namespace AlgorithmCoreVRPTW.Models
                 DueDate = Int32.Parse(parts[5]),
             };
         }
+
         public int X { get; set; }
         public int Y { get; set; }
         public int DueDate { get; set; }

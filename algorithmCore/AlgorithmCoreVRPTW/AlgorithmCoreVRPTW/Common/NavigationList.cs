@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace AlgorithmCoreVRPTW.Common
 {
     public class NavigationList<T> : List<T>
     {
         private int _currentIndex = 0;
+
         public int CurrentIndex
         {
             get

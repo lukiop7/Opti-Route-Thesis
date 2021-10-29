@@ -4,36 +4,36 @@ using AlgorithmCoreVRPTW.Models;
 using AlgorithmCoreVRPTW.Solver.Interfaces;
 using AlgorithmCoreVRPTW.Solver.Services;
 using OptiRoute.Shared.SolutionDrawer;
-using System;
-using System.Linq;
+using System.IO;
+using System.Threading;
 
 namespace AlgorithmCoreVRPTW
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             string inputFile = @"G:\STUDIA\INŻYNIERKA\BEngThesisApp\materials\solomon\c1\c101.txt";
+            string[] filePaths = Directory.GetFiles(@"G:\STUDIA\INŻYNIERKA\BEngThesisApp\materials\solomon\c1\", "*.txt",
+                                         SearchOption.TopDirectoryOnly);
             string outputSolutionFilePath = @"G:\STUDIA\INŻYNIERKA\BEngThesisApp\Results\";
 
             ISolutionDrawer solutionDrawer = new SolutionDrawer();
             IFileReader fileReader = new BenchmarkFileReader();
             ISolver solver = new VRPTWSolver();
 
-            var benchmarkProblem = fileReader.ReadBenchmarkFile(inputFile);
+            foreach (var path in filePaths)
+            {
+                var benchmarkProblem = fileReader.ReadBenchmarkFile(path);
 
-            Solution solution = solver.Solve(benchmarkProblem);
-            
+                Solution solution = solver.Create(benchmarkProblem);
 
-            //Solution solution = new Solution()
-            //{
-            //    Depot = benchmarkProblem.Depot,
-            //    Feasible = true,
-            //};
-            //solution.Routes.Add(new Route { Distance = int.MaxValue, Customers = benchmarkProblem.Customers.Take(benchmarkProblem.Customers.Count/2).ToList() });
-            //solution.Routes.Add(new Route { Distance = int.MaxValue, Customers = benchmarkProblem.Customers.Skip(benchmarkProblem.Customers.Count / 2).ToList() });
+                solutionDrawer.DrawSolution(solution, outputSolutionFilePath + Path.GetFileNameWithoutExtension(path) + "\\");
 
-            solutionDrawer.DrawSolution(solution, outputSolutionFilePath);
+                solution = solver.Solve(benchmarkProblem);
+                Thread.Sleep(500);
+                solutionDrawer.DrawSolution(solution, outputSolutionFilePath + Path.GetFileNameWithoutExtension(path) + "\\");
+            }
         }
     }
 }

@@ -1,15 +1,12 @@
 ﻿using AlgorithmCoreVRPTW.Models;
 using AlgorithmCoreVRPTW.Solver.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace AlgorithmCoreVRPTW.Solver.Services
 {
     public class ClarkeWrightInitial : IMethod
     {
-
         public Solution Solve(Problem problem)
         {
             var customers = problem.Customers;
@@ -17,13 +14,14 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             List<Saving> savings = GenerateSavings(problem, customers);
             MergeSavings(problem, savings, routes);
 
+            bool Feasible = routes.Count<=problem.Vehicles;
 
-            return new Solution() { Feasible = true, Depot = problem.Depot, Routes = routes};
+            return new Solution() { Feasible = Feasible, Depot = problem.Depot, Routes = routes };
         }
 
         private void MergeSavings(Problem problem, List<Saving> savings, List<Route> routes)
         {
-            foreach(Saving saving in savings)
+            foreach (Saving saving in savings)
             {
                 var routeCustomerA = routes.FirstOrDefault(x => x.Customers.Any(c => c.Id == saving.A.Id));
                 var routeCustomerB = routes.FirstOrDefault(x => x.Customers.Any(c => c.Id == saving.B.Id));
@@ -37,6 +35,14 @@ namespace AlgorithmCoreVRPTW.Solver.Services
 
         private void MergeRoutes(Route routeCustomerA, Route routeCustomerB, List<Route> routes, Saving saving)
         {
+            if ((routeCustomerA.Customers.IndexOf(saving.A) == 0 && routeCustomerB.Customers.IndexOf(saving.B) == 0) ||
+                (routeCustomerA.Customers.IndexOf(saving.A) == routeCustomerA.Customers.Count && routeCustomerB.Customers.IndexOf(saving.B) == routeCustomerB.Customers.Count))
+            {
+                if (routeCustomerA.Customers.Count == 1)
+                    routeCustomerB.Customers.Reverse();
+                if (routeCustomerB.Customers.Count == 1)
+                    routeCustomerA.Customers.Reverse();
+            }
             routeCustomerA.MergeRoutes(routeCustomerB, saving.DistanceBetween);
             routes.Remove(routeCustomerB);
         }
@@ -46,12 +52,12 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             if (ValidateCustomers(routeCustomerA, routeCustomerB, saving))
                 return ValidateConstraints(routeCustomerA, routeCustomerB, saving);
 
-           return false;
+            return false;
         }
 
         private bool ValidateConstraints(Route routeCustomerA, Route routeCustomerB, Saving saving)
         {
-           if((routeCustomerA.Vehicle.CurrentLoad + routeCustomerB.Vehicle.CurrentLoad) < routeCustomerA.Vehicle.Capacity)
+            if ((routeCustomerA.Vehicle.CurrentLoad + routeCustomerB.Vehicle.CurrentLoad) <= routeCustomerA.Vehicle.Capacity)
             {
                 if (((routeCustomerA.Vehicle.CurrentTime - routeCustomerA.DistanceToDepot) + (routeCustomerB.Vehicle.CurrentTime - routeCustomerB.DistanceFromDepot)
                     + saving.DistanceBetween) <= routeCustomerA.Depot.DueDate)
@@ -62,28 +68,14 @@ namespace AlgorithmCoreVRPTW.Solver.Services
 
         private bool ValidateCustomers(Route routeCustomerA, Route routeCustomerB, Saving saving)
         {
-            if(routeCustomerA.Id != routeCustomerB.Id)
+            if (routeCustomerA.Id != routeCustomerB.Id)
             {
-                var indexA = routeCustomerA.Customers.IndexOf(saving.A);
-                var indexB = routeCustomerB.Customers.IndexOf(saving.B);                
-                if (!(IsInterior(indexA, routeCustomerA.Customers.Count) && IsInterior(indexB, routeCustomerB.Customers.Count)))
+                if (!routeCustomerA.IsInterior(saving.A) && !routeCustomerB.IsInterior(saving.B))
                 {
                     return true;
                 }
             }
-
             return false;
-        }
-
-        private bool IsInterior(int index, int count)
-        {
-            if (count < 2)
-                return false;
-
-            if (index == 0 || index == count - 1)
-                return false;
-
-            return true;
         }
 
         private List<Saving> GenerateSavings(Problem problem, List<Customer> customers)
@@ -113,14 +105,13 @@ namespace AlgorithmCoreVRPTW.Solver.Services
         private List<Route> CreateInitialRoutes(Problem problem)
         {
             List<Route> routes = new List<Route>();
-            for(int i = 0; i<problem.Customers.Count; i++)
+            for (int i = 0; i < problem.Customers.Count; i++)
             {
-                var route = new Route() {Id=i, Vehicle = new Vehicle(i, problem.Capacity, 0, 0), Depot = problem.Depot };
+                var route = new Route() { Id = i, Vehicle = new Vehicle(i, problem.Capacity, 0, 0), Depot = problem.Depot };
                 route.AddCustomer(problem.Customers[i]);
                 routes.Add(route);
             }
             return routes;
         }
-
     }
 }
