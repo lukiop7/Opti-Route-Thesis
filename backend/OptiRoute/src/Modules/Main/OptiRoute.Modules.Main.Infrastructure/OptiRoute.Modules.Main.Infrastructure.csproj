@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\OptiRoute.Shared.Infrastructure\OptiRoute.Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Shared\OptiRoute.Shared.SolutionDrawer\OptiRoute.Shared.SolutionDrawer\OptiRoute.Shared.SolutionDrawer.csproj" />
     <ProjectReference Include="..\OptiRoute.Modules.Main.Domain\OptiRoute.Modules.Main.Domain.csproj" />
   </ItemGroup>
 

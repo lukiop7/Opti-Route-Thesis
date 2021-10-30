@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TestMainComponent } from './layout/components/test-main/test-main.component';
 import { AuthGuard } from './core/services/auth-guard.service';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AuthGuard } from './core/services/auth-guard.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    LeafletModule,
     SharedModule.forRoot(),
         TranslateModule.forRoot({
             loader: {

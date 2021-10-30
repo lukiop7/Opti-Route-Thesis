@@ -3,25 +3,29 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31605.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptiRoute.WebApi", "src\OptiRoute.WebApi\OptiRoute.WebApi.csproj", "{58FFAE4B-F7D6-40FD-82D6-2756F9150DD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptiRoute.WebApi", "src\OptiRoute.WebApi\OptiRoute.WebApi.csproj", "{58FFAE4B-F7D6-40FD-82D6-2756F9150DD2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{D2BEB47C-660F-4C8F-B7D4-16757460458F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{7F1CC13D-21CB-472A-AF4F-69244D290C11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptiRoute.Shared.Abstractions", "src\Shared\OptiRoute.Shared.Abstractions\OptiRoute.Shared.Abstractions.csproj", "{1FCDC369-71A9-4A34-A2E1-B5F01C6C8C36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptiRoute.Shared.Abstractions", "src\Shared\OptiRoute.Shared.Abstractions\OptiRoute.Shared.Abstractions.csproj", "{1FCDC369-71A9-4A34-A2E1-B5F01C6C8C36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptiRoute.Shared.Data", "src\Shared\OptiRoute.Shared.Data\OptiRoute.Shared.Data.csproj", "{69ED121F-8C20-43B6-83F8-CFA78C4CCFDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptiRoute.Shared.Data", "src\Shared\OptiRoute.Shared.Data\OptiRoute.Shared.Data.csproj", "{69ED121F-8C20-43B6-83F8-CFA78C4CCFDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptiRoute.Shared.Infrastructure", "src\Shared\OptiRoute.Shared.Infrastructure\OptiRoute.Shared.Infrastructure.csproj", "{E2DDD04E-C4FE-4484-81ED-EFAD4EC97992}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptiRoute.Shared.Infrastructure", "src\Shared\OptiRoute.Shared.Infrastructure\OptiRoute.Shared.Infrastructure.csproj", "{E2DDD04E-C4FE-4484-81ED-EFAD4EC97992}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main", "Main", "{4FCD7E53-3794-4648-9461-C7DD7BEF9AC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptiRoute.Modules.Main.Application", "src\Modules\Main\OptiRoute.Modules.Main.Application\OptiRoute.Modules.Main.Application.csproj", "{DF3CD11A-B820-425C-BD69-F3B092F9C3DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptiRoute.Modules.Main.Application", "src\Modules\Main\OptiRoute.Modules.Main.Application\OptiRoute.Modules.Main.Application.csproj", "{DF3CD11A-B820-425C-BD69-F3B092F9C3DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptiRoute.Modules.Main.Domain", "src\Modules\Main\OptiRoute.Modules.Main.Domain\OptiRoute.Modules.Main.Domain.csproj", "{723BB1CE-A80C-4F8F-B673-BE8E2B8E0860}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptiRoute.Modules.Main.Domain", "src\Modules\Main\OptiRoute.Modules.Main.Domain\OptiRoute.Modules.Main.Domain.csproj", "{723BB1CE-A80C-4F8F-B673-BE8E2B8E0860}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptiRoute.Modules.Main.Infrastructure", "src\Modules\Main\OptiRoute.Modules.Main.Infrastructure\OptiRoute.Modules.Main.Infrastructure.csproj", "{D1355810-90A5-4F6B-A4DD-8A2FD617C309}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptiRoute.Modules.Main.Infrastructure", "src\Modules\Main\OptiRoute.Modules.Main.Infrastructure\OptiRoute.Modules.Main.Infrastructure.csproj", "{D1355810-90A5-4F6B-A4DD-8A2FD617C309}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptiRoute.Shared.SolutionDrawer", "src\Shared\OptiRoute.Shared.SolutionDrawer\OptiRoute.Shared.SolutionDrawer\OptiRoute.Shared.SolutionDrawer.csproj", "{A57403A2-CA78-4B84-8E61-61409277FF96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptiRoute.Shared.FileReader", "src\Shared\OptiRoute.Shared.FileReader\OptiRoute.Shared.FileReader\OptiRoute.Shared.FileReader.csproj", "{5DAAB618-9DA5-49E6-8D27-00AD1ECED1E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +61,14 @@ Global
 		{D1355810-90A5-4F6B-A4DD-8A2FD617C309}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1355810-90A5-4F6B-A4DD-8A2FD617C309}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1355810-90A5-4F6B-A4DD-8A2FD617C309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A57403A2-CA78-4B84-8E61-61409277FF96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A57403A2-CA78-4B84-8E61-61409277FF96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A57403A2-CA78-4B84-8E61-61409277FF96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A57403A2-CA78-4B84-8E61-61409277FF96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DAAB618-9DA5-49E6-8D27-00AD1ECED1E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DAAB618-9DA5-49E6-8D27-00AD1ECED1E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DAAB618-9DA5-49E6-8D27-00AD1ECED1E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DAAB618-9DA5-49E6-8D27-00AD1ECED1E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +81,8 @@ Global
 		{DF3CD11A-B820-425C-BD69-F3B092F9C3DD} = {4FCD7E53-3794-4648-9461-C7DD7BEF9AC5}
 		{723BB1CE-A80C-4F8F-B673-BE8E2B8E0860} = {4FCD7E53-3794-4648-9461-C7DD7BEF9AC5}
 		{D1355810-90A5-4F6B-A4DD-8A2FD617C309} = {4FCD7E53-3794-4648-9461-C7DD7BEF9AC5}
+		{A57403A2-CA78-4B84-8E61-61409277FF96} = {7F1CC13D-21CB-472A-AF4F-69244D290C11}
+		{5DAAB618-9DA5-49E6-8D27-00AD1ECED1E3} = {7F1CC13D-21CB-472A-AF4F-69244D290C11}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F2DE08C6-08DF-4256-A2D2-66BFB9E1445F}

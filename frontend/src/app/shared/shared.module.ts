@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TestService } from './services/test/test.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 
 
@@ -10,7 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    LeafletModule,
+    ReactiveFormsModule,
   ],
   exports:[ReactiveFormsModule],
   providers: [DatePipe]
