@@ -90,10 +90,10 @@ namespace AlgorithmCoreVRPTW.Models
 
         public void AddCustomer(Customer customer, int index)
         {
-            if (Customers.Count > 0)
+            if (Customers.Count > 0 && index<Customers.Count)
             {
                 var indexCustomer = Customers[index];
-                if (IsInterior(indexCustomer) || index == Customers.Count - 1)
+                if (IsInterior(indexCustomer) || (index == Customers.Count - 1 && Customers.Count>1))
                 {
                     CustomersDistance += customer.CalculateDistanceBetween(this.Customers[index]);
                     CustomersDistance += customer.CalculateDistanceBetween(this.Customers[index - 1]);
@@ -164,12 +164,49 @@ namespace AlgorithmCoreVRPTW.Models
 
         public bool IsFeasible()
         {
-            if (this.Vehicle.CurrentLoad <= this.Vehicle.Capacity)
+            if (CheckCapacityConstraints(this.Customers,this.Vehicle.Capacity))
             {
-                if (this.Vehicle.CurrentTime <= this.Depot.DueDate)
+                    if(CheckTimeConstraints(this.Customers,this.Depot))
                     return true;
             }
             return false;
+        }
+
+        public static bool CheckCapacityConstraints(List<Customer> customers, int vehicleCapacity)
+        {
+            return customers.Sum(x => x.Demand) <= vehicleCapacity;
+        }
+
+        public static bool CheckTimeConstraints(List<Customer> customers,Depot depot)
+        {
+            double arrivalTime = 0;
+            Customer previousCustomer = null;
+            arrivalTime += customers.FirstOrDefault().DepotDistance;
+
+            foreach (Customer customer in customers)
+            {
+                if (previousCustomer != null)
+                {
+                    arrivalTime += previousCustomer.ServiceTime;
+                    arrivalTime += previousCustomer.CalculateDistanceBetween(customer);
+                }
+                if (arrivalTime < customer.ReadyTime)
+                {
+                    arrivalTime = customer.ReadyTime;
+                }
+                if (arrivalTime > customer.DueDate)
+                {
+                    return false;
+                }
+                previousCustomer = customer;
+            }
+            arrivalTime += customers.LastOrDefault().DepotDistance;
+            if (arrivalTime > depot.DueDate)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

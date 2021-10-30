@@ -13,7 +13,7 @@ namespace AlgorithmCoreVRPTW
     {
         private static void Main(string[] args)
         {
-            string inputFile = @"G:\STUDIA\INŻYNIERKA\BEngThesisApp\materials\solomon\c1\c101.txt";
+            string inputFile = @"G:\\STUDIA\\INŻYNIERKA\\BEngThesisApp\\materials\\solomon\\c1\\c101.txt";
             string[] filePaths = Directory.GetFiles(@"G:\STUDIA\INŻYNIERKA\BEngThesisApp\materials\solomon\c1\", "*.txt",
                                          SearchOption.TopDirectoryOnly);
             string outputSolutionFilePath = @"G:\STUDIA\INŻYNIERKA\BEngThesisApp\Results\";
@@ -28,11 +28,13 @@ namespace AlgorithmCoreVRPTW
 
                 Solution solution = solver.Create(benchmarkProblem);
 
-                solutionDrawer.DrawSolution(solution, outputSolutionFilePath + Path.GetFileNameWithoutExtension(path) + "\\");
+                if (solution.Feasible)
+                  //  solutionDrawer.DrawSolution(solution, outputSolutionFilePath + Path.GetFileNameWithoutExtension(path) + "\\");
+
 
                 solution = solver.Solve(benchmarkProblem);
                 Thread.Sleep(500);
-                solutionDrawer.DrawSolution(solution, outputSolutionFilePath + Path.GetFileNameWithoutExtension(path) + "\\");
+             //   solutionDrawer.DrawSolution(solution, outputSolutionFilePath + Path.GetFileNameWithoutExtension(path) + "\\");
             }
         }
     }

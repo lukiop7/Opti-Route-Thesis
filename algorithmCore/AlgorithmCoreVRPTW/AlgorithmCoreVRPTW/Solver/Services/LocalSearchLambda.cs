@@ -53,9 +53,19 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             if (globalMaxDif != 0)
             {
                 routeList.RemoveAt(globalFirstRouteIndex);
+                if(globalMinCostFirstRoute.Customers.Count!=0)
                 routeList.Insert(globalFirstRouteIndex, globalMinCostFirstRoute);
+                else
+                {
+
+                }
                 routeList.RemoveAt(globalSecondRouteIndex);
-                routeList.Insert(globalSecondRouteIndex, globalMinCostSecondRoute);
+                if (globalMinCostSecondRoute.Customers.Count != 0)
+                    routeList.Insert(globalSecondRouteIndex, globalMinCostSecondRoute);
+                else
+                {
+
+                }
             }
         }
 
@@ -110,7 +120,7 @@ namespace AlgorithmCoreVRPTW.Solver.Services
                 Customer firstRouteCustomer = firstRoute.Customers[rand1];
                 firstRoute.DeleteCustomer(firstRouteCustomer);
 
-                for (int secondRouteCustomerIndex = 1; secondRouteCustomerIndex < secondRoute.Customers.Count; secondRouteCustomerIndex++)
+                for (int secondRouteCustomerIndex = 0; secondRouteCustomerIndex <= secondRoute.Customers.Count; secondRouteCustomerIndex++)
                 {
                     secondRoute.AddCustomer(firstRouteCustomer, secondRouteCustomerIndex);
                     feasible = secondRoute.IsFeasible();
@@ -141,7 +151,7 @@ namespace AlgorithmCoreVRPTW.Solver.Services
                 Customer secondRouteCustomer = secondRoute.Customers[rand2];
                 secondRoute.DeleteCustomer(secondRouteCustomer);
 
-                for (int firstRouteCustomerIndex = 1; firstRouteCustomerIndex < firstRoute.Customers.Count; firstRouteCustomerIndex++)
+                for (int firstRouteCustomerIndex = 0; firstRouteCustomerIndex <= firstRoute.Customers.Count; firstRouteCustomerIndex++)
                 {
                     firstRoute.AddCustomer(secondRouteCustomer, firstRouteCustomerIndex);
                     feasible = firstRoute.IsFeasible();

@@ -34,7 +34,7 @@ namespace OptiRoute.Shared.SolutionDrawer
         public DrawSolutionResponseDto DrawSolution(Solution solution, string path)
         {
             System.IO.Directory.CreateDirectory(path);
-            path += DateTime.Now.ToString("yyyyMMddHHmmss") + ".png";
+            path += DateTime.Now.ToString("yyyyMMddHHmmss")+"_NEW" + ".png";
             var routes = solution.Routes;
             var depot = solution.Depot;
             int offset = 100;

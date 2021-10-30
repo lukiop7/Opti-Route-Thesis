@@ -14,7 +14,7 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             List<Saving> savings = GenerateSavings(problem, customers);
             MergeSavings(problem, savings, routes);
 
-            bool Feasible = routes.Count<=problem.Vehicles;
+            bool Feasible = routes.Count <= problem.Vehicles;
 
             return new Solution() { Feasible = Feasible, Depot = problem.Depot, Routes = routes };
         }
@@ -28,41 +28,35 @@ namespace AlgorithmCoreVRPTW.Solver.Services
 
                 if (ValidateSaving(routeCustomerA, routeCustomerB, saving))
                 {
-                    MergeRoutes(routeCustomerA, routeCustomerB, routes, saving);
+                    Route routeCustomerACopy = routeCustomerA.Clone();
+                    Route routeCustomerBCopy = routeCustomerB.Clone();
+                    bool feasible = TestMergeRoutes(routeCustomerACopy, routeCustomerBCopy, saving);
+                    if (feasible)
+                    {
+                        MergeRoutes(routeCustomerA, routeCustomerB, routes, saving);
+                    }
                 }
             }
+        }
+        private bool TestMergeRoutes(Route routeCustomerA, Route routeCustomerB, Saving saving)
+        {
+            routeCustomerA.MergeRoutes(routeCustomerB, saving.DistanceBetween);
+            return routeCustomerA.IsFeasible();
         }
 
         private void MergeRoutes(Route routeCustomerA, Route routeCustomerB, List<Route> routes, Saving saving)
         {
-            if ((routeCustomerA.Customers.IndexOf(saving.A) == 0 && routeCustomerB.Customers.IndexOf(saving.B) == 0) ||
-                (routeCustomerA.Customers.IndexOf(saving.A) == routeCustomerA.Customers.Count && routeCustomerB.Customers.IndexOf(saving.B) == routeCustomerB.Customers.Count))
-            {
-                if (routeCustomerA.Customers.Count == 1)
-                    routeCustomerB.Customers.Reverse();
-                if (routeCustomerB.Customers.Count == 1)
-                    routeCustomerA.Customers.Reverse();
-            }
             routeCustomerA.MergeRoutes(routeCustomerB, saving.DistanceBetween);
-            routes.Remove(routeCustomerB);
+            routes.Remove(routeCustomerB);       
         }
 
         private bool ValidateSaving(Route routeCustomerA, Route routeCustomerB, Saving saving)
         {
             if (ValidateCustomers(routeCustomerA, routeCustomerB, saving))
-                return ValidateConstraints(routeCustomerA, routeCustomerB, saving);
-
-            return false;
-        }
-
-        private bool ValidateConstraints(Route routeCustomerA, Route routeCustomerB, Saving saving)
-        {
-            if ((routeCustomerA.Vehicle.CurrentLoad + routeCustomerB.Vehicle.CurrentLoad) <= routeCustomerA.Vehicle.Capacity)
             {
-                if (((routeCustomerA.Vehicle.CurrentTime - routeCustomerA.DistanceToDepot) + (routeCustomerB.Vehicle.CurrentTime - routeCustomerB.DistanceFromDepot)
-                    + saving.DistanceBetween) <= routeCustomerA.Depot.DueDate)
-                    return true;
+                return true;              
             }
+
             return false;
         }
 
@@ -72,7 +66,16 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             {
                 if (!routeCustomerA.IsInterior(saving.A) && !routeCustomerB.IsInterior(saving.B))
                 {
-                    return true;
+                    if (routeCustomerA.Customers.Count == 1 && routeCustomerB.Customers.Count == 1)
+                    {
+                        return true;
+                    }
+
+                    if ((routeCustomerA.Customers.IndexOf(saving.A) != 0 && routeCustomerB.Customers.IndexOf(saving.B) != routeCustomerB.Customers.Count))
+                        return false;
+                    else
+                        return true;
+
                 }
             }
             return false;
@@ -86,8 +89,12 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             {
                 for (int j = 0; j < customers.Count; j++)
                 {
-                    if (i >= j)
+                    if (i == j)
                         continue;
+
+                    // wersja z unikalnymi savingami
+                    //if (i >= j)
+                    //    continue;
 
                     var saving = new Saving()
                     {
@@ -98,7 +105,7 @@ namespace AlgorithmCoreVRPTW.Solver.Services
                     savings.Add(saving);
                 }
             }
-            savings.OrderByDescending(x => x.Value);
+            savings = savings.OrderByDescending(x => x.Value).ToList();
             return savings;
         }
 

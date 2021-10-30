@@ -26,6 +26,7 @@ namespace AlgorithmCoreVRPTW.Models
         public int ReadyTime { get; set; }
         public int DueDate { get; set; }
         public int ServiceTime { get; set; }
+        public double DepotDistance { get; set; }
 
         public double CalculateDistanceBetween(Customer destination)
         {
