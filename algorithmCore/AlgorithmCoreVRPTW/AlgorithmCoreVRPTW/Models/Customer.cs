@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AlgorithmCoreVRPTW.Models
 {
@@ -28,11 +26,13 @@ namespace AlgorithmCoreVRPTW.Models
         public int ReadyTime { get; set; }
         public int DueDate { get; set; }
         public int ServiceTime { get; set; }
+        public double DepotDistance { get; set; }
 
         public double CalculateDistanceBetween(Customer destination)
         {
             return Math.Sqrt((Math.Pow(this.X - destination.X, 2) + Math.Pow(this.Y - destination.Y, 2)));
         }
+
         public double CalculateDistanceBetween(Depot destination)
         {
             return Math.Sqrt((Math.Pow(this.X - destination.X, 2) + Math.Pow(this.Y - destination.Y, 2)));

@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace AlgorithmCoreVRPTW.FileReaders.Services
 {
@@ -52,7 +50,7 @@ namespace AlgorithmCoreVRPTW.FileReaders.Services
                 Capacity = Int32.Parse(vehicleLine[1]),
             };
 
-            foreach(var customer in customersLines)
+            foreach (var customer in customersLines)
             {
                 problem.Customers.Add(Customer.Parse(customer));
             }

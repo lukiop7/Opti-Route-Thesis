@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AlgorithmCoreVRPTW.Models
+﻿namespace AlgorithmCoreVRPTW.Models
 {
-   public class Vehicle
+    public class Vehicle
     {
         public Vehicle(int id, int capacity, int currentLoad, double currentTime)
         {
@@ -14,11 +10,24 @@ namespace AlgorithmCoreVRPTW.Models
             CurrentTime = currentTime;
         }
 
+        public Vehicle()
+        {
+        }
+
+        public Vehicle Clone()
+        {
+            return new Vehicle()
+            {
+                Id = this.Id,
+                Capacity = this.Capacity,
+                CurrentLoad = this.CurrentLoad,
+                CurrentTime = this.CurrentTime
+            };
+        }
+
         public int Id { get; set; }
         public int Capacity { get; set; }
         public int CurrentLoad { get; set; }
         public double CurrentTime { get; set; }
-        public double DistanceFromDepot { get; set; }
-        public double DistanceToDepot { get; set; }
     }
 }

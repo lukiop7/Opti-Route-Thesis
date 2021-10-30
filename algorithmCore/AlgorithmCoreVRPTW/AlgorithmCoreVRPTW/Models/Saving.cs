@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AlgorithmCoreVRPTW.Models
+﻿namespace AlgorithmCoreVRPTW.Models
 {
     public class Saving
     {
