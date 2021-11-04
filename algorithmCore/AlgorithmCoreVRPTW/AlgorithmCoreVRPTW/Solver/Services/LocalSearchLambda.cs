@@ -2,6 +2,7 @@
 using AlgorithmCoreVRPTW.Solver.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AlgorithmCoreVRPTW.Solver.Services
 {
@@ -12,15 +13,32 @@ namespace AlgorithmCoreVRPTW.Solver.Services
         public Solution Improve(Solution currentSolution)
         {
             var routeList = currentSolution.Routes;
-
-            for (int i = 0; i < 50; i++)
+            int iterationsCounter = 0;
+            int iterationsLimit = 50;
+            int repetitionsCounter = 0;
+            int repetitionsLimit = 5;
+            double previousDistance = 0;
+            while (iterationsCounter < iterationsLimit && repetitionsCounter < repetitionsLimit)
             {
-                LocalSearch(routeList);
+                double currentDistance = LocalSearch(routeList);
+                repetitionsCounter = CheckRepetition(repetitionsCounter, previousDistance, currentDistance);
+                iterationsLimit = CheckImprovement(iterationsLimit, previousDistance, currentDistance);
+                iterationsCounter++;
             }
             return new Solution() { Feasible = true, Depot = currentSolution.Depot, Routes = routeList };
         }
 
-        private void LocalSearch(List<Route> routeList)
+        private int CheckImprovement(int iterationsLimit, double previousDistance, double currentDistance)
+        {
+            return previousDistance - currentDistance > 0 ? iterationsLimit + 5 : iterationsLimit;
+        }
+
+        private int CheckRepetition(int repetitionsCounter, double previousDistance, double currentDistance)
+        {
+            return currentDistance == previousDistance ? ++repetitionsCounter : 0;
+        }
+
+        private double LocalSearch(List<Route> routeList)
         {
             double globalMaxDif = 0;
             int globalFirstRouteIndex = 0;
@@ -53,20 +71,13 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             if (globalMaxDif != 0)
             {
                 routeList.RemoveAt(globalFirstRouteIndex);
-                if(globalMinCostFirstRoute.Customers.Count!=0)
-                routeList.Insert(globalFirstRouteIndex, globalMinCostFirstRoute);
-                else
-                {
-
-                }
+                if (globalMinCostFirstRoute.Customers.Count != 0)
+                    routeList.Insert(globalFirstRouteIndex, globalMinCostFirstRoute);
                 routeList.RemoveAt(globalSecondRouteIndex);
                 if (globalMinCostSecondRoute.Customers.Count != 0)
                     routeList.Insert(globalSecondRouteIndex, globalMinCostSecondRoute);
-                else
-                {
-
-                }
             }
+            return Math.Round(routeList.Sum(x => x.TotalDistance), 2);
         }
 
         //interchanging customer between 2 given routes using all operators (0,1) (1,0) (2,0) (0,2) (1,2) (2,1) (1,1) (2,2)

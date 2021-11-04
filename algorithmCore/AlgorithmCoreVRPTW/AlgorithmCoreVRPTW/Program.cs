@@ -4,8 +4,8 @@ using AlgorithmCoreVRPTW.Models;
 using AlgorithmCoreVRPTW.Solver.Interfaces;
 using AlgorithmCoreVRPTW.Solver.Services;
 using OptiRoute.Shared.SolutionDrawer;
+using System;
 using System.IO;
-using System.Threading;
 
 namespace AlgorithmCoreVRPTW
 {
@@ -29,12 +29,17 @@ namespace AlgorithmCoreVRPTW
                 Solution solution = solver.Create(benchmarkProblem);
 
                 if (solution.Feasible)
-                  //  solutionDrawer.DrawSolution(solution, outputSolutionFilePath + Path.GetFileNameWithoutExtension(path) + "\\");
+                {
+                    solutionDrawer.DrawSolution(solution, outputSolutionFilePath + Path.GetFileNameWithoutExtension(path) + "\\", "_initial");
 
-
-                solution = solver.Solve(benchmarkProblem);
-                Thread.Sleep(500);
-             //   solutionDrawer.DrawSolution(solution, outputSolutionFilePath + Path.GetFileNameWithoutExtension(path) + "\\");
+                    solution = solver.Improve(solution);
+                    if (solution.Feasible)
+                        solutionDrawer.DrawSolution(solution, outputSolutionFilePath + Path.GetFileNameWithoutExtension(path) + "\\", "_improved");
+                    else
+                        Console.WriteLine(path + " IMPROVED");
+                }
+                else
+                    Console.WriteLine(path);
             }
         }
     }

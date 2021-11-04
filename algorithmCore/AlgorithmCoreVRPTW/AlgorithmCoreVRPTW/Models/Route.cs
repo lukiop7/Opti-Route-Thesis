@@ -36,7 +36,7 @@ namespace AlgorithmCoreVRPTW.Models
                 if (this.Customers.Count == 0)
                     return 0;
 
-                return this.Customers.Last().CalculateDistanceBetween(this.Depot);
+                return this.Customers.Last().DepotDistance;
             }
         }
 
@@ -47,7 +47,7 @@ namespace AlgorithmCoreVRPTW.Models
                 if (this.Customers.Count == 0)
                     return 0;
 
-                return this.Customers.First().CalculateDistanceBetween(this.Depot);
+                return this.Customers.First().DepotDistance;
             }
         }
 
@@ -90,10 +90,10 @@ namespace AlgorithmCoreVRPTW.Models
 
         public void AddCustomer(Customer customer, int index)
         {
-            if (Customers.Count > 0 && index<Customers.Count)
+            if (Customers.Count > 0 && index < Customers.Count)
             {
                 var indexCustomer = Customers[index];
-                if (IsInterior(indexCustomer) || (index == Customers.Count - 1 && Customers.Count>1))
+                if (IsInterior(indexCustomer) || (index == Customers.Count - 1 && Customers.Count > 1))
                 {
                     CustomersDistance += customer.CalculateDistanceBetween(this.Customers[index]);
                     CustomersDistance += customer.CalculateDistanceBetween(this.Customers[index - 1]);
@@ -156,19 +156,14 @@ namespace AlgorithmCoreVRPTW.Models
             if (count < 2)
                 return false;
 
-            if (index == 0 || index == count - 1)
-                return false;
-
-            return true;
+            return index != 0 && index != count - 1;
         }
 
         public bool IsFeasible()
         {
-            if (CheckCapacityConstraints(this.Customers,this.Vehicle.Capacity))
-            {
-                    if(CheckTimeConstraints(this.Customers,this.Depot))
-                    return true;
-            }
+            if (CheckCapacityConstraints(this.Customers, this.Vehicle.Capacity))
+                return CheckTimeConstraints(this.Customers, this.Depot);
+
             return false;
         }
 
@@ -177,7 +172,7 @@ namespace AlgorithmCoreVRPTW.Models
             return customers.Sum(x => x.Demand) <= vehicleCapacity;
         }
 
-        public static bool CheckTimeConstraints(List<Customer> customers,Depot depot)
+        public static bool CheckTimeConstraints(List<Customer> customers, Depot depot)
         {
             double arrivalTime = 0;
             Customer previousCustomer = null;
@@ -200,13 +195,10 @@ namespace AlgorithmCoreVRPTW.Models
                 }
                 previousCustomer = customer;
             }
-            arrivalTime += customers.LastOrDefault().DepotDistance;
-            if (arrivalTime > depot.DueDate)
-            {
-                return false;
-            }
 
-            return true;
+            arrivalTime += customers.LastOrDefault().DepotDistance;
+
+            return arrivalTime <= depot.DueDate;
         }
     }
 }

@@ -10,5 +10,7 @@ namespace AlgorithmCoreVRPTW.Solver.Interfaces
         Solution Solve(Problem problem);
 
         Solution Create(Problem problem);
+
+        Solution Improve(Solution solution);
     }
 }

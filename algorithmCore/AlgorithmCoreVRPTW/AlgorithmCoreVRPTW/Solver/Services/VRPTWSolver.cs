@@ -1,6 +1,5 @@
 ﻿using AlgorithmCoreVRPTW.Models;
 using AlgorithmCoreVRPTW.Solver.Interfaces;
-using System;
 
 namespace AlgorithmCoreVRPTW.Solver.Services
 {
@@ -11,8 +10,13 @@ namespace AlgorithmCoreVRPTW.Solver.Services
 
         public Solution Create(Problem problem)
         {
-           var initial= Initial.Solve(problem);
+            var initial = Initial.Solve(problem);
             return initial;
+        }
+
+        public Solution Improve(Solution solution)
+        {
+            return LocalSearch.Improve(solution);
         }
 
         public Solution Solve(Problem problem)

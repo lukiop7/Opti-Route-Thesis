@@ -3,7 +3,6 @@ using AlgorithmCoreVRPTW.Solver.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace AlgorithmCoreVRPTW.Solver.Services
 {
@@ -13,9 +12,17 @@ namespace AlgorithmCoreVRPTW.Solver.Services
         {
             List<Customer> unroutedCustomers = new List<Customer>();
             List<Route> routes = new List<Route>();
-            int counter = 0;
             unroutedCustomers.AddRange(problem.Customers);
             CalculateDepotDistances(ref unroutedCustomers, problem.Depot);
+            Construct(problem, unroutedCustomers, routes);
+            bool Feasible = routes.Count <= problem.Vehicles;
+
+            return new Solution() { Feasible = Feasible, Depot = problem.Depot, Routes = routes };
+        }
+
+        private void Construct(Problem problem, List<Customer> unroutedCustomers, List<Route> routes)
+        {
+            int counter = 0;
             while (unroutedCustomers.Count > 0)
             {
                 Route currentRouteCustomerList = new Route() { Id = counter, Vehicle = new Vehicle(counter, problem.Capacity, 0, 0), Depot = problem.Depot };
@@ -23,50 +30,58 @@ namespace AlgorithmCoreVRPTW.Solver.Services
                 currentRouteCustomerList.AddCustomer(seedCustomer);
                 unroutedCustomers.Remove(seedCustomer);
 
-                bool placementPossible = true;
-                while (placementPossible)
-                {
-                    double minCost = Double.MaxValue;
-                    int insertionIndex = 0;
-                    Customer selectedCustomer = null;
-
-                    foreach (Customer unroutedCustomer in unroutedCustomers)
-                    {
-                        for (int currentRouteCustomerIndex = 0; currentRouteCustomerIndex <= currentRouteCustomerList.Customers.Count; currentRouteCustomerIndex++)
-                        {
-                            double cost = CostOfInsertionInRoute(currentRouteCustomerList.Clone(), currentRouteCustomerIndex, unroutedCustomer);
-                            if (cost < minCost)
-                            {
-                                minCost = cost;
-                                insertionIndex = currentRouteCustomerIndex;
-                                selectedCustomer = unroutedCustomer;
-                            }
-                        }
-                    }
-                    if (minCost != Double.MaxValue)
-                    {
-                        currentRouteCustomerList.AddCustomer(selectedCustomer, insertionIndex);
-                        unroutedCustomers.Remove(selectedCustomer);
-                    }
-                    else
-                    {
-                        placementPossible = false;
-                    }
-                }
+                InsertCustomers(unroutedCustomers, currentRouteCustomerList);
                 routes.Add(currentRouteCustomerList);
+
                 counter++;
             }
-            bool Feasible = routes.Count <= problem.Vehicles;
-
-            return new Solution() { Feasible = Feasible, Depot = problem.Depot, Routes = routes };
         }
+
+        private void InsertCustomers(List<Customer> unroutedCustomers, Route currentRouteCustomerList)
+        {
+            bool placementPossible = true;
+            while (placementPossible)
+            {
+                double minCost = Double.MaxValue;
+                int insertionIndex = 0;
+                Customer selectedCustomer = null;
+                GetBestInsertionPlace(unroutedCustomers, currentRouteCustomerList, ref minCost, ref insertionIndex, ref selectedCustomer);
+                if (minCost != Double.MaxValue)
+                {
+                    currentRouteCustomerList.AddCustomer(selectedCustomer, insertionIndex);
+                    unroutedCustomers.Remove(selectedCustomer);
+                }
+                else
+                {
+                    placementPossible = false;
+                }
+            }
+        }
+
+        private void GetBestInsertionPlace(List<Customer> unroutedCustomers, Route currentRouteCustomerList, ref double minCost, ref int insertionIndex, ref Customer selectedCustomer)
+        {
+            foreach (Customer unroutedCustomer in unroutedCustomers)
+            {
+                for (int currentRouteCustomerIndex = 0; currentRouteCustomerIndex <= currentRouteCustomerList.Customers.Count; currentRouteCustomerIndex++)
+                {
+                    double cost = CostOfInsertionInRoute(currentRouteCustomerList.Clone(), currentRouteCustomerIndex, unroutedCustomer);
+                    if (cost < minCost)
+                    {
+                        minCost = cost;
+                        insertionIndex = currentRouteCustomerIndex;
+                        selectedCustomer = unroutedCustomer;
+                    }
+                }
+            }
+        }
+
         private void CalculateDepotDistances(ref List<Customer> customers, Depot depot)
         {
             foreach (var customer in customers)
             {
                 customer.DepotDistance = customer.CalculateDistanceBetween(depot);
             }
-            customers= customers.OrderByDescending(x => x.DepotDistance).ToList();
+            customers = customers.OrderByDescending(x => x.DepotDistance).ToList();
         }
 
         //finds seed customer for new route from given unrouted customers
@@ -114,6 +129,5 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             route.DeleteCustomer(customer);
             return Double.MaxValue;
         }
-
     }
 }

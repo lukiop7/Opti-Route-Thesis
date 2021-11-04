@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgorithmCoreVRPTW.Models
@@ -13,7 +14,7 @@ namespace AlgorithmCoreVRPTW.Models
         {
             get
             {
-                return Routes.Sum(x => x.TotalDistance);
+                return Math.Round(Routes.Sum(x => x.TotalDistance), 2);
             }
         }
     }
