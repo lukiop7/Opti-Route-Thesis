@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9edebed8-1684-4c69-8274-9fc2c58bd9c8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.browserslistrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/karma.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/core/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/core/api-services/base-api.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/core/services/auth-guard.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout/components/test-main/test-main.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout/components/test-main/test-main.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout/components/test-main/test-main.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout/components/test-main/test-main.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/models/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/modules/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/modules/test/test-crud/test-crud.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/modules/test/test-crud/test-crud.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/modules/test/test-crud/test-crud.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/modules/test/test-crud/test-crud.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/modules/test/test-module/test-module.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/modules/test/test-module/test-module.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/modules/test/test-module/test-module.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/modules/test/test-module/test-module.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/modules/test/test-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/modules/test/test.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/models/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/models/form-group-controls.model.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/models/test.model.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/pipes/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/services/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/services/test/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/services/test/test-api.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/services/test/test.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/shared.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/fonts/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/i18n/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/i18n/pl.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/icons/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/img/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/environments/environment.prod.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/environments/environment.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/polyfills.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/abstracts/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/base/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/overrides/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.app.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.spec.json" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="20VVOWY3wEe6s5ReGVQlPeXrUTX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/OptiRouteClient" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager" selected="npm.Angular CLI Server">
+    <configuration name="Tests (optiroute-WebUI)" type="JavaScriptTestRunnerKarma">
+      <config-file value="$PROJECT_DIR$/karma.conf.js" />
+      <working-directory value="$PROJECT_DIR$" />
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="Angular Application" type="JavascriptDebugType" uri="http://localhost:4200">
+      <method v="2" />
+    </configuration>
+    <configuration name="Angular CLI Server" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9edebed8-1684-4c69-8274-9fc2c58bd9c8" name="Default Changelist" comment="" />
+      <created>1636129716879</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1636129716879</updated>
+      <workItem from="1636129721418" duration="28000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
