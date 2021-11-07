@@ -5,7 +5,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
-
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -23,6 +22,7 @@ import {SharedModule} from '../shared/shared.module';
 import { MapSidebarComponent } from './map-sidebar/map-sidebar.component';
 import { MapLayoutComponent } from './map-layout/map-layout.component';
 import {MapService} from './services/map.service';
+import {OsrmService} from './services/osrm.service';
 
 
 
@@ -49,11 +49,13 @@ import {MapService} from './services/map.service';
     BrowserAnimationsModule,
     ModalModule.forRoot(),
     LeafletModule,
-    SharedModule
+    SharedModule,
+    FontAwesomeModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
-    MapService
+    MapService,
+    OsrmService
   ],
   bootstrap: [AppComponent]
 })

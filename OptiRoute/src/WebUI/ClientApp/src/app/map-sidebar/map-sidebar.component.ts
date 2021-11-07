@@ -28,8 +28,11 @@ export class MapSidebarComponent implements OnInit, OnDestroy {
     this._subscription.unsubscribe();
   }
 
-  onClick(){
+  onClick() {
     this._mapService.connectMarkers();
   }
 
+  removeCustomer(customer: Customer) {
+    this._mapService.removeCustomer(customer);
+  }
 }

@@ -1,15 +1,15 @@
-<div class="anyClass container-fluid">
-  <div class="card">
-    <div class="card-title">
-      <h2>Customers</h2>
+<div class="anyClass">
+  <div class="card h-100">
+    <div class="card-header">
+      <h2 class="text-center">Customers</h2>
     </div>
-    <div class="card-body">
-      <div class="row" *ngFor="let customer of customers">
-        <app-marker-details [customer]="customer"></app-marker-details>
+    <div class="h-100 hidden-scroll">
+      <div *ngFor="let customer of customers">
+        <app-marker-details [customer]="customer" (closed)="removeCustomer($event)"></app-marker-details>
       </div>
     </div>
     <div class="card-footer">
-      <button class="btn-primary" (click)="onClick()">
+      <button class="btn-primary w-100" (click)="onClick()">
         Solve
       </button>
     </div>

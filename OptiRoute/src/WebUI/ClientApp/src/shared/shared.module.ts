@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MarkerDetailsComponent } from './components/marker-details/marker-details.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 
 
@@ -12,7 +13,8 @@ import { MarkerDetailsComponent } from './components/marker-details/marker-detai
     MarkerDetailsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FontAwesomeModule
   ]
 })
 export class SharedModule { }

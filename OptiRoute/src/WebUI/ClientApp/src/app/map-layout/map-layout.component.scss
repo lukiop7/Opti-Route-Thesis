@@ -1,9 +1,14 @@
 
-#mapContainer{
-  height:900px;
-  width:100%;
+#mapContainer {
+  height: calc(100vh - 57px);
+  width: 100%;
+  position: relative;
 }
-#customers{
-  top:100px;
-  left:100px;
+
+#customers {
+  top: 5%;
+  left: 5%;
+  height:90%;
+  width:30%;
+  position: absolute;
 }

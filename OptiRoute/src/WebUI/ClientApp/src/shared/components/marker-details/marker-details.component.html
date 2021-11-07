@@ -1,5 +1,8 @@
-<div class="card card-body">
-<p class="card-text">Date: {{customer.date | date:'shortTime'}}</p>
+<div class="card card-body position-relative">
+  <button type="button" class="close close-button" aria-label="Close" (click)="closeOnClick()">
+    <fa-icon [icon]="faTimes" class="fa-sm"></fa-icon>
+  </button>
+  <p class="card-text">Date: {{customer.date | date:'shortTime'}}</p>
 <p class="card-text">Lat: {{customer.lat}}</p>
 <p class="card-text">Lng: {{customer.lng}}</p>
 </div>
