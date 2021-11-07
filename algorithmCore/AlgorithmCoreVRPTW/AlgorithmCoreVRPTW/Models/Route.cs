@@ -11,6 +11,7 @@ namespace AlgorithmCoreVRPTW.Models
         public List<Customer> Customers { get; set; } = new List<Customer>();
         public List<List<double>> Distances { get; set; } = new List<List<double>>();
         public List<List<double>> Durations { get; set; } = new List<List<double>>();
+        private Dictionary<int, double> WaitingTimeDictionary { get; set; } = new Dictionary<int, double>();
 
         public double TotalDistance
         {
@@ -114,15 +115,32 @@ namespace AlgorithmCoreVRPTW.Models
             };
         }
 
-        //public bool ValidateDistance()
-        //{
-        //    double dist = 0;
-        //    for(int i=0; i< Customers.Count-1; i++)
-        //    {
-        //        dist += Customers[i].CalculateDistanceBetween(Customers[i+1]);
-        //    }
-        //    return System.Math.Round(dist - CustomersDistance, 14) <= 0;
-        //}
+        public bool ValidateDistance()
+        {
+            double dist = 0;
+            for (int i = 0; i < Customers.Count - 1; i++)
+            {
+                dist += Customers[i].CalculateDistanceBetween(this.Distances, Customers[i + 1]);
+            }
+            return System.Math.Round(dist - CustomersDistance, 13) <= 0;
+        }
+
+        public bool ValidateTime()
+        {
+            double arrivalTime = 0;
+            Customer previousCustomer = null;
+            foreach (Customer customer in Customers)
+            {
+                if (previousCustomer != null)
+                {
+                    arrivalTime += previousCustomer.ServiceTime;
+                    arrivalTime += previousCustomer.CalculateTimeBetween(Durations, customer);
+                }
+                previousCustomer = customer;
+            }
+            arrivalTime += Customers.LastOrDefault().ServiceTime;
+            return System.Math.Round(arrivalTime - this.CustomersTime, 13) <= 0;
+        }
 
         public void AddCustomer(Customer customer)
         {
@@ -130,12 +148,12 @@ namespace AlgorithmCoreVRPTW.Models
             {
                 CustomersDistance += this.Customers.Last().CalculateDistanceBetween(this.Distances, customer);
                 CustomersTime += this.Customers.Last().CalculateTimeBetween(this.Durations, customer);
-                CustomersTime += customer.ServiceTime;
                 //CustomersDistance += customer.CalculateDistanceBetween(this.Distances, this.Customers.Last());
                 //CustomersTime += customer.CalculateTimeBetween(this.Durations, this.Customers.Last());
             }
             this.Customers.Add(customer);
 
+            CustomersTime += customer.ServiceTime;
             this.Vehicle.CurrentLoad += customer.Demand;
             this.Vehicle.CurrentTime = this.TotalTime;
         }
@@ -152,7 +170,6 @@ namespace AlgorithmCoreVRPTW.Models
 
                     CustomersTime += customer.CalculateDistanceBetween(this.Durations, this.Customers[index]);
                     CustomersTime += this.Customers[index - 1].CalculateTimeBetween(this.Durations, customer);
-                    CustomersTime += customer.ServiceTime;
                     //CustomersDistance += customer.CalculateDistanceBetween(this.Distances, this.Customers[index]);
                     //CustomersDistance += customer.CalculateDistanceBetween(this.Distances, this.Customers[index - 1]);
                 }
@@ -160,9 +177,9 @@ namespace AlgorithmCoreVRPTW.Models
                 {
                     CustomersDistance += customer.CalculateDistanceBetween(this.Distances, this.Customers[index]);
                     CustomersTime += customer.CalculateTimeBetween(this.Durations, this.Customers[index]);
-                    CustomersTime += customer.ServiceTime;
                 }
                 this.Customers.Insert(index, customer);
+                CustomersTime += customer.ServiceTime;
                 this.Vehicle.CurrentLoad += customer.Demand;
                 this.Vehicle.CurrentTime = this.TotalTime;
             }
@@ -243,29 +260,27 @@ namespace AlgorithmCoreVRPTW.Models
 
         public bool IsFeasible()
         {
-            if (CheckCapacityConstraints(this.Customers, this.Vehicle.Capacity))
-                return CheckTimeConstraints(this.Customers, this.Depot, this.Durations);
+            if (CheckCapacityConstraints())
+                return CheckTimeConstraints();
 
             return false;
         }
 
-        public static bool CheckCapacityConstraints(List<Customer> customers, int vehicleCapacity)
+        public bool CheckCapacityConstraints()
         {
-            return customers.Sum(x => x.Demand) <= vehicleCapacity;
+            return this.Customers.Sum(x => x.Demand) <= this.Vehicle.Capacity;
         }
-
-        public static bool CheckTimeConstraints(List<Customer> customers, Depot depot, List<List<double>> durations)
+        public bool CheckTimeConstraints()
         {
             double arrivalTime = 0;
             Customer previousCustomer = null;
-            arrivalTime += customers.FirstOrDefault().DepotTimeFrom;
-
-            foreach (Customer customer in customers)
+            arrivalTime += Customers.FirstOrDefault().DepotTimeFrom;
+            foreach (Customer customer in Customers)
             {
                 if (previousCustomer != null)
                 {
                     arrivalTime += previousCustomer.ServiceTime;
-                    arrivalTime += previousCustomer.CalculateTimeBetween(durations, customer);
+                    arrivalTime += previousCustomer.CalculateTimeBetween(Durations, customer);
                 }
                 if (arrivalTime < customer.ReadyTime)
                 {
@@ -277,11 +292,13 @@ namespace AlgorithmCoreVRPTW.Models
                 }
                 previousCustomer = customer;
             }
-            arrivalTime += customers.LastOrDefault().ServiceTime;
+            arrivalTime += Customers.LastOrDefault().ServiceTime;
             // czy tu nie trzeba uwzglednic tego jeszcze
-            arrivalTime += customers.LastOrDefault().DepotTimeTo;
+            arrivalTime += Customers.LastOrDefault().DepotTimeTo;
 
-            return arrivalTime <= depot.DueDate;
+            this.Vehicle.CurrentTime = arrivalTime;
+
+            return arrivalTime <= Depot.DueDate;
         }
     }
 }

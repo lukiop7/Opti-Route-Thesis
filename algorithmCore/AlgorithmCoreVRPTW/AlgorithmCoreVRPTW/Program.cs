@@ -69,10 +69,9 @@ namespace AlgorithmCoreVRPTW
 
                 if (solution.Feasible)
                 {
-                    solutionDrawer.DrawSolution(solution, outputSolutionFilePath + Path.GetFileNameWithoutExtension(path) + "\\", "_initial");
-
+                  solutionDrawer.DrawSolution(solution, outputSolutionFilePath + Path.GetFileNameWithoutExtension(path) + "\\", "_initial");
                     solution = solver.Improve(solution);
-                    if (solution.Feasible)
+                    if (solution.Feasible) { }
                         solutionDrawer.DrawSolution(solution, outputSolutionFilePath + Path.GetFileNameWithoutExtension(path) + "\\", "_improved");
                     else
                         Console.WriteLine(path + " IMPROVED");
