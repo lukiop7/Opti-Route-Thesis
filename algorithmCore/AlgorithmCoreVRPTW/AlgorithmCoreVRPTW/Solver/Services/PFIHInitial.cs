@@ -13,7 +13,7 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             List<Customer> unroutedCustomers = new List<Customer>();
             List<Route> routes = new List<Route>();
             unroutedCustomers.AddRange(problem.Customers);
-            CalculateDepotDistances(ref unroutedCustomers, problem.Depot);
+            CalculateDepotDistancesAndTimes(ref unroutedCustomers, problem.Depot, problem.Distances, problem.Durations);
             Construct(problem, unroutedCustomers, routes);
             bool Feasible = routes.Count <= problem.Vehicles;
 
@@ -25,7 +25,8 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             int counter = 0;
             while (unroutedCustomers.Count > 0)
             {
-                Route currentRouteCustomerList = new Route() { Id = counter, Vehicle = new Vehicle(counter, problem.Capacity, 0, 0), Depot = problem.Depot };
+                Route currentRouteCustomerList = new Route() { Id = counter, Vehicle = new Vehicle(counter, problem.Capacity, 0, 0), Depot = problem.Depot, Distances = problem.Distances,
+                Durations = problem.Durations};
                 Customer seedCustomer = FindSeedCustomer(unroutedCustomers);
                 currentRouteCustomerList.AddCustomer(seedCustomer);
                 unroutedCustomers.Remove(seedCustomer);
@@ -75,13 +76,13 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             }
         }
 
-        private void CalculateDepotDistances(ref List<Customer> customers, Depot depot)
+        private void CalculateDepotDistancesAndTimes(ref List<Customer> customers, Depot depot, List<List<double>> distances, List<List<double>> durations)
         {
             foreach (var customer in customers)
             {
-                customer.DepotDistance = customer.CalculateDistanceBetween(depot);
+                customer.CalculateDepotTimesAndDistances(distances, durations, depot);
             }
-            customers = customers.OrderByDescending(x => x.DepotDistance).ToList();
+            customers = customers.OrderByDescending(x => x.DepotDistanceFrom).ToList();
         }
 
         //finds seed customer for new route from given unrouted customers
@@ -92,8 +93,9 @@ namespace AlgorithmCoreVRPTW.Solver.Services
 
             foreach (Customer customer in unroutedCustomerList)
             {
-                double distanceFromDepo = customer.DepotDistance;
-                double cost = CostOfSeedCustomer(distanceFromDepo, customer.ReadyTime);
+                double distanceFromDepo = customer.DepotDistanceFrom;
+                double timeFromDepo = customer.DepotTimeFrom;
+                double cost = CostOfSeedCustomer(distanceFromDepo, timeFromDepo, customer.ReadyTime);
                 if (cost < minCost)
                 {
                     minCost = cost;
@@ -104,11 +106,12 @@ namespace AlgorithmCoreVRPTW.Solver.Services
         }
 
         //calculates cost of customer for selectioning it as seed customer
-        private double CostOfSeedCustomer(double disFromDepo, int latestDeadline)
+        private double CostOfSeedCustomer(double disFromDepo, double timeFromDepo, int latestDeadline)
         {
-            double alpha = 0.7;
-            double beta = 0.3;
-            return alpha * disFromDepo + beta * latestDeadline;
+            double alpha = 0.4;
+            double beta = 0.4;
+            double gamma = 0.2;
+            return alpha * disFromDepo + beta * timeFromDepo + gamma * latestDeadline;
         }
 
         //calculates cost of insertion for given customer in given vehicle route at specific index
