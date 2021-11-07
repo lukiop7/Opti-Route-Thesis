@@ -8,5 +8,7 @@ namespace AlgorithmCoreVRPTW.Models
         public int Capacity { get; set; }
         public Depot Depot { get; set; }
         public List<Customer> Customers { get; } = new List<Customer>();
+        public List<List<double>> Distances { get; set; } = new List<List<double>>();
+        public List<List<double>> Durations { get; set; } = new List<List<double>>();
     }
 }

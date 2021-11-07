@@ -38,6 +38,7 @@ namespace AlgorithmCoreVRPTW.Solver.Services
                 }
             }
         }
+
         private bool TestMergeRoutes(Route routeCustomerA, Route routeCustomerB, Saving saving)
         {
             routeCustomerA.MergeRoutes(routeCustomerB, saving.DistanceBetween);
@@ -47,14 +48,14 @@ namespace AlgorithmCoreVRPTW.Solver.Services
         private void MergeRoutes(Route routeCustomerA, Route routeCustomerB, List<Route> routes, Saving saving)
         {
             routeCustomerA.MergeRoutes(routeCustomerB, saving.DistanceBetween);
-            routes.Remove(routeCustomerB);       
+            routes.Remove(routeCustomerB);
         }
 
         private bool ValidateSaving(Route routeCustomerA, Route routeCustomerB, Saving saving)
         {
             if (ValidateCustomers(routeCustomerA, routeCustomerB, saving))
             {
-                return true;              
+                return true;
             }
 
             return false;
@@ -75,7 +76,6 @@ namespace AlgorithmCoreVRPTW.Solver.Services
                         return false;
                     else
                         return true;
-
                 }
             }
             return false;

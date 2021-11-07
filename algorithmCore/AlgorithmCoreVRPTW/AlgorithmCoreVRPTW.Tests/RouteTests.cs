@@ -1,5 +1,4 @@
 using AlgorithmCoreVRPTW.Models;
-using System;
 using Xunit;
 
 namespace AlgorithmCoreVRPTW.Tests
@@ -9,7 +8,6 @@ namespace AlgorithmCoreVRPTW.Tests
         [Fact]
         public void Test1()
         {
-
         }
     }
 
@@ -17,8 +15,8 @@ namespace AlgorithmCoreVRPTW.Tests
     {
         public RouteFixture()
         {
-
         }
+
         public Route Route { get; set; }
     }
 }

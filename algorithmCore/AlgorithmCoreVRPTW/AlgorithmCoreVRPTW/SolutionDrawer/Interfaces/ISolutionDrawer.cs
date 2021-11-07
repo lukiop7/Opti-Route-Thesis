@@ -5,6 +5,6 @@ namespace OptiRoute.Shared.SolutionDrawer
 {
     public interface ISolutionDrawer
     {
-        DrawSolutionResponseDto DrawSolution(Solution solution, string path);
+        DrawSolutionResponseDto DrawSolution(Solution solution, string path, string word);
     }
 }

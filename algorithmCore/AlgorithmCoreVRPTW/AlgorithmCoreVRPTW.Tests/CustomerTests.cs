@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AlgorithmCoreVRPTW.Tests
+﻿namespace AlgorithmCoreVRPTW.Tests
 {
-    class CustomerTests
+    public class CustomerTests
     {
     }
 }
