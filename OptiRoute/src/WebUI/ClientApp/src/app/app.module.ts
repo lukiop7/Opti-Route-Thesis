@@ -5,7 +5,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
-
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -19,6 +18,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { AppRoutingModule } from './app-routing.module';
 import { TokenComponent } from './token/token.component';
 import { MapComponent } from './map/map.component';
+import {SharedModule} from '../shared/shared.module';
+import { MapSidebarComponent } from './map-sidebar/map-sidebar.component';
+import { MapLayoutComponent } from './map-layout/map-layout.component';
+import {MapService} from './services/map.service';
+import {OsrmService} from './services/osrm.service';
 
 
 
@@ -31,7 +35,9 @@ import { MapComponent } from './map/map.component';
     FetchDataComponent,
     TodoComponent,
     TokenComponent,
-    MapComponent
+    MapComponent,
+    MapSidebarComponent,
+    MapLayoutComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -42,10 +48,14 @@ import { MapComponent } from './map/map.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     ModalModule.forRoot(),
-    LeafletModule
+    LeafletModule,
+    SharedModule,
+    FontAwesomeModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+    MapService,
+    OsrmService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,22 @@
-<h1>Mapa</h1>
-<div style="height: 300px;"
-     leaflet
-     [leafletOptions]="options">
+<div id="map" leaflet
+         [leafletOptions]="options"
+         [leafletLayers]="allLayers"
+         (leafletMapReady)="onMapReady($event)">
 </div>
+<!--<div class="card-body">-->
+<!--  <div class="row">-->
+<!--    <form class="col">-->
+<!--&lt;!&ndash;      <button type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;              class="btn btn-primary m-1"&ndash;&gt;-->
+<!--&lt;!&ndash;              (click)="removeMarker()">Remove Marker&ndash;&gt;-->
+<!--&lt;!&ndash;      </button>&ndash;&gt;-->
+<!--      <button type="button"-->
+<!--              class="btn btn-primary m-1"-->
+<!--              (click)="connectMarkers()">Connect Markers-->
+<!--      </button>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--  <div class="row">-->
+<!--    <label class="col col-form-label">{{allLayers?.length}} Markers</label>-->
+<!--  </div>-->
+<!--</div>-->
