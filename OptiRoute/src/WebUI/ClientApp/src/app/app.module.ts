@@ -19,6 +19,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { AppRoutingModule } from './app-routing.module';
 import { TokenComponent } from './token/token.component';
 import { MapComponent } from './map/map.component';
+import {SharedModule} from '../shared/shared.module';
+import { MapSidebarComponent } from './map-sidebar/map-sidebar.component';
+import { MapLayoutComponent } from './map-layout/map-layout.component';
+import {MapService} from './services/map.service';
 
 
 
@@ -31,7 +35,9 @@ import { MapComponent } from './map/map.component';
     FetchDataComponent,
     TodoComponent,
     TokenComponent,
-    MapComponent
+    MapComponent,
+    MapSidebarComponent,
+    MapLayoutComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -42,10 +48,12 @@ import { MapComponent } from './map/map.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     ModalModule.forRoot(),
-    LeafletModule
+    LeafletModule,
+    SharedModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+    MapService
   ],
   bootstrap: [AppComponent]
 })
