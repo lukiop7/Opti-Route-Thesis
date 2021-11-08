@@ -15,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using System.Linq;
+using AlgorithmCoreVRPTW.Solver.Interfaces;
+using AlgorithmCoreVRPTW.Solver.Services;
 
 namespace OptiRoute.WebUI
 {
@@ -36,6 +38,7 @@ namespace OptiRoute.WebUI
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddSingleton<ISolver, VRPTWSolver>();
 
             services.AddHttpContextAccessor();
 

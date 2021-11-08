@@ -6,6 +6,38 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/CVRPTW": {
+      "post": {
+        "tags": [
+          "CVRPTW"
+        ],
+        "operationId": "CVRPTW_GetSolution",
+        "requestBody": {
+          "x-name": "problem",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProblemViewModel"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolutionViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/TodoItems": {
       "get": {
         "tags": [
@@ -440,6 +472,147 @@
   },
   "components": {
     "schemas": {
+      "SolutionViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "feasible": {
+            "type": "boolean"
+          },
+          "routes": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/RouteViewModel"
+            }
+          },
+          "distance": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "RouteViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "customers": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "ProblemViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "vehicles": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "capacity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "depot": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DepotViewModel"
+              }
+            ]
+          },
+          "customers": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CustomerViewModel"
+            }
+          },
+          "distances": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "format": "double"
+              }
+            }
+          },
+          "durations": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "format": "double"
+              }
+            }
+          }
+        }
+      },
+      "DepotViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "y": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dueDate": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CustomerViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "y": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "demand": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "readyTime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dueDate": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "serviceTime": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "PaginatedListOfTodoItemDto": {
         "type": "object",
         "additionalProperties": false,

@@ -20,6 +20,7 @@ import {Subscription} from 'rxjs';
 import 'leaflet';
 import 'leaflet-routing-machine';
 import {OsrmService} from '../services/osrm.service';
+
 declare let L;
 
 @Component({
@@ -38,11 +39,13 @@ export class MapComponent implements OnInit, OnDestroy {
       tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'})
     ],
     zoom: 5,
-    center: latLng( 50.276093992810296, 18.93446445465088)
+    center: latLng(50.276093992810296, 18.93446445465088)
   };
   map: lMap;
   counter = 0;
-
+  path: any;
+  colors: string[] = ['blue', 'red', 'green'];
+  colorsCounter = 0;
 
   constructor(private changeDetector: ChangeDetectorRef, private _mapService: MapService, private _osrmService: OsrmService) {
   }
@@ -52,20 +55,25 @@ export class MapComponent implements OnInit, OnDestroy {
       this.allLayers = markers;
       this.changeDetector.detectChanges();
     });
-    this._pathsSubscription = this._mapService.getPaths().subscribe((paths: LatLng[]) => {
-      this._osrmService.getDistancesAndDurationsTable(paths);
-     // const routeControl = L.Routing.control({
-     //    waypoints: paths,
-     //    routeWhileDragging: false,
-     //    lineOptions: {
-     //      styles: [{color: 'blue', opacity: 1, weight: 5}]
-     //    }
-     //  }).addTo(this.map);
-     //  // this.pathLayers.push(paths);
-     //  routeControl.on('routesfound', function(e) {
-     //    const routes = e.routes;
-     //    const summary = routes[0].summary;
-     //  });
+    this._pathsSubscription = this._mapService.getPaths().subscribe((paths: LatLng[][]) => {
+      this.colorsCounter = 0;
+
+      paths.forEach(path => {
+        const routeControl = L.Routing.control({
+          waypoints: path,
+          routeWhileDragging: false,
+          lineOptions: {
+            styles: [{color: this.colors[this.colorsCounter++], opacity: 1, weight: 5}]
+          }
+        }).addTo(this.map);
+
+      });
+
+      // // this.pathLayers.push(paths);
+      // routeControl.on('routesfound', function(e) {
+      //   const routes = e.routes;
+      //   const summary = routes[0].summary;
+      // });
     });
   }
 
