@@ -1,18 +1,22 @@
-<div class="anyClass">
-  <div class="card h-100">
-    <div class="card-header">
-      <h2 class="text-center">Customers</h2>
+<div class="h-100 w-100 sidebar">
+  <ng-container  [formGroup]="vrptwForm" [ngSwitch]="viewCounter">
+    <div class="h-100 w-100" @fadeSlideInOut>
+      <app-map-sidebar-getting-started *ngSwitchCase="0"
+                                       (continueClicked)="viewShown()"></app-map-sidebar-getting-started>
+      <app-map-sidebar-problem-info [group]="vrptwForm.controls.problemInfo" *ngSwitchCase="1" (continueClicked)="viewShown()"></app-map-sidebar-problem-info>
+      <app-map-sidebar-depot *ngSwitchCase="2" (continueClicked)="viewShown()"></app-map-sidebar-depot>
+      <app-map-sidebar-customers *ngSwitchCase="3"></app-map-sidebar-customers>
     </div>
-    <div class="h-100 hidden-scroll">
-      <div *ngFor="let customer of customers">
-        <app-marker-details [customer]="customer" (closed)="removeCustomer($event)"></app-marker-details>
-      </div>
-    </div>
-    <div class="card-footer">
-      <button class="btn-primary w-100" (click)="onClick()">
-        Solve
-      </button>
-    </div>
-  </div>
+  </ng-container>
 </div>
+
+
+<!--      <ng-container [formGroup]="vrptwForm">-->
+
+<!--  </ng-container>-->
+<!--  <div class="h-100 w-100" *ngIf="firstShow; else gettingStarted" @fadeSlideInOut>-->
+<!--   -->
+<!--  </div>-->
+<!--  <ng-template class="h-100 w-100" #gettingStarted>-->
+<!--  </ng-template>-->
 

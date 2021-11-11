@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MarkerDetailsComponent } from './components/marker-details/marker-details.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {TimepickerModule} from 'ngx-bootstrap/timepicker';
+import {FormsModule} from '@angular/forms';
 
 
 
@@ -14,7 +16,9 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
   ],
   imports: [
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    TimepickerModule.forRoot(),
+    FormsModule
   ]
 })
 export class SharedModule { }

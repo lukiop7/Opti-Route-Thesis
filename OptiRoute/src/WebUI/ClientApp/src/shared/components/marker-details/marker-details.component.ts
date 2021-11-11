@@ -13,12 +13,14 @@ export class MarkerDetailsComponent implements OnInit {
   @Output()
   public closed = new EventEmitter<Customer>();
 
+  public time: Date;
   public faTimes = faTimes;
 
   constructor() {
   }
 
   ngOnInit(): void {
+    this.time = new Date();
   }
 
   closeOnClick() {

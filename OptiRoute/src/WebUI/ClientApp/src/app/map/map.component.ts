@@ -12,7 +12,7 @@ import {
   popup,
   Polyline,
   Marker,
-  Polygon
+  Zoom, control
 } from 'leaflet';
 import {MapService} from '../services/map.service';
 import {Subscription} from 'rxjs';
@@ -20,6 +20,7 @@ import {Subscription} from 'rxjs';
 import 'leaflet';
 import 'leaflet-routing-machine';
 import {OsrmService} from '../services/osrm.service';
+import zoom = control.zoom;
 
 declare let L;
 
@@ -39,8 +40,10 @@ export class MapComponent implements OnInit, OnDestroy {
       tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'})
     ],
     zoom: 5,
-    center: latLng(50.276093992810296, 18.93446445465088)
+    center: latLng(50.276093992810296, 18.93446445465088),
+    zoomControl: false
   };
+
   map: lMap;
   counter = 0;
   path: any;
@@ -51,8 +54,10 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
     this._markersSubscription = this._mapService.getMarkers().subscribe((markers: Marker[]) => {
       this.allLayers = markers;
+      this.refreshToolTips();
       this.changeDetector.detectChanges();
     });
     this._pathsSubscription = this._mapService.getPaths().subscribe((paths: LatLng[][]) => {
@@ -68,6 +73,7 @@ export class MapComponent implements OnInit, OnDestroy {
         }).addTo(this.map);
 
       });
+
 
       // // this.pathLayers.push(paths);
       // routeControl.on('routesfound', function(e) {
@@ -88,22 +94,39 @@ export class MapComponent implements OnInit, OnDestroy {
       this.addMarker(e.latlng);
       this.changeDetector.detectChanges();
     });
+    this.map.addControl(zoom({
+      position: 'bottomright'
+    }));
   }
 
   addMarker(latlng: LatLng) {
     const newMarker = marker(
       [latlng.lat, latlng.lng],
       {
-        icon: icon({
-          iconSize: [25, 41],
-          iconAnchor: [13, 41],
-          iconUrl: 'leaflet/marker-icon.png',
-          shadowUrl: 'leaflet/marker-shadow.png'
-        })
+        icon:
+          icon({
+            iconSize: [25, 41],
+            iconAnchor: [13, 41],
+            iconUrl: 'leaflet/marker-icon.png',
+            shadowUrl: 'leaflet/marker-shadow.png'
+          })
+      });
+    newMarker.bindTooltip(`${this.allLayers.length + 1}`,
+      {
+        permanent: true,
+        direction: 'center'
       }
     );
     this._mapService.addMarker(newMarker);
   }
+
+  refreshToolTips() {
+    for (let i = 0; i < this.allLayers.length; i++) {
+      const marker = this.allLayers[i];
+      marker.getTooltip().setContent(`${i + 1}`);
+    }
+  }
+
 
   // removeMarker() {
   //   const marker = this.markers[this.markers.length - 1];

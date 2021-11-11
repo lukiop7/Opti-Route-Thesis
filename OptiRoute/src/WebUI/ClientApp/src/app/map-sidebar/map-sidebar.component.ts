@@ -1,38 +1,59 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {MapCustomer} from '../../shared/models/mapCustomer';
 import {Customer} from '../../shared/models/customer';
 import {Observable, Subscription} from 'rxjs';
 import {Marker} from 'leaflet';
 import {MapService} from '../services/map.service';
+import {animate, style, transition, trigger} from '@angular/animations';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-map-sidebar',
   templateUrl: './map-sidebar.component.html',
-  styleUrls: ['./map-sidebar.component.scss']
+  styleUrls: ['./map-sidebar.component.scss'],
+  animations: [
+    trigger('fadeSlideInOut', [
+      transition(':enter', [
+        style({opacity: 0, transform: 'translateX(10px)'}),
+        animate('500ms', style({opacity: 1, transform: 'translateX(0)'})),
+      ]),
+      transition(':leave', [
+        animate('500ms', style({opacity: 0, transform: 'translateX(10px)'})),
+      ]),
+    ]),
+  ],
+  encapsulation: ViewEncapsulation.None
 })
 export class MapSidebarComponent implements OnInit, OnDestroy {
-  private _subscription: Subscription;
-  customers: Customer[] = [];
 
-  constructor(private changeDetector: ChangeDetectorRef, private _mapService: MapService) {
+  public firstShow = false;
+  public vrptwForm: FormGroup;
+  public viewCounter = 0;
+
+  constructor(private changeDetector: ChangeDetectorRef, private _mapService: MapService, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
-    this._subscription = this._mapService.getCustomers().subscribe((customers: Customer[]) => {
-      this.customers = customers;
-      this.changeDetector.detectChanges();
-    });
+    this.initializeForm();
   }
 
   ngOnDestroy(): void {
-    this._subscription.unsubscribe();
   }
 
-  onClick() {
-    this._mapService.connectMarkers();
+  viewShown() {
+    this.viewCounter++;
   }
 
-  removeCustomer(customer: Customer) {
-    this._mapService.removeCustomer(customer);
+  initializeForm() {
+    this.vrptwForm = this.fb.group({
+      problemInfo: this.fb.group({
+        vehicles: ['',Validators.required],
+        capacity: ['',Validators.required]
+      }),
+      depotInfo: this.fb.group({
+        dueDate: []
+      }),
+      customersInfo: this.fb.array([])
+    });
   }
 }
