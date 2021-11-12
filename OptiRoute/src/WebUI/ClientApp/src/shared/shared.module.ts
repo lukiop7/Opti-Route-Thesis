@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MarkerDetailsComponent } from './components/marker-details/marker-details.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {TimepickerModule} from 'ngx-bootstrap/timepicker';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 
@@ -18,7 +18,8 @@ import {FormsModule} from '@angular/forms';
     CommonModule,
     FontAwesomeModule,
     TimepickerModule.forRoot(),
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule { }

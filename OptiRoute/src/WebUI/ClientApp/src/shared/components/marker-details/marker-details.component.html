@@ -2,7 +2,22 @@
   <button type="button" class="close close-button" aria-label="Close" (click)="closeOnClick()">
     <fa-icon [icon]="faTimes" class="fa-sm"></fa-icon>
   </button>
-  <input type="time" [(ngModel)]="time" >
-  <p class="card-text">Lat: {{customer.lat}}</p>
-  <p class="card-text">Lng: {{customer.lng}}</p>
+  <div [formGroup]="customerInfoForm">
+    <input type="time" [(ngModel)]="readyTime" formControlName="readyTime">
+    <small [hidden]="customerInfoForm.controls.readyTime.valid">
+      readyTime is required
+    </small>
+    <input type="time" [(ngModel)]="dueDate" formControlName="dueDate">
+    <small [hidden]="customerInfoForm.controls.dueDate.valid">
+      dueDate is required
+    </small>
+    <input type="time" [(ngModel)]="serviceTime" formControlName="serviceTime">
+    <small [hidden]="customerInfoForm.controls.serviceTime.valid">
+      serviceTime is required
+    </small>
+    <input type="text" [(ngModel)]="demand" formControlName="demand">
+    <small [hidden]="customerInfoForm.controls.demand.valid">
+      demand is required
+    </small>
+  </div>
 </div>

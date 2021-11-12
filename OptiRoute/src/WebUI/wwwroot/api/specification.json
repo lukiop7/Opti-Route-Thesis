@@ -574,8 +574,8 @@
             "format": "int32"
           },
           "dueDate": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -600,16 +600,16 @@
             "format": "int32"
           },
           "readyTime": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "date-time"
           },
           "dueDate": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "date-time"
           },
           "serviceTime": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "date-time"
           }
         }
       },

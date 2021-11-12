@@ -14,10 +14,11 @@ namespace OptiRoute.Application.CVRPTW.ViewModels
         public int Id { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public int DueDate { get; set; }
+        public DateTime DueDate { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<DepotViewModel, Depot>();
+            profile.CreateMap<DepotViewModel, Depot>()
+                .ForMember(dest=> dest.DueDate, opt=> opt.MapFrom(src=> src.DueDate.TimeOfDay.TotalSeconds));
         }
     }
 }

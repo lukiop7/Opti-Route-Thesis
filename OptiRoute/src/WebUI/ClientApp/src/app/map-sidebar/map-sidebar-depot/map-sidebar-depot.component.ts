@@ -1,4 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-map-sidebar-depot',
@@ -6,12 +7,14 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
   styleUrls: ['./map-sidebar-depot.component.scss']
 })
 export class MapSidebarDepotComponent implements OnInit {
-
+  @Input('group')
+  public depotInfoForm: FormGroup;
   @Output() continueClicked = new EventEmitter<void>();
-
+  public time: Date;
   constructor() { }
 
   ngOnInit(): void {
+    this.time = new Date();
   }
 
   onClick() {

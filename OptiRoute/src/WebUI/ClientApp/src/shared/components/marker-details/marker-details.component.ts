@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {Customer} from '../../models/customer';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-marker-details',
@@ -10,17 +11,24 @@ import {faTimes} from '@fortawesome/free-solid-svg-icons';
 export class MarkerDetailsComponent implements OnInit {
   @Input()
   public customer: Customer;
+  @Input('group')
+  public customerInfoForm: FormGroup;
   @Output()
   public closed = new EventEmitter<Customer>();
 
-  public time: Date;
+  public dueDate: Date;
+  public readyTime: Date;
+  public serviceTime: Date;
+  public demand = 0;
   public faTimes = faTimes;
 
   constructor() {
   }
 
   ngOnInit(): void {
-    this.time = new Date();
+    this.dueDate = new Date();
+    this.readyTime = new Date();
+    this.serviceTime = new Date();
   }
 
   closeOnClick() {

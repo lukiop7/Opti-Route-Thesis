@@ -7,6 +7,7 @@ import {Observable, Subject} from 'rxjs';
 import {CustomerViewModel, CVRPTWClient, DepotViewModel, ProblemViewModel, SolutionViewModel} from '../web-api-client';
 import {OsrmService} from './osrm.service';
 import {IDistDur} from '../../shared/models/osrmTableResponse';
+import {FormGroup} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -51,31 +52,34 @@ export class MapService {
     this._markersSubject.next(this._mapCustomers.map(c => c.marker));
   }
 
-  async connectMarkers() {
+  async connectMarkers(data) {
+    console.log('siema');
+    console.log(data);
     const coordinated = this._mapCustomers.map(c => c.marker.getLatLng());
+    console.log(this._mapCustomers);
     const distDur = await this._osrmService.getDistancesAndDurationsTable(coordinated).toPromise();
     const customers: CustomerViewModel[] = [];
     let time = 0;
+    const today = new Date();
     for (let i = 1; i < coordinated.length; i++) {
       customers.push(CustomerViewModel.fromJS({
         id: i,
         x: Math.floor(coordinated[i].lng),
         y: Math.floor(coordinated[i].lat),
-        demand: 1,
-        readyTime: time,
-        dueDate: time + 600,
-        serviceTime: 300
+        demand: data.customersInfoForm.customersInfo[i - 1].demand,
+        readyTime: new Date(today.toDateString() + ' ' + data.customersInfoForm.customersInfo[i - 1].readyTime),
+        dueDate: new Date(today.toDateString() + ' ' + data.customersInfoForm.customersInfo[i - 1].dueDate),
+        serviceTime: new Date(today.toDateString() + ' ' + data.customersInfoForm.customersInfo[i - 1].serviceTime)
       }));
-      time = time + 600;
     }
     const problem = ProblemViewModel.fromJS({
-      vehicles: 3,
-      capacity: 3,
+      vehicles: data.vehicles,
+      capacity: data.capacity,
       depot: DepotViewModel.fromJS({
         id: 0,
         x: Math.floor(coordinated[0].lng),
         y: Math.floor(coordinated[0].lat),
-        dueDate: (coordinated.length - 1) * 600
+        dueDate: new Date(today.toDateString() + ' ' + data.depotInfo.dueDate),
       }),
       customers: customers,
       distances: distDur.distances,

@@ -51,9 +51,17 @@ export class MapSidebarComponent implements OnInit, OnDestroy {
         capacity: ['',Validators.required]
       }),
       depotInfo: this.fb.group({
-        dueDate: []
+        dueDate: [new Date(), Validators.required]
       }),
-      customersInfo: this.fb.array([])
+      customersInfoForm: this.fb.group({
+          customersInfo: this.fb.array([])
+        }
+      )
     });
+  }
+
+  submitted(data){
+    this._mapService.connectMarkers(data);
+    console.log(data);
   }
 }

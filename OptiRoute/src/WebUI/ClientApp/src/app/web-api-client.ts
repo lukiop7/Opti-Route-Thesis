@@ -897,7 +897,7 @@ export class DepotViewModel implements IDepotViewModel {
     id?: number;
     x?: number;
     y?: number;
-    dueDate?: number;
+    dueDate?: Date;
 
     constructor(data?: IDepotViewModel) {
         if (data) {
@@ -913,7 +913,7 @@ export class DepotViewModel implements IDepotViewModel {
             this.id = _data["id"];
             this.x = _data["x"];
             this.y = _data["y"];
-            this.dueDate = _data["dueDate"];
+            this.dueDate = _data["dueDate"] ? new Date(_data["dueDate"].toString()) : <any>undefined;
         }
     }
 
@@ -929,7 +929,7 @@ export class DepotViewModel implements IDepotViewModel {
         data["id"] = this.id;
         data["x"] = this.x;
         data["y"] = this.y;
-        data["dueDate"] = this.dueDate;
+        data["dueDate"] = this.dueDate ? this.dueDate.toISOString() : <any>undefined;
         return data; 
     }
 }
@@ -938,7 +938,7 @@ export interface IDepotViewModel {
     id?: number;
     x?: number;
     y?: number;
-    dueDate?: number;
+    dueDate?: Date;
 }
 
 export class CustomerViewModel implements ICustomerViewModel {
@@ -946,9 +946,9 @@ export class CustomerViewModel implements ICustomerViewModel {
     x?: number;
     y?: number;
     demand?: number;
-    readyTime?: number;
-    dueDate?: number;
-    serviceTime?: number;
+    readyTime?: Date;
+    dueDate?: Date;
+    serviceTime?: Date;
 
     constructor(data?: ICustomerViewModel) {
         if (data) {
@@ -965,9 +965,9 @@ export class CustomerViewModel implements ICustomerViewModel {
             this.x = _data["x"];
             this.y = _data["y"];
             this.demand = _data["demand"];
-            this.readyTime = _data["readyTime"];
-            this.dueDate = _data["dueDate"];
-            this.serviceTime = _data["serviceTime"];
+            this.readyTime = _data["readyTime"] ? new Date(_data["readyTime"].toString()) : <any>undefined;
+            this.dueDate = _data["dueDate"] ? new Date(_data["dueDate"].toString()) : <any>undefined;
+            this.serviceTime = _data["serviceTime"] ? new Date(_data["serviceTime"].toString()) : <any>undefined;
         }
     }
 
@@ -984,9 +984,9 @@ export class CustomerViewModel implements ICustomerViewModel {
         data["x"] = this.x;
         data["y"] = this.y;
         data["demand"] = this.demand;
-        data["readyTime"] = this.readyTime;
-        data["dueDate"] = this.dueDate;
-        data["serviceTime"] = this.serviceTime;
+        data["readyTime"] = this.readyTime ? this.readyTime.toISOString() : <any>undefined;
+        data["dueDate"] = this.dueDate ? this.dueDate.toISOString() : <any>undefined;
+        data["serviceTime"] = this.serviceTime ? this.serviceTime.toISOString() : <any>undefined;
         return data; 
     }
 }
@@ -996,9 +996,9 @@ export interface ICustomerViewModel {
     x?: number;
     y?: number;
     demand?: number;
-    readyTime?: number;
-    dueDate?: number;
-    serviceTime?: number;
+    readyTime?: Date;
+    dueDate?: Date;
+    serviceTime?: Date;
 }
 
 export class PaginatedListOfTodoItemDto implements IPaginatedListOfTodoItemDto {
