@@ -1,0 +1,18 @@
+[0] Config.pm:311> INFO - This is Biber 2.16
+[0] Config.pm:314> INFO - Logfile is 'BSc_thesis_Informatics.blg'
+[334] biber-MSWIN64:340> INFO - === 
+[481] Biber.pm:415> INFO - Reading 'BSc_thesis_Informatics.bcf'
+[838] Biber.pm:952> INFO - Found 5 citekeys in bib section 0
+[876] Biber.pm:4340> INFO - Processing section 0
+[903] Biber.pm:4531> INFO - Looking for bibtex format file 'refs.bib' for section 0
+[1073] bibtex.pm:1689> INFO - LaTeX decoding ...
+[1088] bibtex.pm:1494> INFO - Found BibTeX data source 'refs.bib'
+[1196] Utils.pm:395> WARN - I didn't find a database entry for 'bib:article' (section 0)
+[1196] Utils.pm:395> WARN - I didn't find a database entry for 'bib:book' (section 0)
+[1229] UCollate.pm:68> INFO - Overriding locale 'en-GB' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1229] UCollate.pm:68> INFO - Overriding locale 'en-GB' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1230] Biber.pm:4168> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-GB'
+[1230] Biber.pm:4174> INFO - No sort tailoring available for locale 'en-GB'
+[1246] bbl.pm:654> INFO - Writing 'BSc_thesis_Informatics.bbl' with encoding 'UTF-8'
+[1253] bbl.pm:757> INFO - Output to BSc_thesis_Informatics.bbl
+[1254] Biber.pm:128> INFO - WARNINGS: 2
