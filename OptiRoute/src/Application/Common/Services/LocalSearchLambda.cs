@@ -120,13 +120,6 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             bool feasible = true;
             Random random = new Random();
 
-            Interchange(firstRoute, secondRoute, ref operator1, ref feasible, random);
-            Interchange(secondRoute, firstRoute, ref operator2, ref feasible, random);
-            return feasible;
-        }
-
-        private void Interchange(Route firstRoute, Route secondRoute, ref int operator1, ref bool feasible, Random random)
-        {
             while (operator1 != 0 && feasible)
             {
                 if (firstRoute.Customers.Count - 2 < 1)
@@ -157,6 +150,39 @@ namespace AlgorithmCoreVRPTW.Solver.Services
                 }
                 operator1--;
             }
+
+            while (operator2 != 0 && feasible)
+            {
+                if (secondRoute.Customers.Count - 2 < 1)
+                {
+                    feasible = false;
+                    break;
+                }
+                int rand2 = random.Next(1, secondRoute.Customers.Count - 1);
+                Customer secondRouteCustomer = secondRoute.Customers[rand2];
+                secondRoute.DeleteCustomer(secondRouteCustomer);
+
+                for (int firstRouteCustomerIndex = 0; firstRouteCustomerIndex <= firstRoute.Customers.Count; firstRouteCustomerIndex++)
+                {
+                    firstRoute.AddCustomer(secondRouteCustomer, firstRouteCustomerIndex);
+                    feasible = firstRoute.IsFeasible();
+                    if (feasible)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        firstRoute.DeleteCustomer(secondRouteCustomer);
+                    }
+                }
+                if (!feasible)
+                {
+                    secondRoute.AddCustomer(secondRouteCustomer, rand2);
+                }
+
+                operator2--;
+            }
+            return feasible;
         }
     }
 }

@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OptiRoute.Application.CVRPTW.ViewModels
+namespace OptiRoute.Application.CVRPTW.Dtos
 {
-  public  class CustomerViewModel : IMapFrom<Customer>
+  public  class CustomerDto : IMapFrom<Customer>
     {
         public int Id { get; set; }
         public int X { get; set; }
@@ -20,10 +20,11 @@ namespace OptiRoute.Application.CVRPTW.ViewModels
         public DateTime ServiceTime { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CustomerViewModel, Customer>()
+            profile.CreateMap<CustomerDto, Customer>()
                      .ForMember(dest => dest.DueDate, opt => opt.MapFrom(src => src.DueDate.TimeOfDay.TotalSeconds))
                  .ForMember(dest => dest.ReadyTime, opt => opt.MapFrom(src => src.ReadyTime.TimeOfDay.TotalSeconds))
-                 .ForMember(dest => dest.ServiceTime, opt => opt.MapFrom(src => src.ServiceTime.TimeOfDay.TotalSeconds)); 
+                 .ForMember(dest => dest.ServiceTime, opt => opt.MapFrom(src => src.ServiceTime.TimeOfDay.TotalSeconds))
+                 .ReverseMap(); 
         }
     }
 }

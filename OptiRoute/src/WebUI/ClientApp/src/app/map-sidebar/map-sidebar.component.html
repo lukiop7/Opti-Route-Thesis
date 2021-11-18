@@ -6,7 +6,7 @@
       <app-map-sidebar-problem-info [group]="vrptwForm.controls.problemInfo" *ngSwitchCase="1" (continueClicked)="viewShown()"></app-map-sidebar-problem-info>
       <app-map-sidebar-depot [group]="vrptwForm.controls.depotInfo" *ngSwitchCase="2" (continueClicked)="viewShown()"></app-map-sidebar-depot>
       <app-map-sidebar-customers [group]="vrptwForm.controls.customersInfoForm"  *ngSwitchCase="3"></app-map-sidebar-customers>
-      <button class="btn-primary w-100" type="submit">
+      <button class="btn-primary w-100" type="submit" [disabled]="!vrptwForm.valid">
         submit
       </button>
     </div>

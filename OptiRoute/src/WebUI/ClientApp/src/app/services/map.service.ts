@@ -4,7 +4,12 @@ import {Customer} from '../../shared/models/customer';
 import {LatLng, Marker, Polygon} from 'leaflet';
 import {removeItem} from '../../shared/utils/removeItem';
 import {Observable, Subject} from 'rxjs';
-import {CustomerViewModel, CVRPTWClient, DepotViewModel, ProblemViewModel, SolutionViewModel} from '../web-api-client';
+import {
+  CustomerDto,
+  CVRPTWClient,
+  DepotDto,
+  ProblemDto,
+} from '../web-api-client';
 import {OsrmService} from './osrm.service';
 import {IDistDur} from '../../shared/models/osrmTableResponse';
 import {FormGroup} from '@angular/forms';
@@ -58,11 +63,14 @@ export class MapService {
     const coordinated = this._mapCustomers.map(c => c.marker.getLatLng());
     console.log(this._mapCustomers);
     const distDur = await this._osrmService.getDistancesAndDurationsTable(coordinated).toPromise();
-    const customers: CustomerViewModel[] = [];
+    const customers: CustomerDto[] = [];
     let time = 0;
     const today = new Date();
+    today.setDate(today.getDate() - 1);
     for (let i = 1; i < coordinated.length; i++) {
-      customers.push(CustomerViewModel.fromJS({
+      console.log(today.toDateString());
+      console.log(new Date(today.toDateString() + ' ' + data.customersInfoForm.customersInfo[i - 1].readyTime));
+      customers.push(CustomerDto.fromJS({
         id: i,
         x: Math.floor(coordinated[i].lng),
         y: Math.floor(coordinated[i].lat),
@@ -72,10 +80,10 @@ export class MapService {
         serviceTime: new Date(today.toDateString() + ' ' + data.customersInfoForm.customersInfo[i - 1].serviceTime)
       }));
     }
-    const problem = ProblemViewModel.fromJS({
-      vehicles: data.vehicles,
-      capacity: data.capacity,
-      depot: DepotViewModel.fromJS({
+    const problem = ProblemDto.fromJS({
+      vehicles: data.problemInfo.vehicles,
+      capacity: data.problemInfo.capacity,
+      depot: DepotDto.fromJS({
         id: 0,
         x: Math.floor(coordinated[0].lng),
         y: Math.floor(coordinated[0].lat),

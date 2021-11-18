@@ -38,7 +38,6 @@ namespace OptiRoute.WebUI
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
-            services.AddSingleton<ISolver, VRPTWSolver>();
 
             services.AddHttpContextAccessor();
 

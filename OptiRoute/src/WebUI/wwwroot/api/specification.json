@@ -17,7 +17,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProblemViewModel"
+                "$ref": "#/components/schemas/ProblemDto"
               }
             }
           },
@@ -30,7 +30,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SolutionViewModel"
+                  "$ref": "#/components/schemas/SolutionDto"
                 }
               }
             }
@@ -472,7 +472,7 @@
   },
   "components": {
     "schemas": {
-      "SolutionViewModel": {
+      "SolutionDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -483,7 +483,7 @@
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/RouteViewModel"
+              "$ref": "#/components/schemas/RouteDto"
             }
           },
           "distance": {
@@ -492,7 +492,7 @@
           }
         }
       },
-      "RouteViewModel": {
+      "RouteDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -506,7 +506,7 @@
           }
         }
       },
-      "ProblemViewModel": {
+      "ProblemDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -522,7 +522,7 @@
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/DepotViewModel"
+                "$ref": "#/components/schemas/DepotDto"
               }
             ]
           },
@@ -530,7 +530,7 @@
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/CustomerViewModel"
+              "$ref": "#/components/schemas/CustomerDto"
             }
           },
           "distances": {
@@ -557,7 +557,7 @@
           }
         }
       },
-      "DepotViewModel": {
+      "DepotDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -579,7 +579,7 @@
           }
         }
       },
-      "CustomerViewModel": {
+      "CustomerDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {

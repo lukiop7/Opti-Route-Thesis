@@ -15,7 +15,7 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface ICVRPTWClient {
-    getSolution(problem: ProblemViewModel): Observable<SolutionViewModel>;
+    getSolution(problem: ProblemDto): Observable<SolutionDto>;
 }
 
 @Injectable({
@@ -31,7 +31,7 @@ export class CVRPTWClient implements ICVRPTWClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getSolution(problem: ProblemViewModel): Observable<SolutionViewModel> {
+    getSolution(problem: ProblemDto): Observable<SolutionDto> {
         let url_ = this.baseUrl + "/api/CVRPTW";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -54,14 +54,14 @@ export class CVRPTWClient implements ICVRPTWClient {
                 try {
                     return this.processGetSolution(<any>response_);
                 } catch (e) {
-                    return <Observable<SolutionViewModel>><any>_observableThrow(e);
+                    return <Observable<SolutionDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<SolutionViewModel>><any>_observableThrow(response_);
+                return <Observable<SolutionDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetSolution(response: HttpResponseBase): Observable<SolutionViewModel> {
+    protected processGetSolution(response: HttpResponseBase): Observable<SolutionDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -72,7 +72,7 @@ export class CVRPTWClient implements ICVRPTWClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = SolutionViewModel.fromJS(resultData200);
+            result200 = SolutionDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -80,7 +80,7 @@ export class CVRPTWClient implements ICVRPTWClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<SolutionViewModel>(<any>null);
+        return _observableOf<SolutionDto>(<any>null);
     }
 }
 
@@ -717,12 +717,12 @@ export class WeatherForecastClient implements IWeatherForecastClient {
     }
 }
 
-export class SolutionViewModel implements ISolutionViewModel {
+export class SolutionDto implements ISolutionDto {
     feasible?: boolean;
-    routes?: RouteViewModel[] | undefined;
+    routes?: RouteDto[] | undefined;
     distance?: number;
 
-    constructor(data?: ISolutionViewModel) {
+    constructor(data?: ISolutionDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -737,15 +737,15 @@ export class SolutionViewModel implements ISolutionViewModel {
             if (Array.isArray(_data["routes"])) {
                 this.routes = [] as any;
                 for (let item of _data["routes"])
-                    this.routes!.push(RouteViewModel.fromJS(item));
+                    this.routes!.push(RouteDto.fromJS(item));
             }
             this.distance = _data["distance"];
         }
     }
 
-    static fromJS(data: any): SolutionViewModel {
+    static fromJS(data: any): SolutionDto {
         data = typeof data === 'object' ? data : {};
-        let result = new SolutionViewModel();
+        let result = new SolutionDto();
         result.init(data);
         return result;
     }
@@ -763,16 +763,16 @@ export class SolutionViewModel implements ISolutionViewModel {
     }
 }
 
-export interface ISolutionViewModel {
+export interface ISolutionDto {
     feasible?: boolean;
-    routes?: RouteViewModel[] | undefined;
+    routes?: RouteDto[] | undefined;
     distance?: number;
 }
 
-export class RouteViewModel implements IRouteViewModel {
+export class RouteDto implements IRouteDto {
     customers?: number[] | undefined;
 
-    constructor(data?: IRouteViewModel) {
+    constructor(data?: IRouteDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -791,9 +791,9 @@ export class RouteViewModel implements IRouteViewModel {
         }
     }
 
-    static fromJS(data: any): RouteViewModel {
+    static fromJS(data: any): RouteDto {
         data = typeof data === 'object' ? data : {};
-        let result = new RouteViewModel();
+        let result = new RouteDto();
         result.init(data);
         return result;
     }
@@ -809,19 +809,19 @@ export class RouteViewModel implements IRouteViewModel {
     }
 }
 
-export interface IRouteViewModel {
+export interface IRouteDto {
     customers?: number[] | undefined;
 }
 
-export class ProblemViewModel implements IProblemViewModel {
+export class ProblemDto implements IProblemDto {
     vehicles?: number;
     capacity?: number;
-    depot?: DepotViewModel | undefined;
-    customers?: CustomerViewModel[] | undefined;
+    depot?: DepotDto | undefined;
+    customers?: CustomerDto[] | undefined;
     distances?: number[][] | undefined;
     durations?: number[][] | undefined;
 
-    constructor(data?: IProblemViewModel) {
+    constructor(data?: IProblemDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -834,11 +834,11 @@ export class ProblemViewModel implements IProblemViewModel {
         if (_data) {
             this.vehicles = _data["vehicles"];
             this.capacity = _data["capacity"];
-            this.depot = _data["depot"] ? DepotViewModel.fromJS(_data["depot"]) : <any>undefined;
+            this.depot = _data["depot"] ? DepotDto.fromJS(_data["depot"]) : <any>undefined;
             if (Array.isArray(_data["customers"])) {
                 this.customers = [] as any;
                 for (let item of _data["customers"])
-                    this.customers!.push(CustomerViewModel.fromJS(item));
+                    this.customers!.push(CustomerDto.fromJS(item));
             }
             if (Array.isArray(_data["distances"])) {
                 this.distances = [] as any;
@@ -853,9 +853,9 @@ export class ProblemViewModel implements IProblemViewModel {
         }
     }
 
-    static fromJS(data: any): ProblemViewModel {
+    static fromJS(data: any): ProblemDto {
         data = typeof data === 'object' ? data : {};
-        let result = new ProblemViewModel();
+        let result = new ProblemDto();
         result.init(data);
         return result;
     }
@@ -884,22 +884,22 @@ export class ProblemViewModel implements IProblemViewModel {
     }
 }
 
-export interface IProblemViewModel {
+export interface IProblemDto {
     vehicles?: number;
     capacity?: number;
-    depot?: DepotViewModel | undefined;
-    customers?: CustomerViewModel[] | undefined;
+    depot?: DepotDto | undefined;
+    customers?: CustomerDto[] | undefined;
     distances?: number[][] | undefined;
     durations?: number[][] | undefined;
 }
 
-export class DepotViewModel implements IDepotViewModel {
+export class DepotDto implements IDepotDto {
     id?: number;
     x?: number;
     y?: number;
     dueDate?: Date;
 
-    constructor(data?: IDepotViewModel) {
+    constructor(data?: IDepotDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -917,9 +917,9 @@ export class DepotViewModel implements IDepotViewModel {
         }
     }
 
-    static fromJS(data: any): DepotViewModel {
+    static fromJS(data: any): DepotDto {
         data = typeof data === 'object' ? data : {};
-        let result = new DepotViewModel();
+        let result = new DepotDto();
         result.init(data);
         return result;
     }
@@ -934,14 +934,14 @@ export class DepotViewModel implements IDepotViewModel {
     }
 }
 
-export interface IDepotViewModel {
+export interface IDepotDto {
     id?: number;
     x?: number;
     y?: number;
     dueDate?: Date;
 }
 
-export class CustomerViewModel implements ICustomerViewModel {
+export class CustomerDto implements ICustomerDto {
     id?: number;
     x?: number;
     y?: number;
@@ -950,7 +950,7 @@ export class CustomerViewModel implements ICustomerViewModel {
     dueDate?: Date;
     serviceTime?: Date;
 
-    constructor(data?: ICustomerViewModel) {
+    constructor(data?: ICustomerDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -971,9 +971,9 @@ export class CustomerViewModel implements ICustomerViewModel {
         }
     }
 
-    static fromJS(data: any): CustomerViewModel {
+    static fromJS(data: any): CustomerDto {
         data = typeof data === 'object' ? data : {};
-        let result = new CustomerViewModel();
+        let result = new CustomerDto();
         result.init(data);
         return result;
     }
@@ -991,7 +991,7 @@ export class CustomerViewModel implements ICustomerViewModel {
     }
 }
 
-export interface ICustomerViewModel {
+export interface ICustomerDto {
     id?: number;
     x?: number;
     y?: number;
