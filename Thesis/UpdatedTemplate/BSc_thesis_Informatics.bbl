@@ -19,6 +19,77 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global}
+    \entry{bib:article:CordeauVehicleRouting}{article}{}
+      \name{author}{4}{}{%
+        {{hash=759501aaf5ca8680bcd9308d7f293e83}{%
+           family={Cordeau},
+           familyi={C\bibinitperiod},
+           given={J.\bibnamedelimi F.},
+           giveni={J\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+        {{hash=64a21d7d6af80b9745445b7848079bcd}{%
+           family={Laporte},
+           familyi={L\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+        {{hash=35acc8e9a47f73d7fd9179347fd57240}{%
+           family={Savelsbergh},
+           familyi={S\bibinitperiod},
+           given={M.\bibnamedelimi W.P.},
+           giveni={M\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=79f51014d14fb37d93b68a0ecaf87922}{%
+           family={Vigo},
+           familyi={V\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{d5f4297afbf569167c952573ae1d7dc2}
+      \strng{fullhash}{6b811597b7750da39ba38ffa180df88c}
+      \strng{bibnamehash}{d5f4297afbf569167c952573ae1d7dc2}
+      \strng{authorbibnamehash}{d5f4297afbf569167c952573ae1d7dc2}
+      \strng{authornamehash}{d5f4297afbf569167c952573ae1d7dc2}
+      \strng{authorfullhash}{6b811597b7750da39ba38ffa180df88c}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Management Science}
+      \field{title}{Vehicle Routing}
+      \field{volume}{14}
+      \field{year}{2007}
+      \field{pages}{367\bibrangedash 428}
+      \range{pages}{62}
+    \endentry
+    \entry{bib:article:TruckDispatching}{article}{}
+      \name{author}{2}{}{%
+        {{hash=4bce1f3879abcf7be7f0dc11f79b8d7f}{%
+           family={Dantzig},
+           familyi={D\bibinitperiod},
+           given={G.\bibnamedelimi B.},
+           giveni={G\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=9adcb7a7188471d6b9823fe589158827}{%
+           family={Ramser},
+           familyi={R\bibinitperiod},
+           given={J.\bibnamedelimi H.},
+           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{62f7b2386234f3f921bb30d0c3a60c9a}
+      \strng{fullhash}{62f7b2386234f3f921bb30d0c3a60c9a}
+      \strng{bibnamehash}{62f7b2386234f3f921bb30d0c3a60c9a}
+      \strng{authorbibnamehash}{62f7b2386234f3f921bb30d0c3a60c9a}
+      \strng{authornamehash}{62f7b2386234f3f921bb30d0c3a60c9a}
+      \strng{authorfullhash}{62f7b2386234f3f921bb30d0c3a60c9a}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Management Science}
+      \field{number}{1}
+      \field{title}{The Truck Dispatching Problem}
+      \field{volume}{6}
+      \field{year}{1959}
+      \field{pages}{80\bibrangedash 91}
+      \range{pages}{12}
+    \endentry
     \entry{bib:article:sukiennik}{article}{}
       \name{author}{1}{}{%
         {{hash=6ed0078fffdbb8200a17bdf50f3da614}{%
@@ -40,7 +111,6 @@
       \field{journaltitle}{Zeszyty Naukowe Politechniki Częstochowskiej. Zarządzanie}
       \field{number}{4}
       \field{title}{Logistics Costs in Manufacturing Companies}
-      \field{volume}{---}
       \field{year}{2011}
       \field{pages}{131\bibrangedash 139}
       \range{pages}{9}
@@ -112,6 +182,36 @@
       \field{howpublished}{\url{http://somewhere/in/internet.html}}
       \field{note}{[access date: 2018-09-30]}
       \field{title}{Title of a web page}
+    \endentry
+    \entry{bib:book:TothAndVigo}{book}{}
+      \name{author}{2}{}{%
+        {{hash=16fc2b730a7a7c0fc6b31098630baaef}{%
+           family={Toth},
+           familyi={T\bibinitperiod},
+           given={Paolo},
+           giveni={P\bibinitperiod}}}%
+        {{hash=714df25ae31514d150daa1631e87d182}{%
+           family={Vigo},
+           familyi={V\bibinitperiod},
+           given={Daniele},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Society for Industrial \& Applied Mathematics}%
+      }
+      \strng{namehash}{5bb027295595510455847230731bf280}
+      \strng{fullhash}{5bb027295595510455847230731bf280}
+      \strng{bibnamehash}{5bb027295595510455847230731bf280}
+      \strng{authorbibnamehash}{5bb027295595510455847230731bf280}
+      \strng{authornamehash}{5bb027295595510455847230731bf280}
+      \strng{authorfullhash}{5bb027295595510455847230731bf280}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-0-89871-498-2}
+      \field{title}{The Vehicle Routing Problem}
+      \field{year}{2002}
     \endentry
   \enddatalist
   \missing{bib:article}

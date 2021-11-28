@@ -2349,6 +2349,10 @@
     <bcf:citekey order="2">bib:book</bcf:citekey>
     <bcf:citekey order="2">bib:conference</bcf:citekey>
     <bcf:citekey order="2">bib:internet</bcf:citekey>
+    <bcf:citekey order="3">bib:article:TruckDispatching</bcf:citekey>
+    <bcf:citekey order="4">bib:article:CordeauVehicleRouting</bcf:citekey>
+    <bcf:citekey order="5">bib:book:TothAndVigo</bcf:citekey>
+    <bcf:citekey order="6">bib:book:TothAndVigo</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

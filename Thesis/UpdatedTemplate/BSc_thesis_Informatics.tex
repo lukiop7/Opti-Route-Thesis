@@ -279,6 +279,52 @@ The goal was to create a tool that will simplify the process of defining and sol
 \item description of existing solutions (also scientific ones, if the problem is scientifically researched), algorithms,  location of the thesis in the scientific domain
 \end{itemize}
 
+\section{Vehicle Routing Problem}
+The Vehicle Routing Problem was first stated by Dantzig and Ramser in 1959 as "The Truck Dispatching Problem" \cite{bib:article:TruckDispatching}. The problem concerns a set of customers to whom products need to be delivered in such a way that the delivery cost is as low as possible. Transport is performed by a fleet of vehicles, each of which can carry a certain number of goods. The goal is to serve all customers with as few vehicles as possible and to keep the total distance travelled by all vehicles as short as possible within predefined constraints. The classic version of VRP has the following constraints: 
+\begin{enumerate}
+	\item Each vehicle's route starts and ends at a depot.
+	\item All goods must be delivered.
+	\item Customer must receive all goods at one time delivered by one vehicle.
+	\item The vehicle may not carry more goods than its capacity allows.	
+\end{enumerate}
+\paragraph{}
+The VRP can be formally defined as directed graph $\textit{G = (V,A)}$, where $\textit{V = $\lbrace$0,\ldots,n$\rbrace$}$ is the set of vertices representing customers and the depot, and \textit{A} is the set of arcs \textit{(i,j)} connecting these vertices. The depot is marked as vertex 0. The number of vehicles is denoted by \textit{m}, and each vehicle has a capacity of \textit{Q}. The cost of travel between vertices \textit{i} and \textit{j} is denoted by \textit{$c_{ij}$}. The cost is the distance, duration or other costs that may occur during the travel between nodes. The demand of customer \textit{i} is represented as \textit{$q_{i}$}.
+The customer subset \textit{S $\subseteq$ V$\setminus$ $\lbrace$0$\rbrace$} can be served by a minimum of \textit{r(S)} vehicles. This number can be obtained by solving the Bin Packing Problem (BPP) with bin set \textit{S} with capacities \textit{Q}, but because BPP is an NP-hard problem, it can be approximated by its lower bound: $\lceil$ $\sum$\textsubscript{i$\in$S} $q_{i}$/Q $\rceil$\cite{bib:article:CordeauVehicleRouting}.
+\paragraph{}
+The Integer Linear Programming formulation of the problem\cite{bib:book:TothAndVigo}: 
+\begin{equation}
+Minimize \sum_{i,j \in V} c_{ij}x_{ij}
+\end{equation}
+
+\textit{subject to:}
+
+\begin{equation}
+\sum_{i \in V}x_{ij} = 1 \qquad \forall j \in V \setminus \lbrace 0 \rbrace
+\end{equation}
+
+\begin{equation}
+\sum_{j \in V}x_{ij} = 1 \qquad \forall i \in V \setminus \lbrace 0 \rbrace
+\end{equation}
+
+\begin{equation}
+\sum_{j \in V}x_{0j} = m 
+\end{equation}
+
+\begin{equation}
+\sum_{i \in V}x_{i0} = m 
+\end{equation}
+
+\begin{equation}
+\sum_{i \not\in S} \sum_{j \in S}x_{ij} \geq \lceil \sum_{i \in S} q_{i} / Q \rceil \qquad \forall S \subseteq V \setminus \lbrace 0 \rbrace , S \neq \emptyset
+\end{equation}
+
+\begin{equation}
+x_{ij} \in \lbrace 0,1 \rbrace \qquad \forall i,j \in V
+\end{equation}
+
+In this formula, $x_{ij}$  is a binary variable whose value indicates whether the arc between vertices i and j is traversed in the solution.  
+If the connection between these vertices belongs to the solution, then the variable $x_{ij}$ is equal to 1, otherwise it is equal to 0. \textit{Indegree} (2.2) and \textit{outdegree} (2.3) constraints guarantee that every customer is visited only once. Constraints 2.4 and 2.5 ensure that the solution has \textit{m} routes, one for each vehicle (the number of routes does not exceed the number of vehicles).
+Constraints 2.6 are called \textit{capacity-cut constraints} and refer to the minimum number of vehicles needed to serve a set of customers whose total demand is $\sum$\textsubscript{i$\in$S} $q_{i}$. These constraints ensure the connectivity of the solution and that there are no paths whose load would exceed the capacity of the vehicle. The last constraint 2.7 ensures the binarity of the variable $x_{ij}$. If $x_{0j}$ is equal to 1 it means that \textit{j} belongs to this route. Any route from the solution can be reconstructed in this way: the next customer in the route is customer \textit{i}, for whom $x_{ij}$ is equal to 1. The last customer is customer i for whom $x_{i0}$ is equal to 1. \cite{bib:book:TothAndVigo}
 
 
 \chapter{Requirements and tools}
@@ -526,14 +572,16 @@ partition fcm_possibilistic::doPartition
 }
 \end{lstlisting} 
 
-\chapter*{CD/DVD content}
-\addcontentsline{toc}{chapter}{CD/DVD content}
+\chapter*{List of additional files in electronic submission }
+\addcontentsline{toc}{chapter}{List of additional files in electronic submission (if applicable)}
 
-The thesis is accompanied by a CD containing:
+Additional files uploaded to the system include:
 \begin{itemize}
-\item thesis (\LaTeX\ source files and final \texttt{pdf} file),
+																
 \item source code of the application,
-\item test data.
+\item test data,
+\item a video showing how software or hardware developed for thesis is used
+\item etc.
 \end{itemize}
  
 \listoffigures
