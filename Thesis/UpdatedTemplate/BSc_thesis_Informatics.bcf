@@ -2345,14 +2345,15 @@
   </bcf:bibdata>
   <bcf:section number="0">
     <bcf:citekey order="1">bib:article:sukiennik</bcf:citekey>
-    <bcf:citekey order="2">bib:article</bcf:citekey>
-    <bcf:citekey order="2">bib:book</bcf:citekey>
-    <bcf:citekey order="2">bib:conference</bcf:citekey>
-    <bcf:citekey order="2">bib:internet</bcf:citekey>
-    <bcf:citekey order="3">bib:article:TruckDispatching</bcf:citekey>
-    <bcf:citekey order="4">bib:article:CordeauVehicleRouting</bcf:citekey>
-    <bcf:citekey order="5">bib:book:TothAndVigo</bcf:citekey>
-    <bcf:citekey order="6">bib:book:TothAndVigo</bcf:citekey>
+    <bcf:citekey order="2">bib:article:CordeauVehicleRouting</bcf:citekey>
+    <bcf:citekey order="3">bib:book:TothAndVigo</bcf:citekey>
+    <bcf:citekey order="4">bib:book:TothAndVigo</bcf:citekey>
+    <bcf:citekey order="5">bib:article:TruckDispatching</bcf:citekey>
+    <bcf:citekey order="6">bib:book:GeometricModellingCostSavings</bcf:citekey>
+    <bcf:citekey order="7">bib:chapter:VRPTW</bcf:citekey>
+    <bcf:citekey order="8">bib:article:Savelsbergh</bcf:citekey>
+    <bcf:citekey order="9">bib:chapter:VRPTW</bcf:citekey>
+    <bcf:citekey order="10">bib:chapter:VRPTW</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

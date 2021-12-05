@@ -19,6 +19,51 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global}
+    \entry{bib:chapter:VRPTW}{incollection}{}
+      \name{author}{4}{}{%
+        {{hash=a33a5af946f425f4259314665a01b260}{%
+           family={B.},
+           familyi={B\bibinitperiod},
+           given={Kallehauge},
+           giveni={K\bibinitperiod}}}%
+        {{hash=94cd685ac2e6da06856a1ee342efa7e5}{%
+           family={J.},
+           familyi={J\bibinitperiod},
+           given={Larsen},
+           giveni={L\bibinitperiod}}}%
+        {{hash=d1ec4a9d0915e2db2d24795d87b9d9c9}{%
+           family={O.B.},
+           familyi={O\bibinitperiod},
+           given={Madsen},
+           giveni={M\bibinitperiod}}}%
+        {{hash=bf40155a5ccd6c80880ddda877884ecc}{%
+           family={M.M.},
+           familyi={M\bibinitperiod},
+           given={Solomon},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Boston, MA.}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{3adef63afa1279eeac1128848c7f0fb0}
+      \strng{fullhash}{78b38818569b8220eec0c98e5b7d3a3c}
+      \strng{bibnamehash}{3adef63afa1279eeac1128848c7f0fb0}
+      \strng{authorbibnamehash}{3adef63afa1279eeac1128848c7f0fb0}
+      \strng{authornamehash}{3adef63afa1279eeac1128848c7f0fb0}
+      \strng{authorfullhash}{78b38818569b8220eec0c98e5b7d3a3c}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Column Generation}
+      \field{title}{Vehicle Routing Problem with Time Windows.}
+      \field{year}{2005}
+      \field{pages}{67\bibrangedash 98}
+      \range{pages}{32}
+    \endentry
     \entry{bib:article:CordeauVehicleRouting}{article}{}
       \name{author}{4}{}{%
         {{hash=759501aaf5ca8680bcd9308d7f293e83}{%
@@ -90,6 +135,69 @@
       \field{pages}{80\bibrangedash 91}
       \range{pages}{12}
     \endentry
+    \entry{bib:book:GeometricModellingCostSavings}{book}{}
+      \name{author}{3}{}{%
+        {{hash=01c0789dd811bbd5bad687de0b8de67c}{%
+           family={Hasle},
+           familyi={H\bibinitperiod},
+           given={Geir},
+           giveni={G\bibinitperiod}}}%
+        {{hash=c0c993e8d48f97fe5bc094483b47598d}{%
+           family={Lie},
+           familyi={L\bibinitperiod},
+           given={Knut-Andreas},
+           giveni={K\bibinithyphendelim A\bibinitperiod}}}%
+        {{hash=3e635e30195399e3b3a57571a7f17104}{%
+           family={Quak},
+           familyi={Q\bibinitperiod},
+           given={Ewald},
+           giveni={E\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Berlin}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{6e1673675226e391649063770b50172a}
+      \strng{fullhash}{6e1673675226e391649063770b50172a}
+      \strng{bibnamehash}{6e1673675226e391649063770b50172a}
+      \strng{authorbibnamehash}{6e1673675226e391649063770b50172a}
+      \strng{authornamehash}{6e1673675226e391649063770b50172a}
+      \strng{authorfullhash}{6e1673675226e391649063770b50172a}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-3-540-68783-2}
+      \field{title}{Geometric Modelling, Numerical Simulation, and Optimization: Applied Mathematics at SINTEF}
+      \field{year}{2007}
+    \endentry
+    \entry{bib:article:Savelsbergh}{article}{}
+      \name{author}{1}{}{%
+        {{hash=35acc8e9a47f73d7fd9179347fd57240}{%
+           family={Savelsbergh},
+           familyi={S\bibinitperiod},
+           given={M.\bibnamedelimi W.\bibnamedelimi P.},
+           giveni={M\bibinitperiod\bibinitdelim W\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \strng{namehash}{35acc8e9a47f73d7fd9179347fd57240}
+      \strng{fullhash}{35acc8e9a47f73d7fd9179347fd57240}
+      \strng{bibnamehash}{35acc8e9a47f73d7fd9179347fd57240}
+      \strng{authorbibnamehash}{35acc8e9a47f73d7fd9179347fd57240}
+      \strng{authornamehash}{35acc8e9a47f73d7fd9179347fd57240}
+      \strng{authorfullhash}{35acc8e9a47f73d7fd9179347fd57240}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Annals of Operations Research}
+      \field{number}{4}
+      \field{title}{Local search in routing problems with time windows}
+      \field{year}{1985}
+      \field{pages}{285\bibrangedash 305}
+      \range{pages}{21}
+    \endentry
     \entry{bib:article:sukiennik}{article}{}
       \name{author}{1}{}{%
         {{hash=6ed0078fffdbb8200a17bdf50f3da614}{%
@@ -114,74 +222,6 @@
       \field{year}{2011}
       \field{pages}{131\bibrangedash 139}
       \range{pages}{9}
-    \endentry
-    \entry{bib:conference}{inproceedings}{}
-      \name{author}{3}{}{%
-        {{hash=4bb983b68767bfb7760064c0db4691d7}{%
-           family={Surname},
-           familyi={S\bibinitperiod},
-           given={Name},
-           giveni={N\bibinitperiod}}}%
-        {{hash=4bb983b68767bfb7760064c0db4691d7}{%
-           family={Surname},
-           familyi={S\bibinitperiod},
-           given={Name},
-           giveni={N\bibinitperiod}}}%
-        {{hash=f94f4ce0c4d395b05e6918c4e7090334}{%
-           family={Surname},
-           familyi={S\bibinitperiod},
-           given={N.},
-           giveni={N\bibinitperiod}}}%
-      }
-      \strng{namehash}{c54e4d7e0f2cfe0ff5e1df387b2a1fbf}
-      \strng{fullhash}{c54e4d7e0f2cfe0ff5e1df387b2a1fbf}
-      \strng{bibnamehash}{c54e4d7e0f2cfe0ff5e1df387b2a1fbf}
-      \strng{authorbibnamehash}{c54e4d7e0f2cfe0ff5e1df387b2a1fbf}
-      \strng{authornamehash}{c54e4d7e0f2cfe0ff5e1df387b2a1fbf}
-      \strng{authorfullhash}{c54e4d7e0f2cfe0ff5e1df387b2a1fbf}
-      \field{extraname}{1}
-      \field{sortinit}{S}
-      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{booktitle}{Conference title}
-      \field{title}{Title of a conference article}
-      \field{year}{2006}
-      \field{pages}{5346\bibrangedash 5349}
-      \range{pages}{4}
-    \endentry
-    \entry{bib:internet}{misc}{}
-      \name{author}{3}{}{%
-        {{hash=4bb983b68767bfb7760064c0db4691d7}{%
-           family={Surname},
-           familyi={S\bibinitperiod},
-           given={Name},
-           giveni={N\bibinitperiod}}}%
-        {{hash=4bb983b68767bfb7760064c0db4691d7}{%
-           family={Surname},
-           familyi={S\bibinitperiod},
-           given={Name},
-           giveni={N\bibinitperiod}}}%
-        {{hash=f94f4ce0c4d395b05e6918c4e7090334}{%
-           family={Surname},
-           familyi={S\bibinitperiod},
-           given={N.},
-           giveni={N\bibinitperiod}}}%
-      }
-      \strng{namehash}{c54e4d7e0f2cfe0ff5e1df387b2a1fbf}
-      \strng{fullhash}{c54e4d7e0f2cfe0ff5e1df387b2a1fbf}
-      \strng{bibnamehash}{c54e4d7e0f2cfe0ff5e1df387b2a1fbf}
-      \strng{authorbibnamehash}{c54e4d7e0f2cfe0ff5e1df387b2a1fbf}
-      \strng{authornamehash}{c54e4d7e0f2cfe0ff5e1df387b2a1fbf}
-      \strng{authorfullhash}{c54e4d7e0f2cfe0ff5e1df387b2a1fbf}
-      \field{extraname}{2}
-      \field{sortinit}{S}
-      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{howpublished}{\url{http://somewhere/in/internet.html}}
-      \field{note}{[access date: 2018-09-30]}
-      \field{title}{Title of a web page}
     \endentry
     \entry{bib:book:TothAndVigo}{book}{}
       \name{author}{2}{}{%
@@ -214,8 +254,6 @@
       \field{year}{2002}
     \endentry
   \enddatalist
-  \missing{bib:article}
-  \missing{bib:book}
 \endrefsection
 \endinput
 
