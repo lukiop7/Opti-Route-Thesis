@@ -1,15 +1,17 @@
 [0] Config.pm:311> INFO - This is Biber 2.16
 [1] Config.pm:314> INFO - Logfile is 'BSc_thesis_Informatics.blg'
-[490] biber-MSWIN64:340> INFO - === 
-[743] Biber.pm:415> INFO - Reading 'BSc_thesis_Informatics.bcf'
-[1372] Biber.pm:952> INFO - Found 7 citekeys in bib section 0
-[1447] Biber.pm:4340> INFO - Processing section 0
-[1503] Biber.pm:4531> INFO - Looking for bibtex format file 'refs.bib' for section 0
-[1824] bibtex.pm:1689> INFO - LaTeX decoding ...
-[1864] bibtex.pm:1494> INFO - Found BibTeX data source 'refs.bib'
-[2164] UCollate.pm:68> INFO - Overriding locale 'en-GB' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[2164] UCollate.pm:68> INFO - Overriding locale 'en-GB' defaults 'variable = shifted' with 'variable = non-ignorable'
-[2164] Biber.pm:4168> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-GB'
-[2164] Biber.pm:4174> INFO - No sort tailoring available for locale 'en-GB'
-[2201] bbl.pm:654> INFO - Writing 'BSc_thesis_Informatics.bbl' with encoding 'UTF-8'
-[2214] bbl.pm:757> INFO - Output to BSc_thesis_Informatics.bbl
+[513] biber-MSWIN64:340> INFO - === 
+[652] Biber.pm:415> INFO - Reading 'BSc_thesis_Informatics.bcf'
+[1312] Biber.pm:952> INFO - Found 16 citekeys in bib section 0
+[1367] Biber.pm:4340> INFO - Processing section 0
+[1400] Biber.pm:4531> INFO - Looking for bibtex format file 'refs.bib' for section 0
+[1719] bibtex.pm:1689> INFO - LaTeX decoding ...
+[1803] bibtex.pm:1494> INFO - Found BibTeX data source 'refs.bib'
+[2174] Utils.pm:395> WARN - BibTeX subsystem: warning: comma(s) at end of name (removing)
+[2238] UCollate.pm:68> INFO - Overriding locale 'en-GB' defaults 'variable = shifted' with 'variable = non-ignorable'
+[2238] UCollate.pm:68> INFO - Overriding locale 'en-GB' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[2238] Biber.pm:4168> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-GB'
+[2238] Biber.pm:4174> INFO - No sort tailoring available for locale 'en-GB'
+[2280] bbl.pm:654> INFO - Writing 'BSc_thesis_Informatics.bbl' with encoding 'UTF-8'
+[2298] bbl.pm:757> INFO - Output to BSc_thesis_Informatics.bbl
+[2299] Biber.pm:128> INFO - WARNINGS: 1

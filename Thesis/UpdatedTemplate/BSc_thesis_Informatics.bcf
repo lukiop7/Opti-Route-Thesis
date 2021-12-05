@@ -2354,6 +2354,16 @@
     <bcf:citekey order="8">bib:article:Savelsbergh</bcf:citekey>
     <bcf:citekey order="9">bib:chapter:VRPTW</bcf:citekey>
     <bcf:citekey order="10">bib:chapter:VRPTW</bcf:citekey>
+    <bcf:citekey order="11">bib:chapter:ExactMethods</bcf:citekey>
+    <bcf:citekey order="12">bib:article:Eilon</bcf:citekey>
+    <bcf:citekey order="13">bib:article:LowerBound</bcf:citekey>
+    <bcf:citekey order="14">bib:article:Laporte</bcf:citekey>
+    <bcf:citekey order="15">bib:article:ILP</bcf:citekey>
+    <bcf:citekey order="16">bib:article:solomon</bcf:citekey>
+    <bcf:citekey order="17">bib:chapter:PFIH</bcf:citekey>
+    <bcf:citekey order="18">bib:article:osman</bcf:citekey>
+    <bcf:citekey order="19">bib:article:LocalSearchLambda</bcf:citekey>
+    <bcf:citekey order="20">bib:article:LocalSearchLambda</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

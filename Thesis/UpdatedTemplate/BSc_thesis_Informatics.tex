@@ -84,10 +84,11 @@ numbers=left,%
 numberstyle=\tiny,%
 numbersep=5pt,%
 breaklines=true,%
-morekeywords={descriptor_gaussian,descriptor,partition,fcm_possibilistic,dataset,my_exception,exception,std,vector},%
+morekeywords={,descriptor_gaussian,descriptor,partition,fcm_possibilistic,dataset,my_exception,exception,std,vector},%
 escapeinside={@*}{*@},%
 %texcl=true, % wylacza tryb verbatim w komentarzach jednolinijkowych
 }
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%% TODO LIST GENERATOR %%%%%%%%%
@@ -368,9 +369,68 @@ x_{ijk} \in {0,1} \qquad \forall i,j \in V ,\forall k \in W
 
 Objective function (2.8) minimizes travel cost. Constraints (2.9) and (2.10) ensures that each customer is visited once and vehicle cannot surpass its capacity. Equations (2.11), (2.12) and (2.13) indicate that each vehicle must leave the depot, once it has reached the customer it must travel to the next location and finally return to the depot. Inequality (2.14) shows the relationship between vehicle departure time and its successor. Inequalities (2.15) provide that the time windows are observed. Constraints (2.16) are the integrality constraints. \cite{bib:chapter:VRPTW}
 
-\section{Exact Methods}
+\section{Solution approaches}
 
+There are two approaches to solving VRPs. The first is to solve using exact methods, which are guaranteed to find the most optimal solution. However, these methods are very expensive in terms of memory and computation time, which makes them applicable only to problems of low complexity. The second approach is to use approximate methods (heuristics), which allow solving larger and more complex problems in a reasonable time. However, heuristics do not guarantee the most optimal solution. 
 
+\subsection{Exact methods}
+The exact methods were divided by Laporte and Norbert's into three families: Direct Tree Search methods, Dynamic Programming and Integer Linear Programming. \cite{bib:chapter:ExactMethods}
+\paragraph{}
+The Direct Tree Search family includes branch and bound algorithms. The solution using this algorithm was first proposed by Christofides and Eilon in 1969 \cite{bib:article:Eilon}. However, the algorithm was only able to solve problems up to 13 clients, due to time complexity. Over the years, the methods in this family have been improved, allowing solutions for problems with up to 25 \cite{bib:article:LowerBound} clients and even, in later years, 250 \cite{bib:article:Laporte}.
+\paragraph{}
+The Dynamic Programming solutions were, at first, able to solve problems up to 25 customers. Later, significant improvements were made that allowed to solve problems up to 50 customers.
+\paragraph{}
+The Integer Linear Programming methods produced some of the best exact solutions. This has been achieved by extending the set partitioning algorithm using the column generation method \cite{bib:article:ILP}. 
+
+\subsection{Heuristics}
+Heuristics do not guarantee the best solution, their aim is to obtain a solution close to the best, in a relatively short time. They make it possible to solve larger and more complex problems that would not be possible to solve with exact methods. For VRP, we can distinguish between two types of herustics: construction and improvement. The process of solving a VRP usually can be divided into two steps: an initial solution is created using the construction heuristic, and then the improvement heuristics improves the solution. 
+\subsubsection{Construction heuristics}
+One of the best known construction heuristics is Clarke and Wright's savings algorithm. In the first step, separate routes are created for each customer, even if the number of vehicles is insufficient. Then, the  savings for all connections between edges (\textit{i,j}) are calculated using the formula \textit{$s_{ij}$ = $c_{i0}$ + $C_{0j}$ - $c_{ij}$}. After that, the savings are sorted in the descending order and algorithm tries to merge two routes that will reduce the total costs of travel. Routes are merged by connecting the customer from one route to the customer from the second route. A merge between \textit{i} and \textit{j} is only possible if they are the first or last vertices of their routes and the vehicle capacity constraint is not violated. The algorithm stops when there are no more possible connections.
+\paragraph{}
+Another type of Construction herustics is insertion heuristics. The Push forward insertion heuristics used in this thesis will be discussed in detail later in the chapter.
+\paragraph{}
+The last type of design heuristics are two-phase heuristics. They divide the problem into two sub-problems and then solve each of them. One such method is cluster first, route second. In this approach, customers are clustered into a base set of routes. Each cluster is treated as a separate TSP instance. There are various methods of clustering customers, one of which is the sweep algorithm. The sweep algorithm builds routes by sweeping a ray, centered at the depot, clockwise adding each customer lying on the line of the circle to the cluster.
+\subsubsection{Improvement heuristics}
+Once an initial solution is found using the construction heuristics, it is improved using the improvement heuristics. One type of such heuristics is the local search heuristic, in which the best solution is selected from the neighbourhood until a stopping criterion is reached. Neighbourhood solutions are created from the current one by applying operators that modify the original solution. 
+\paragraph{}
+Local search with $\lambda$ interchange heuristic will be discussed later in the chapter. This improvement heuristic method was used in the project.
+\paragraph{}
+Simulated annealing is another example. This method replicates the process of heating up a material and then slowly lowering the temperature to reduce defects. The main assumption of the algorithm is to infrequently accept worse solutions in order to avoid a local optimum. The solution is accepted with a probability calculated by means of a function depending on the difference in quality between the new and the current solution, and a parameter called the current temperature.
+\paragraph{}
+Another method is Tabu search. Based on the initial solution, neighbouring solutions are determined and the best of these solutions is selected as the new best solution. The previous solutions are stored in a tabu list, it has a predefined length, and when it is full, adding another solution removes the oldest one from the list. Such a mechanism avoids a local optimum and a return to previous solutions. 
+\paragraph{}
+VRP can be solved using many other heuristics, including: Large Neighbourhood Searches, Genetic Algorithms or Ant Colonies.
+\subsection{Push forward insertion heuristic}
+In this thesis, the initial solution is created using Push Forward Insertion Heuristic. It was introduced by Solomon \cite{bib:article:solomon} in 1987 and it is an efficient method to insert customers into routes. The algorithm creates a new route by selecting the starting customer furthest from the depot and then inserts each unassigned customer into the route until the capacity or time constraints are met. Then new route is created and the process repeats until all customers are routed. The feasibility check ensures that all constraints are not violated. This method generates a good starting solution for later improvements, in a short time.
+\paragraph{}
+For the pseudocode for PFIH algorithm for VPRTW see figure \ref{fig:PFIH} \cite{bib:chapter:PFIH}.
+\begin{figure}
+\centering
+\begin{lstlisting}[mathescape=true]
+Begin an empty route $r_{0}$ starting from the depot; $i := 0$;
+Among all unassigned customers, select the customer farthest from the depot and insert into the current route $r_{i}$;
+if all customers are routed then goto line 13.
+else
+    if the capacity $Q$ of the vehicle $k$ involved in the current route $r_{i}$ is exceeded then goto line 12.
+	else
+    	foreach unassigned customer
+    		find the best position for insertion in $r_{i}$ without violating any specified time window to compare the cost of starting a new route against that for the best position found.   
+if there exists no feasible position for insertion into the current route $r_{i}$ then goto line 12.
+else
+	Pick the customer with the greatest cost difference and insert it into $r_{i}$ and update the capacity $Q$ of the vehicle $k$ involved. goto line 3.
+Start a new route $r_{i+1}$ starting from the depot; $i := i+1$; goto line 2.
+Return the current solution
+\end{lstlisting}
+\caption{Push Forward Insertion Heuristic for Vehicle Routing Problem with Time Windows}
+\label{fig:PFIH}
+\end{figure}
+\subsection{Local search with $\lambda$ interchange}
+The $\lambda$ interchange neighbourhood generation method was introduced by Osman and Christofides \cite{bib:article:osman}. Local Search is performed by interchanging clients between routes. The interchanges are performed through operators whose number depends on the $\lambda$ parameter. In this work, this parameter is set to 2, which means that the maximum number of interchanged clients between routes will be 2. For this parameter value, we can distinguish 8 interchange operators: (0,1), (1,0), (1,1), (0,2), (2,0), (2,1), (1,2), (2,2). Operator (1,1) means that one customer will be transferred from route $R_{i}$ to $R_{j}$ and also one customer will be transferred from route $R_{j}$ to $R_{i}$. Operator 2,1 means that two customers will be moved from route $R_{i}$ to $R_{j}$ and only one customer will be moved from route $R_{j}$ to $R_{i}$. The other operators work on the same principle. If the solution has improved after the interchange of customers between routes, it is then accepted, otherwise such a solution is rejected. \cite{bib:article:LocalSearchLambda} 
+\paragraph{}
+To select between the candidate solutions a global-best strategy was chosen. The global-best strategy searches all solutions in the neighbourhood of the current solution for all operators and selects the one that gives the greatest cost reduction. The local search is stopped after a fixed number of iterations or other specified stopping criterion.
+\cite{bib:article:LocalSearchLambda} 
+\paragraph{}
+The algorithm can be summarised as follows: After generating a starting solution its entire neighbourhood (generated using the operators) is searched for a candidate solution. The candidate becomes the new current solution and its neighbourhood is searched to find a better solution. In case there are no more solutions in the neighbourhood that improve our current solution the algorithm is stopped.
 \chapter{Requirements and tools}
 
 \begin{itemize}
@@ -524,12 +584,13 @@ class descriptor_gaussian : virtual public descriptor
 \addcontentsline{toc}{chapter}{Index of abbreviations and symbols}
 
 \begin{itemize}
-\item[DNA] deoxyribonucleic acid
-\item[MVC] model--view--controller 
-\item[$N$] cardinality of data set
-\item[$\mu$] membership function of a fuzzy set
-\item[$\mathbb{E}$] set of edges of a graph
-\item[$\mathcal{L}$] Laplace transformation
+\item[VRP] Vehicle Routing Problem
+\item[VRPTW] Vehicle Routing Problem with Time Windows
+\item[CVRPTW] Capacitated Vehicle Routing Problem with Time Windows
+\item[$V$] Set of vertices representing customers and the depot
+\item[$A$] Arcs connecting vertices from $V$
+\item[$W$] Set of vehicles
+\item[$Q$] Capacity of vehicle
 \end{itemize}
 
 
