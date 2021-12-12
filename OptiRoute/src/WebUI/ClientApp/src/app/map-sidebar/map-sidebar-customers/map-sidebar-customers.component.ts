@@ -25,7 +25,6 @@ export class MapSidebarCustomersComponent implements OnInit, OnDestroy {
       this.customers = customers;
       const control = <FormArray>this.customersInfoForm.controls['customersInfo'];
       control.push(this.initCustomer());
-      console.log(control);
       this.changeDetector.detectChanges();
     });
   }
@@ -41,16 +40,17 @@ export class MapSidebarCustomersComponent implements OnInit, OnDestroy {
   removeCustomer(customer: Customer) {
     const index = this.customers.indexOf(customer);
     const control = <FormArray>this.customersInfoForm.controls['customersInfo'];
-    control.push(this.initCustomer());
+    control.removeAt(index);
     this._mapService.removeCustomer(customer);
+    this.changeDetector.detectChanges();
   }
 
   initCustomer(): FormGroup {
     return this.fb.group({
-      demand: ['', Validators.required],
-      readyTime: [new Date(), Validators.required],
-      dueDate: [new Date(), Validators.required],
-      serviceTime: [new Date(), Validators.required],
+      demand: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      readyTime: [null, Validators.required],
+      dueDate: [null, Validators.required],
+      serviceTime: [null, Validators.required],
     });
   }
 }

@@ -2,20 +2,20 @@
   <button type="button" class="close close-button" aria-label="Close" (click)="closeOnClick()">
     <fa-icon [icon]="faTimes" class="fa-sm"></fa-icon>
   </button>
-  <div [formGroup]="customerInfoForm">
-    <input type="time" [(ngModel)]="readyTime" formControlName="readyTime">
+  <div [formGroup]="customerInfoForm" class="d-flex flex-column">
+    <input type="datetime-local"  formControlName="readyTime">
     <small [hidden]="customerInfoForm.controls.readyTime.valid">
       readyTime is required
     </small>
-    <input type="time" [(ngModel)]="dueDate" formControlName="dueDate">
+    <input type="datetime-local"  formControlName="dueDate">
     <small [hidden]="customerInfoForm.controls.dueDate.valid">
       dueDate is required
     </small>
-    <input type="time" [(ngModel)]="serviceTime" formControlName="serviceTime">
+    <input type="time" formControlName="serviceTime">
     <small [hidden]="customerInfoForm.controls.serviceTime.valid">
       serviceTime is required
     </small>
-    <input type="text" [(ngModel)]="demand" formControlName="demand">
+    <input type="text" formControlName="demand">
     <small [hidden]="customerInfoForm.controls.demand.valid">
       demand is required
     </small>

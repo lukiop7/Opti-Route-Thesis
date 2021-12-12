@@ -6,6 +6,7 @@ import {Marker} from 'leaflet';
 import {MapService} from '../services/map.service';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {minLengthArray} from '../../shared/utils/minLengthArray';
 
 @Component({
   selector: 'app-map-sidebar',
@@ -29,38 +30,43 @@ export class MapSidebarComponent implements OnInit, OnDestroy {
   public firstShow = false;
   public vrptwForm: FormGroup;
   public viewCounter = 0;
+  private _viewSubscription: Subscription;
 
   constructor(private changeDetector: ChangeDetectorRef, private _mapService: MapService, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.initializeForm();
+    this._viewSubscription = this._mapService.getView().subscribe(value =>{
+      this.viewCounter = value;
+    });
   }
 
   ngOnDestroy(): void {
+    this._viewSubscription.unsubscribe();
   }
 
   viewShown() {
-    this.viewCounter++;
+    this._mapService.setView(this.viewCounter + 1);
   }
 
   initializeForm() {
     this.vrptwForm = this.fb.group({
       problemInfo: this.fb.group({
-        vehicles: ['',Validators.required],
-        capacity: ['',Validators.required]
+        vehicles: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+        capacity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       }),
       depotInfo: this.fb.group({
-        dueDate: [new Date(), Validators.required]
+        dueDate: [null, Validators.required]
       }),
       customersInfoForm: this.fb.group({
-          customersInfo: this.fb.array([])
+          customersInfo: this.fb.array([],minLengthArray(1))
         }
       )
     });
   }
 
-  submitted(data){
+  submitted(data) {
     this._mapService.connectMarkers(data);
     console.log(data);
   }

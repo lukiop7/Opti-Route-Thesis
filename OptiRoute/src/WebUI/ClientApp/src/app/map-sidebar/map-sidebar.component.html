@@ -3,23 +3,19 @@
     <div class="h-100 w-100" @fadeSlideInOut>
       <app-map-sidebar-getting-started *ngSwitchCase="0"
                                        (continueClicked)="viewShown()"></app-map-sidebar-getting-started>
-      <app-map-sidebar-problem-info [group]="vrptwForm.controls.problemInfo" *ngSwitchCase="1" (continueClicked)="viewShown()"></app-map-sidebar-problem-info>
-      <app-map-sidebar-depot [group]="vrptwForm.controls.depotInfo" *ngSwitchCase="2" (continueClicked)="viewShown()"></app-map-sidebar-depot>
-      <app-map-sidebar-customers [group]="vrptwForm.controls.customersInfoForm"  *ngSwitchCase="3"></app-map-sidebar-customers>
-      <button class="btn-primary w-100" type="submit" [disabled]="!vrptwForm.valid">
-        submit
-      </button>
+      <app-map-sidebar-problem-info [group]="vrptwForm.controls.problemInfo" *ngSwitchCase="1"
+                                    (continueClicked)="viewShown()"></app-map-sidebar-problem-info>
+      <app-map-sidebar-depot [group]="vrptwForm.controls.depotInfo" *ngSwitchCase="2"
+                             (continueClicked)="viewShown()"></app-map-sidebar-depot>
+      <app-map-sidebar-customers [group]="vrptwForm.controls.customersInfoForm"
+                                 *ngSwitchCase="3"></app-map-sidebar-customers>
+
+      <div class="footer" *ngIf="viewCounter===3">
+        <button class=" w-100" [ngClass]="vrptwForm.valid ? 'btn-primary' : 'btn-secondary'" type="submit"
+                [disabled]="!vrptwForm.valid">
+          Solve
+        </button>
+      </div>
     </div>
   </form>
 </div>
-
-
-<!--      <ng-container [formGroup]="vrptwForm">-->
-
-<!--  </ng-container>-->
-<!--  <div class="h-100 w-100" *ngIf="firstShow; else gettingStarted" @fadeSlideInOut>-->
-<!--   -->
-<!--  </div>-->
-<!--  <ng-template class="h-100 w-100" #gettingStarted>-->
-<!--  </ng-template>-->
-

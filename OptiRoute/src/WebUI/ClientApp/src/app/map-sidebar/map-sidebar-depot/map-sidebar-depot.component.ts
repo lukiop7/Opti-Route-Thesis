@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormGroup} from '@angular/forms';
+import {localIsoTime} from '../../../shared/utils/localIsoTime';
 
 @Component({
   selector: 'app-map-sidebar-depot',
@@ -10,14 +11,19 @@ export class MapSidebarDepotComponent implements OnInit {
   @Input('group')
   public depotInfoForm: FormGroup;
   @Output() continueClicked = new EventEmitter<void>();
-  public time: Date;
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
-    this.time = new Date();
+    this.depotInfoForm.patchValue({
+      dueDate: (localIsoTime().slice(0, 16))
+    });
   }
 
   onClick() {
     this.continueClicked.emit();
   }
+
+
 }
+

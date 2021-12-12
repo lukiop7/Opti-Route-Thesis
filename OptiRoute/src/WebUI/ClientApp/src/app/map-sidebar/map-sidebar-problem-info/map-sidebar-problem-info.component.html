@@ -2,14 +2,14 @@
   <div class="card-header">
     <h2 class="text-center">Problem info</h2>
   </div>
-  <div [formGroup]="problemInfoForm" class="h-100 hidden-scroll p-2">
-    <label>vehicle</label>
+  <div [formGroup]="problemInfoForm" class="h-100 hidden-scroll p-2  d-flex flex-column">
+    <label>Vehicles</label>
     <input type="text" formControlName="vehicles">
     <!--display error message if street is not valid-->
     <small [hidden]="problemInfoForm.controls.vehicles.valid">
       vehicle is required
     </small>
-    <label>capacity</label>
+    <label>Capacity</label>
     <input type="text" formControlName="capacity">
     <!--display error message if street is not valid-->
     <small [hidden]="problemInfoForm.controls.capacity.valid">
@@ -17,7 +17,7 @@
     </small>
   </div>
   <div class="card-footer">
-    <button class="btn-primary w-100" (click)="onClick()">
+    <button class="w-100" (click)="onClick()" [ngClass]="problemInfoForm.valid ? 'btn-primary' : 'btn-secondary'" [disabled]="!problemInfoForm.valid">
       Continue
     </button>
   </div>
