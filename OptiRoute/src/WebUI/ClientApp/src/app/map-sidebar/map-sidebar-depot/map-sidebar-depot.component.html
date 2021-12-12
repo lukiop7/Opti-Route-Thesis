@@ -10,7 +10,7 @@
     </small>
   </div>
   <div class="card-footer">
-    <button class="w-100" (click)="onClick()" [disabled]="!depotInfoForm.valid || !depot" [ngClass]="depotInfoForm.valid ? 'btn-primary' : 'btn-secondary'">
+    <button class="w-100" (click)="onClick()" [disabled]="!depotInfoForm.valid || !depot" [ngClass]="depotInfoForm.valid || !depot ? 'btn-primary' : 'btn-secondary'">
       Continue
     </button>
   </div>

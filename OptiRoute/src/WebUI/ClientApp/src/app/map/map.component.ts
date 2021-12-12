@@ -27,6 +27,7 @@ export class MapComponent implements OnInit, OnDestroy {
   customersLayer: L.LayerGroup;
   depotLayer: L.LayerGroup;
   pathsLayer: any[] = [];
+  panes: any[] = [];
   options = {
     layers: [
       L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'})
@@ -62,13 +63,17 @@ export class MapComponent implements OnInit, OnDestroy {
     });
 
     this._pathsSubscription = this._mapService.getPaths().subscribe((result: VrptwSolutionResponse) => {
+      this.panes.forEach((pane: HTMLElement)  => {
+        pane.remove();
+      });
+      this.panes = [];
       this.pathsLayer.forEach(path => {
         this.map.removeControl(path);
       });
       this.pathsLayer = [];
-    //  this.pathsLayer.clearLayers();
+      //  this.pathsLayer.clearLayers();
       this.colorsCounter = 0;
-      let index = 2000;
+      let index = 400;
       // const router = new L.Routing.osrmv1();
       // result.paths.forEach(path => {
       //   console.log(`path: ${path}`);
@@ -89,6 +94,10 @@ export class MapComponent implements OnInit, OnDestroy {
       //   });
       // });
       for (let i = 0; i < result.paths.length; i++) {
+        const paneName = `pane${i}`;
+        const pane = this.map.createPane(paneName);
+        pane.style.zIndex = index.toString();
+        index += 1;
         const routeControl = L.Routing.control({
           createMarker: function () {
             return null;
@@ -97,16 +106,13 @@ export class MapComponent implements OnInit, OnDestroy {
           routeWhileDragging: false,
           lineOptions: {
             addWaypoints: false,
-            styles: [{color: this.colors[this.colorsCounter++], opacity: 1, weight: 5}]
+            styles: [{pane: paneName, color: this.colors[this.colorsCounter++], opacity: 1, weight: 5}]
           }
         }).addTo(this.map);
         routeControl.hide();
         this.pathsLayer.push(routeControl);
+        this.panes.push(pane);
       }
-      setTimeout(function () {
-        this.pathsLayer.forEach(layer => {
-        });
-      }, 5000);
       this.changeDetector.detectChanges();
     });
 
