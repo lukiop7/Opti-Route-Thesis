@@ -1,18 +1,21 @@
-<div class="anyClass">
-  <div class="card h-100">
-    <div class="card-header">
-      <h2 class="text-center">Customers</h2>
-    </div>
-    <div class="h-100 hidden-scroll">
-      <div *ngFor="let customer of customers">
-        <app-marker-details [customer]="customer" (closed)="removeCustomer($event)"></app-marker-details>
+<div class="h-100 w-100 sidebar">
+  <form class="h-100 w-100" [formGroup]="vrptwForm" [ngSwitch]="viewCounter" (ngSubmit)="submitted(vrptwForm.value)">
+    <div class="h-100 w-100" @fadeSlideInOut>
+      <app-map-sidebar-getting-started *ngSwitchCase="0"
+                                       (continueClicked)="viewShown()"></app-map-sidebar-getting-started>
+      <app-map-sidebar-problem-info [group]="vrptwForm.controls.problemInfo" *ngSwitchCase="1"
+                                    (continueClicked)="viewShown()"></app-map-sidebar-problem-info>
+      <app-map-sidebar-depot [group]="vrptwForm.controls.depotInfo" *ngSwitchCase="2"
+                             (continueClicked)="viewShown()"></app-map-sidebar-depot>
+      <app-map-sidebar-customers [group]="vrptwForm.controls.customersInfoForm"
+                                 *ngSwitchCase="3"></app-map-sidebar-customers>
+
+      <div class="footer" *ngIf="viewCounter===3">
+        <button class=" w-100" [ngClass]="vrptwForm.valid ? 'btn-primary' : 'btn-secondary'" type="submit"
+                [disabled]="!vrptwForm.valid">
+          Solve
+        </button>
       </div>
     </div>
-    <div class="card-footer">
-      <button class="btn-primary w-100" (click)="onClick()">
-        Solve
-      </button>
-    </div>
-  </div>
+  </form>
 </div>
-

@@ -1,0 +1,17 @@
+<div class="card h-100 w-100 border-0">
+  <div class="card-header">
+    <h2 class="text-center">Depot</h2>
+  </div>
+  <div [formGroup]="depotInfoForm" class="h-100 hidden-scroll d-flex flex-column">
+    <label>Due date</label>
+    <input type="datetime-local" formControlName="dueDate" >
+    <small [hidden]="depotInfoForm.controls.dueDate.valid">
+      Due date is required
+    </small>
+  </div>
+  <div class="card-footer">
+    <button class="w-100" (click)="onClick()" [disabled]="!depotInfoForm.valid" [ngClass]="depotInfoForm.valid ? 'btn-primary' : 'btn-secondary'">
+      Continue
+    </button>
+  </div>
+</div>

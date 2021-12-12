@@ -14,6 +14,76 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
+export interface ICVRPTWClient {
+    getSolution(problem: ProblemDto): Observable<SolutionDto>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class CVRPTWClient implements ICVRPTWClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    getSolution(problem: ProblemDto): Observable<SolutionDto> {
+        let url_ = this.baseUrl + "/api/CVRPTW";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(problem);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSolution(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSolution(<any>response_);
+                } catch (e) {
+                    return <Observable<SolutionDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SolutionDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetSolution(response: HttpResponseBase): Observable<SolutionDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = SolutionDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SolutionDto>(<any>null);
+    }
+}
+
 export interface ITodoItemsClient {
     getTodoItemsWithPagination(listId: number | undefined, pageNumber: number | undefined, pageSize: number | undefined): Observable<PaginatedListOfTodoItemDto>;
     create(command: CreateTodoItemCommand): Observable<number>;
@@ -645,6 +715,290 @@ export class WeatherForecastClient implements IWeatherForecastClient {
         }
         return _observableOf<WeatherForecast[]>(<any>null);
     }
+}
+
+export class SolutionDto implements ISolutionDto {
+    feasible?: boolean;
+    routes?: RouteDto[] | undefined;
+    distance?: number;
+
+    constructor(data?: ISolutionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.feasible = _data["feasible"];
+            if (Array.isArray(_data["routes"])) {
+                this.routes = [] as any;
+                for (let item of _data["routes"])
+                    this.routes!.push(RouteDto.fromJS(item));
+            }
+            this.distance = _data["distance"];
+        }
+    }
+
+    static fromJS(data: any): SolutionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SolutionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["feasible"] = this.feasible;
+        if (Array.isArray(this.routes)) {
+            data["routes"] = [];
+            for (let item of this.routes)
+                data["routes"].push(item.toJSON());
+        }
+        data["distance"] = this.distance;
+        return data; 
+    }
+}
+
+export interface ISolutionDto {
+    feasible?: boolean;
+    routes?: RouteDto[] | undefined;
+    distance?: number;
+}
+
+export class RouteDto implements IRouteDto {
+    customers?: number[] | undefined;
+
+    constructor(data?: IRouteDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["customers"])) {
+                this.customers = [] as any;
+                for (let item of _data["customers"])
+                    this.customers!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): RouteDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RouteDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.customers)) {
+            data["customers"] = [];
+            for (let item of this.customers)
+                data["customers"].push(item);
+        }
+        return data; 
+    }
+}
+
+export interface IRouteDto {
+    customers?: number[] | undefined;
+}
+
+export class ProblemDto implements IProblemDto {
+    vehicles?: number;
+    capacity?: number;
+    depot?: DepotDto | undefined;
+    customers?: CustomerDto[] | undefined;
+    distances?: number[][] | undefined;
+    durations?: number[][] | undefined;
+
+    constructor(data?: IProblemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.vehicles = _data["vehicles"];
+            this.capacity = _data["capacity"];
+            this.depot = _data["depot"] ? DepotDto.fromJS(_data["depot"]) : <any>undefined;
+            if (Array.isArray(_data["customers"])) {
+                this.customers = [] as any;
+                for (let item of _data["customers"])
+                    this.customers!.push(CustomerDto.fromJS(item));
+            }
+            if (Array.isArray(_data["distances"])) {
+                this.distances = [] as any;
+                for (let item of _data["distances"])
+                    this.distances!.push(item);
+            }
+            if (Array.isArray(_data["durations"])) {
+                this.durations = [] as any;
+                for (let item of _data["durations"])
+                    this.durations!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): ProblemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProblemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["vehicles"] = this.vehicles;
+        data["capacity"] = this.capacity;
+        data["depot"] = this.depot ? this.depot.toJSON() : <any>undefined;
+        if (Array.isArray(this.customers)) {
+            data["customers"] = [];
+            for (let item of this.customers)
+                data["customers"].push(item.toJSON());
+        }
+        if (Array.isArray(this.distances)) {
+            data["distances"] = [];
+            for (let item of this.distances)
+                data["distances"].push(item);
+        }
+        if (Array.isArray(this.durations)) {
+            data["durations"] = [];
+            for (let item of this.durations)
+                data["durations"].push(item);
+        }
+        return data; 
+    }
+}
+
+export interface IProblemDto {
+    vehicles?: number;
+    capacity?: number;
+    depot?: DepotDto | undefined;
+    customers?: CustomerDto[] | undefined;
+    distances?: number[][] | undefined;
+    durations?: number[][] | undefined;
+}
+
+export class DepotDto implements IDepotDto {
+    id?: number;
+    x?: number;
+    y?: number;
+    dueDate?: Date;
+
+    constructor(data?: IDepotDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.x = _data["x"];
+            this.y = _data["y"];
+            this.dueDate = _data["dueDate"] ? new Date(_data["dueDate"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): DepotDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DepotDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["x"] = this.x;
+        data["y"] = this.y;
+        data["dueDate"] = this.dueDate ? this.dueDate.toISOString() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IDepotDto {
+    id?: number;
+    x?: number;
+    y?: number;
+    dueDate?: Date;
+}
+
+export class CustomerDto implements ICustomerDto {
+    id?: number;
+    x?: number;
+    y?: number;
+    demand?: number;
+    readyTime?: Date;
+    dueDate?: Date;
+    serviceTime?: Date;
+
+    constructor(data?: ICustomerDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.x = _data["x"];
+            this.y = _data["y"];
+            this.demand = _data["demand"];
+            this.readyTime = _data["readyTime"] ? new Date(_data["readyTime"].toString()) : <any>undefined;
+            this.dueDate = _data["dueDate"] ? new Date(_data["dueDate"].toString()) : <any>undefined;
+            this.serviceTime = _data["serviceTime"] ? new Date(_data["serviceTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): CustomerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CustomerDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["x"] = this.x;
+        data["y"] = this.y;
+        data["demand"] = this.demand;
+        data["readyTime"] = this.readyTime ? this.readyTime.toISOString() : <any>undefined;
+        data["dueDate"] = this.dueDate ? this.dueDate.toISOString() : <any>undefined;
+        data["serviceTime"] = this.serviceTime ? this.serviceTime.toISOString() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface ICustomerDto {
+    id?: number;
+    x?: number;
+    y?: number;
+    demand?: number;
+    readyTime?: Date;
+    dueDate?: Date;
+    serviceTime?: Date;
 }
 
 export class PaginatedListOfTodoItemDto implements IPaginatedListOfTodoItemDto {

@@ -1,0 +1,599 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{bib:chapter:VRPTW}{incollection}{}
+      \name{author}{4}{}{%
+        {{hash=a33a5af946f425f4259314665a01b260}{%
+           family={B.},
+           familyi={B\bibinitperiod},
+           given={Kallehauge},
+           giveni={K\bibinitperiod}}}%
+        {{hash=94cd685ac2e6da06856a1ee342efa7e5}{%
+           family={J.},
+           familyi={J\bibinitperiod},
+           given={Larsen},
+           giveni={L\bibinitperiod}}}%
+        {{hash=d1ec4a9d0915e2db2d24795d87b9d9c9}{%
+           family={O.B.},
+           familyi={O\bibinitperiod},
+           given={Madsen},
+           giveni={M\bibinitperiod}}}%
+        {{hash=bf40155a5ccd6c80880ddda877884ecc}{%
+           family={M.M.},
+           familyi={M\bibinitperiod},
+           given={Solomon},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Boston, MA.}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{3adef63afa1279eeac1128848c7f0fb0}
+      \strng{fullhash}{78b38818569b8220eec0c98e5b7d3a3c}
+      \strng{bibnamehash}{3adef63afa1279eeac1128848c7f0fb0}
+      \strng{authorbibnamehash}{3adef63afa1279eeac1128848c7f0fb0}
+      \strng{authornamehash}{3adef63afa1279eeac1128848c7f0fb0}
+      \strng{authorfullhash}{78b38818569b8220eec0c98e5b7d3a3c}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Column Generation}
+      \field{title}{Vehicle Routing Problem with Time Windows.}
+      \field{year}{2005}
+      \field{pages}{67\bibrangedash 98}
+      \range{pages}{32}
+    \endentry
+    \entry{bib:article:Eilon}{article}{}
+      \name{author}{2}{}{%
+        {{hash=b8311e16a24e1c52f5369ada87fb6903}{%
+           family={Christofides},
+           familyi={C\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod}}}%
+        {{hash=a136d79802c4fa56599d356653342ac5}{%
+           family={Eilon},
+           familyi={E\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{48dd7bd4dfe88e836ad800e499adceb7}
+      \strng{fullhash}{48dd7bd4dfe88e836ad800e499adceb7}
+      \strng{bibnamehash}{48dd7bd4dfe88e836ad800e499adceb7}
+      \strng{authorbibnamehash}{48dd7bd4dfe88e836ad800e499adceb7}
+      \strng{authornamehash}{48dd7bd4dfe88e836ad800e499adceb7}
+      \strng{authorfullhash}{48dd7bd4dfe88e836ad800e499adceb7}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of the Operational Research Society}
+      \field{number}{3}
+      \field{title}{An Algorithm for the Vehicle-dispatching Problem}
+      \field{volume}{20}
+      \field{year}{1969}
+      \field{pages}{309\bibrangedash 318}
+      \range{pages}{10}
+    \endentry
+    \entry{bib:article:LowerBound}{article}{}
+      \name{author}{3}{}{%
+        {{hash=b8311e16a24e1c52f5369ada87fb6903}{%
+           family={Christofides},
+           familyi={C\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod}}}%
+        {{hash=d141a7e49833e1baf6e58b91b7e48397}{%
+           family={Mingozzi},
+           familyi={M\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=bd0d9c3e6caea172e46d7f3b01d848df}{%
+           family={Toth},
+           familyi={T\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{b656f2043195027335d35dafceddd63b}
+      \strng{fullhash}{b656f2043195027335d35dafceddd63b}
+      \strng{bibnamehash}{b656f2043195027335d35dafceddd63b}
+      \strng{authorbibnamehash}{b656f2043195027335d35dafceddd63b}
+      \strng{authornamehash}{b656f2043195027335d35dafceddd63b}
+      \strng{authorfullhash}{b656f2043195027335d35dafceddd63b}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Mathematical Programming}
+      \field{number}{1}
+      \field{title}{Exact algorithms for the vehicle routing problem, based on spanning tree and shortest path relaxations}
+      \field{volume}{20}
+      \field{year}{1981}
+      \field{pages}{255\bibrangedash 282}
+      \range{pages}{28}
+    \endentry
+    \entry{bib:article:CordeauVehicleRouting}{article}{}
+      \name{author}{4}{}{%
+        {{hash=759501aaf5ca8680bcd9308d7f293e83}{%
+           family={Cordeau},
+           familyi={C\bibinitperiod},
+           given={J.\bibnamedelimi F.},
+           giveni={J\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+        {{hash=64a21d7d6af80b9745445b7848079bcd}{%
+           family={Laporte},
+           familyi={L\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+        {{hash=35acc8e9a47f73d7fd9179347fd57240}{%
+           family={Savelsbergh},
+           familyi={S\bibinitperiod},
+           given={M.\bibnamedelimi W.P.},
+           giveni={M\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=79f51014d14fb37d93b68a0ecaf87922}{%
+           family={Vigo},
+           familyi={V\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{d5f4297afbf569167c952573ae1d7dc2}
+      \strng{fullhash}{6b811597b7750da39ba38ffa180df88c}
+      \strng{bibnamehash}{d5f4297afbf569167c952573ae1d7dc2}
+      \strng{authorbibnamehash}{d5f4297afbf569167c952573ae1d7dc2}
+      \strng{authornamehash}{d5f4297afbf569167c952573ae1d7dc2}
+      \strng{authorfullhash}{6b811597b7750da39ba38ffa180df88c}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Management Science}
+      \field{title}{Vehicle Routing}
+      \field{volume}{14}
+      \field{year}{2007}
+      \field{pages}{367\bibrangedash 428}
+      \range{pages}{62}
+    \endentry
+    \entry{bib:article:TruckDispatching}{article}{}
+      \name{author}{2}{}{%
+        {{hash=4bce1f3879abcf7be7f0dc11f79b8d7f}{%
+           family={Dantzig},
+           familyi={D\bibinitperiod},
+           given={G.\bibnamedelimi B.},
+           giveni={G\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=9adcb7a7188471d6b9823fe589158827}{%
+           family={Ramser},
+           familyi={R\bibinitperiod},
+           given={J.\bibnamedelimi H.},
+           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{62f7b2386234f3f921bb30d0c3a60c9a}
+      \strng{fullhash}{62f7b2386234f3f921bb30d0c3a60c9a}
+      \strng{bibnamehash}{62f7b2386234f3f921bb30d0c3a60c9a}
+      \strng{authorbibnamehash}{62f7b2386234f3f921bb30d0c3a60c9a}
+      \strng{authornamehash}{62f7b2386234f3f921bb30d0c3a60c9a}
+      \strng{authorfullhash}{62f7b2386234f3f921bb30d0c3a60c9a}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Management Science}
+      \field{number}{1}
+      \field{title}{The Truck Dispatching Problem}
+      \field{volume}{6}
+      \field{year}{1959}
+      \field{pages}{80\bibrangedash 91}
+      \range{pages}{12}
+    \endentry
+    \entry{bib:article:ILP}{article}{}
+      \name{author}{3}{}{%
+        {{hash=974a7c677f556d3929d669d337ac2e3c}{%
+           family={Desrochers},
+           familyi={D\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=f1ad71764b66d3f9fe3c6cb7555b973f}{%
+           family={Desrosiers},
+           familyi={D\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=94cc56887570779a4e9f6b2b8d77085f}{%
+           family={Solomon},
+           familyi={S\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{941323fc326c83b84c0f815c91ec2229}
+      \strng{fullhash}{941323fc326c83b84c0f815c91ec2229}
+      \strng{bibnamehash}{941323fc326c83b84c0f815c91ec2229}
+      \strng{authorbibnamehash}{941323fc326c83b84c0f815c91ec2229}
+      \strng{authornamehash}{941323fc326c83b84c0f815c91ec2229}
+      \strng{authorfullhash}{941323fc326c83b84c0f815c91ec2229}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Operations Research}
+      \field{number}{2}
+      \field{title}{A New Optimization Algorithm for the Vehicle Routing Problem with Time Windows}
+      \field{volume}{40}
+      \field{year}{1992}
+      \field{pages}{342\bibrangedash 354}
+      \range{pages}{13}
+    \endentry
+    \entry{bib:book:GeometricModellingCostSavings}{book}{}
+      \name{author}{3}{}{%
+        {{hash=01c0789dd811bbd5bad687de0b8de67c}{%
+           family={Hasle},
+           familyi={H\bibinitperiod},
+           given={Geir},
+           giveni={G\bibinitperiod}}}%
+        {{hash=c0c993e8d48f97fe5bc094483b47598d}{%
+           family={Lie},
+           familyi={L\bibinitperiod},
+           given={Knut-Andreas},
+           giveni={K\bibinithyphendelim A\bibinitperiod}}}%
+        {{hash=3e635e30195399e3b3a57571a7f17104}{%
+           family={Quak},
+           familyi={Q\bibinitperiod},
+           given={Ewald},
+           giveni={E\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Berlin}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{6e1673675226e391649063770b50172a}
+      \strng{fullhash}{6e1673675226e391649063770b50172a}
+      \strng{bibnamehash}{6e1673675226e391649063770b50172a}
+      \strng{authorbibnamehash}{6e1673675226e391649063770b50172a}
+      \strng{authornamehash}{6e1673675226e391649063770b50172a}
+      \strng{authorfullhash}{6e1673675226e391649063770b50172a}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-3-540-68783-2}
+      \field{title}{Geometric Modelling, Numerical Simulation, and Optimization: Applied Mathematics at SINTEF}
+      \field{year}{2007}
+    \endentry
+    \entry{bib:article:Laporte}{article}{}
+      \name{author}{3}{}{%
+        {{hash=64a21d7d6af80b9745445b7848079bcd}{%
+           family={Laporte},
+           familyi={L\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+        {{hash=e5cde8c455f93c5dde33f594a93db35e}{%
+           family={Mercure},
+           familyi={M\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+        {{hash=0533cd996cc1e582851468a9a1a4bf23}{%
+           family={Nobert},
+           familyi={N\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{840ffb7ecef88dc0044b537dcf919a46}
+      \strng{fullhash}{840ffb7ecef88dc0044b537dcf919a46}
+      \strng{bibnamehash}{840ffb7ecef88dc0044b537dcf919a46}
+      \strng{authorbibnamehash}{840ffb7ecef88dc0044b537dcf919a46}
+      \strng{authornamehash}{840ffb7ecef88dc0044b537dcf919a46}
+      \strng{authorfullhash}{840ffb7ecef88dc0044b537dcf919a46}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Networks}
+      \field{number}{1}
+      \field{title}{An exact algorithm for the asymmetrical capacitated vehicle routing problem}
+      \field{volume}{16}
+      \field{year}{1986}
+      \field{pages}{33\bibrangedash 46}
+      \range{pages}{14}
+    \endentry
+    \entry{bib:chapter:ExactMethods}{incollection}{}
+      \name{author}{2}{}{%
+        {{hash=64a21d7d6af80b9745445b7848079bcd}{%
+           family={Laporte},
+           familyi={L\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+        {{hash=0533cd996cc1e582851468a9a1a4bf23}{%
+           family={Nobert},
+           familyi={N\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \name{editor}{4}{}{%
+        {{hash=9680e482c6207bd5c935937249582d06}{%
+           family={Martello},
+           familyi={M\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=64a21d7d6af80b9745445b7848079bcd}{%
+           family={Laporte},
+           familyi={L\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+        {{hash=9648c9ae2be97907077a6f392a357efd}{%
+           family={Minoux},
+           familyi={M\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=21d3f7afe700f247cb80700dd4973475}{%
+           family={Ribeiro},
+           familyi={R\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {North-Holland Mathematics Studies}%
+      }
+      \strng{namehash}{1ac83889ee1280bbae0d7f1baa8e2aa1}
+      \strng{fullhash}{1ac83889ee1280bbae0d7f1baa8e2aa1}
+      \strng{bibnamehash}{1ac83889ee1280bbae0d7f1baa8e2aa1}
+      \strng{authorbibnamehash}{1ac83889ee1280bbae0d7f1baa8e2aa1}
+      \strng{authornamehash}{1ac83889ee1280bbae0d7f1baa8e2aa1}
+      \strng{authorfullhash}{1ac83889ee1280bbae0d7f1baa8e2aa1}
+      \strng{editorbibnamehash}{ae7b69db8c0781e5fbbca9f001a445f3}
+      \strng{editornamehash}{ae7b69db8c0781e5fbbca9f001a445f3}
+      \strng{editorfullhash}{cf2fb09bb53506ba1147238985ccdfea}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Surveys in Combinatorial Optimization}
+      \field{title}{Exact Algorithms for the Vehicle Routing Problem.}
+      \field{volume}{132}
+      \field{year}{1987}
+      \field{pages}{147\bibrangedash 184}
+      \range{pages}{38}
+    \endentry
+    \entry{bib:article:osman}{article}{}
+      \name{author}{2}{}{%
+        {{hash=c9010307ae0703dc98625e0531fa3bfa}{%
+           family={Osman},
+           familyi={O\bibinitperiod},
+           given={I.\bibnamedelimi H.},
+           giveni={I\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=b8311e16a24e1c52f5369ada87fb6903}{%
+           family={Christofides},
+           familyi={C\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{25f62886263c53a93f3cd8ef1b6bb68d}
+      \strng{fullhash}{25f62886263c53a93f3cd8ef1b6bb68d}
+      \strng{bibnamehash}{25f62886263c53a93f3cd8ef1b6bb68d}
+      \strng{authorbibnamehash}{25f62886263c53a93f3cd8ef1b6bb68d}
+      \strng{authornamehash}{25f62886263c53a93f3cd8ef1b6bb68d}
+      \strng{authorfullhash}{25f62886263c53a93f3cd8ef1b6bb68d}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Imperial College, University of London, Research Report}
+      \field{title}{Simulated annealing and descent algorithms for capacitated clustering problem}
+      \field{year}{1989}
+    \endentry
+    \entry{bib:article:Savelsbergh}{article}{}
+      \name{author}{1}{}{%
+        {{hash=35acc8e9a47f73d7fd9179347fd57240}{%
+           family={Savelsbergh},
+           familyi={S\bibinitperiod},
+           given={M.\bibnamedelimi W.\bibnamedelimi P.},
+           giveni={M\bibinitperiod\bibinitdelim W\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \strng{namehash}{35acc8e9a47f73d7fd9179347fd57240}
+      \strng{fullhash}{35acc8e9a47f73d7fd9179347fd57240}
+      \strng{bibnamehash}{35acc8e9a47f73d7fd9179347fd57240}
+      \strng{authorbibnamehash}{35acc8e9a47f73d7fd9179347fd57240}
+      \strng{authornamehash}{35acc8e9a47f73d7fd9179347fd57240}
+      \strng{authorfullhash}{35acc8e9a47f73d7fd9179347fd57240}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Annals of Operations Research}
+      \field{number}{4}
+      \field{title}{Local search in routing problems with time windows}
+      \field{year}{1985}
+      \field{pages}{285\bibrangedash 305}
+      \range{pages}{21}
+    \endentry
+    \entry{bib:article:solomon}{article}{}
+      \name{author}{1}{}{%
+        {{hash=7c509b0ca1c5ce1ab460732fcf604559}{%
+           family={Solomon},
+           familyi={S\bibinitperiod},
+           given={Marius\bibnamedelima M.},
+           giveni={M\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \strng{namehash}{7c509b0ca1c5ce1ab460732fcf604559}
+      \strng{fullhash}{7c509b0ca1c5ce1ab460732fcf604559}
+      \strng{bibnamehash}{7c509b0ca1c5ce1ab460732fcf604559}
+      \strng{authorbibnamehash}{7c509b0ca1c5ce1ab460732fcf604559}
+      \strng{authornamehash}{7c509b0ca1c5ce1ab460732fcf604559}
+      \strng{authorfullhash}{7c509b0ca1c5ce1ab460732fcf604559}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Operations Research}
+      \field{number}{2}
+      \field{title}{Algorithms for the Vehicle Routing and Scheduling Problems with Time Window Constraints}
+      \field{volume}{35}
+      \field{year}{1987}
+      \field{pages}{254\bibrangedash 265}
+      \range{pages}{12}
+    \endentry
+    \entry{bib:article:sukiennik}{article}{}
+      \name{author}{1}{}{%
+        {{hash=6ed0078fffdbb8200a17bdf50f3da614}{%
+           family={Sukiennik},
+           familyi={S\bibinitperiod},
+           given={Katarzyna},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{6ed0078fffdbb8200a17bdf50f3da614}
+      \strng{fullhash}{6ed0078fffdbb8200a17bdf50f3da614}
+      \strng{bibnamehash}{6ed0078fffdbb8200a17bdf50f3da614}
+      \strng{authorbibnamehash}{6ed0078fffdbb8200a17bdf50f3da614}
+      \strng{authornamehash}{6ed0078fffdbb8200a17bdf50f3da614}
+      \strng{authorfullhash}{6ed0078fffdbb8200a17bdf50f3da614}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Zeszyty Naukowe Politechniki Częstochowskiej. Zarządzanie}
+      \field{number}{4}
+      \field{title}{Logistics Costs in Manufacturing Companies}
+      \field{year}{2011}
+      \field{pages}{131\bibrangedash 139}
+      \range{pages}{9}
+    \endentry
+    \entry{bib:chapter:PFIH}{incollection}{}
+      \name{author}{2}{}{%
+        {{hash=276764688d1e679c0bc5832fec17f2a2}{%
+           family={Tam},
+           familyi={T\bibinitperiod},
+           given={V.},
+           giveni={V\bibinitperiod}}}%
+        {{hash=128f25f8ee488bbf7c6062a5e2d80cd4}{%
+           family={Ma},
+           familyi={M\bibinitperiod},
+           given={K.T.},
+           giveni={K\bibinitperiod}}}%
+      }
+      \name{editor}{2}{}{%
+        {{hash=f627aaedc8e61ac178f013fa2aa535ed}{%
+           family={Caric},
+           familyi={C\bibinitperiod},
+           given={Tonci},
+           giveni={T\bibinitperiod}}}%
+        {{hash=ad3d48c352f9bf9bc7bd10ec6dfe849c}{%
+           family={Gold},
+           familyi={G\bibinitperiod},
+           given={Hrvoje},
+           giveni={H\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Rijeka}%
+      }
+      \list{publisher}{1}{%
+        {IntechOpen}%
+      }
+      \strng{namehash}{bafa7aa83d89f681f03732065c384b6a}
+      \strng{fullhash}{bafa7aa83d89f681f03732065c384b6a}
+      \strng{bibnamehash}{bafa7aa83d89f681f03732065c384b6a}
+      \strng{authorbibnamehash}{bafa7aa83d89f681f03732065c384b6a}
+      \strng{authornamehash}{bafa7aa83d89f681f03732065c384b6a}
+      \strng{authorfullhash}{bafa7aa83d89f681f03732065c384b6a}
+      \strng{editorbibnamehash}{d34e1e01562e72f0a70434ef1ac58d5a}
+      \strng{editornamehash}{d34e1e01562e72f0a70434ef1ac58d5a}
+      \strng{editorfullhash}{d34e1e01562e72f0a70434ef1ac58d5a}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Vehicle Routing Problem}
+      \field{chapter}{3}
+      \field{title}{An Effective Search Framework Combining Meta-Heuristics to Solve the Vehicle Routing Problems with Time Windows}
+      \field{year}{2008}
+    \endentry
+    \entry{bib:article:LocalSearchLambda}{article}{}
+      \name{author}{4}{}{%
+        {{hash=62035adae3aef2d5a1230212ea5195fb}{%
+           family={Tan},
+           familyi={T\bibinitperiod},
+           given={K.},
+           giveni={K\bibinitperiod}}}%
+        {{hash=1c11fefd4b02170a02fb35d7ffcd7da3}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={L.\bibnamedelimi H.},
+           giveni={L\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=a0926b6039f743fc204323d9c1b5db43}{%
+           family={Zhu},
+           familyi={Z\bibinitperiod},
+           given={K.},
+           giveni={K\bibinitperiod}}}%
+        {{hash=84b1fb538958d2849ae9207b42fd4e63}{%
+           family={Ou},
+           familyi={O\bibinitperiod},
+           given={K.},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{98e04404829faed5d5476e08da13449c}
+      \strng{fullhash}{9b5885a79fd0a74adfffbb9129632f97}
+      \strng{bibnamehash}{98e04404829faed5d5476e08da13449c}
+      \strng{authorbibnamehash}{98e04404829faed5d5476e08da13449c}
+      \strng{authornamehash}{98e04404829faed5d5476e08da13449c}
+      \strng{authorfullhash}{9b5885a79fd0a74adfffbb9129632f97}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{AI in Engineering}
+      \field{month}{01}
+      \field{title}{Heuristic methods for vehicle routing problem with time windows.}
+      \field{volume}{15}
+      \field{year}{2001}
+      \field{pages}{281\bibrangedash 295}
+      \range{pages}{15}
+    \endentry
+    \entry{bib:book:TothAndVigo}{book}{}
+      \name{author}{2}{}{%
+        {{hash=16fc2b730a7a7c0fc6b31098630baaef}{%
+           family={Toth},
+           familyi={T\bibinitperiod},
+           given={Paolo},
+           giveni={P\bibinitperiod}}}%
+        {{hash=714df25ae31514d150daa1631e87d182}{%
+           family={Vigo},
+           familyi={V\bibinitperiod},
+           given={Daniele},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Society for Industrial \& Applied Mathematics}%
+      }
+      \strng{namehash}{5bb027295595510455847230731bf280}
+      \strng{fullhash}{5bb027295595510455847230731bf280}
+      \strng{bibnamehash}{5bb027295595510455847230731bf280}
+      \strng{authorbibnamehash}{5bb027295595510455847230731bf280}
+      \strng{authornamehash}{5bb027295595510455847230731bf280}
+      \strng{authorfullhash}{5bb027295595510455847230731bf280}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-0-89871-498-2}
+      \field{title}{The Vehicle Routing Problem}
+      \field{year}{2002}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

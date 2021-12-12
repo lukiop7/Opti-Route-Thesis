@@ -1,14 +1,22 @@
-
+#mapLayoutContainer {
+  display:flex;
+}
 #mapContainer {
+  position: relative;
   height: calc(100vh - 57px);
   width: 100%;
-  position: relative;
 }
 
 #customers {
+  position: absolute;
   top: 5%;
   left: 5%;
   height:90%;
-  width:30%;
-  position: absolute;
+  width:25%;
+  z-index: 1060;
+}
+
+.sidebar-content{
+  height:100%;
+  width:100%;
 }

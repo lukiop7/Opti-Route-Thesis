@@ -1,0 +1,703 @@
+% !TeX spellcheck = en_GB
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                        %
+%    Engineer thesis LaTeX template      % 
+%                                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\documentclass[a4paper,twoside,12pt]{book}
+\usepackage[utf8]{inputenc}                                      
+\usepackage[T1]{fontenc}  
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage[polish,british]{babel} 
+\usepackage{indentfirst}
+\usepackage{lmodern}
+\usepackage{graphicx} 
+\usepackage{hyperref}
+\usepackage{booktabs}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage[page]{appendix} 
+\usepackage[
+backend=biber
+]{biblatex}
+
+\addbibresource{refs.bib}
+
+\usepackage{setspace}
+\onehalfspacing
+
+
+\frenchspacing
+
+\usepackage{listings}
+\lstset{
+	language={},
+	basicstyle=\ttfamily,
+	keywordstyle=\lst@ifdisplaystyle\color{blue}\fi,
+	commentstyle=\color{gray}
+}
+
+%%%%%%%%%
+
+ 
+
+%%%%%%%%%%%% FANCY HEADERS %%%%%%%%%%%%%%%
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LO]{\nouppercase{\it\rightmark}}
+\fancyhead[RE]{\nouppercase{\it\leftmark}}
+\fancyhead[LE,RO]{\it\thepage}
+
+
+\fancypagestyle{onlyPageNumbers}{%
+   \fancyhf{} 
+   \fancyhead[LE,RO]{\it\thepage}
+}
+
+\fancypagestyle{PageNumbersChapterTitles}{%
+   \fancyhf{} 
+   \fancyhead[LO]{\nouppercase{\it\rightmark}}
+   \fancyhead[RE]{\nouppercase{\it\leftmark}}
+   \fancyhead[LE,RO]{\it\thepage}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% listings 
+\usepackage{listings}
+\lstset{%
+language=C++,%
+commentstyle=\textit,%
+identifierstyle=\textsf,%
+keywordstyle=\sffamily\bfseries, %\texttt, %
+%captionpos=b,%
+tabsize=3,%
+frame=lines,%
+numbers=left,%
+numberstyle=\tiny,%
+numbersep=5pt,%
+breaklines=true,%
+morekeywords={,descriptor_gaussian,descriptor,partition,fcm_possibilistic,dataset,my_exception,exception,std,vector},%
+escapeinside={@*}{*@},%
+%texcl=true, % wylacza tryb verbatim w komentarzach jednolinijkowych
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%% TODO LIST GENERATOR %%%%%%%%%
+
+\usepackage{color}
+\definecolor{brickred}      {cmyk}{0   , 0.89, 0.94, 0.28}
+
+\makeatletter \newcommand \kslistofremarks{\section*{Remarks} \@starttoc{rks}}
+  \newcommand\l@uwagas[2]
+    {\par\noindent \textbf{#2:} %\parbox{10cm}
+{#1}\par} \makeatother
+
+
+\newcommand{\remark}[1]{%
+{%\marginpar{\textdbend}
+{\color{brickred}{[#1]}}}%
+\addcontentsline{rks}{uwagas}{\protect{#1}}%
+}
+
+%%%%%%%%%%%%%% END OF TODO LIST GENERATOR %%%%%%%%%%% 
+
+% some issues...
+
+\newcounter{PagesWithoutNumbers}
+
+\newcommand{\hcancel}[1]{%
+    \tikz[baseline=(tocancel.base)]{
+        \node[inner sep=0pt,outer sep=0pt] (tocancel) {#1};
+        \draw[red] (tocancel.south west) -- (tocancel.north east);
+    }%
+}%
+
+\newcommand{\MonthName}{%
+  \ifcase\the\month
+  \or January% 1
+  \or February% 2
+  \or March% 3
+  \or April% 4
+  \or May% 5
+  \or June% 6
+  \or July% 7
+  \or August% 8
+  \or September% 9
+  \or October% 10
+  \or November% 11
+  \or December% 12
+  \fi}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Helvetica font macros for the title page:
+\newcommand{\headerfont}{\fontfamily{phv}\fontsize{18}{18}\bfseries\scshape\selectfont}
+\newcommand{\titlefont}{\fontfamily{phv}\fontsize{18}{18}\selectfont}
+\newcommand{\otherfont}{\fontfamily{phv}\fontsize{14}{14}\selectfont}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\Author}{Łukasz Kwiecień}
+\newcommand{\Supervisor}{Tomasz Jastrząb, PhD}
+\newcommand{\Title}{Design and implementation of web application used for solving vehicle routing problems with time windows.}
+\newcommand{\Polsl}{Silesian University of Technology}
+\newcommand{\Faculty}{Faculty of Automatic Control, Electronics and Computer Science}
+\newcommand{\Programme}{Programme: Informatics}
+
+
+\begin{document} 
+	
+%%%%%%%%%%%%%%%%%%  Title page %%%%%%%%%%%%%%%%%%% 
+\pagestyle{empty}
+{
+	\newgeometry{top=2.5cm,%
+	             bottom=2.5cm,%
+	             left=3cm,
+	             right=2.5cm}
+	\sffamily
+	\rule{0cm}{0cm}
+	
+	\begin{center}
+	\includegraphics[width=45mm]{logo_eng.jpg}
+	\end{center} 
+	\vspace{1cm}
+	\begin{center}
+	\headerfont \Polsl
+	\end{center}
+	\begin{center}
+	\headerfont \Faculty
+	\end{center}
+	\vfill
+	\begin{center}
+   \headerfont \Programme
+	\end{center}
+	\vfill
+	\begin{center}
+	\titlefont Final Project
+	\end{center}
+	\vfill
+	
+	\begin{center}
+	\otherfont \Title\par
+	\end{center}
+	
+	\vfill
+	
+	\vfill
+	 
+	\noindent\vbox
+	{
+		\hbox{\otherfont author: \Author}
+		\vspace{12pt}
+		\hbox{\otherfont supervisor: \Supervisor}
+		\vspace{12pt}
+	}
+	\vfill 
+ 
+   \begin{center}
+   \otherfont Gliwice,  \MonthName\ \the\year
+   \end{center}	
+	\restoregeometry
+}
+  
+
+\cleardoublepage
+ 
+
+\rmfamily
+\normalfont
+
+
+
+%%%%%%%%%%%%%%%%%% Table of contents %%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{Roman}
+\pagestyle{onlyPageNumbers}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{PagesWithoutNumbers}{\value{page}}
+\mainmatter
+\pagestyle{empty}
+
+\chapter*{Abstract}
+
+Abstract - the abstract text should be copied into the respective field in the APD system. Abstract with keywords should not exceed one page.
+
+\bf{Keywords:} 2-5 keywords, separated by commas
+
+\addcontentsline{toc}{chapter}{Abstract}
+
+\cleardoublepage
+
+
+\pagestyle{PageNumbersChapterTitles}
+
+%%%%%%%%%%%%%% body of the thesis %%%%%%%%%%%%%%%%%
+
+
+\chapter{Introduction}
+
+ Transportation is one of the most critical activities in the supply chain. Its importance comes from the fact that the transportation costs can reach up to almost 40\% of the total logistics costs of a manufacturing company \cite{bib:article:sukiennik}. For that reason, the companies need to transport the goods or persons efficiently. That goal can be achieved by either minimizing the distance traveled by the vehicles or reducing the number of routes required to visit all destinations. The Vehicle Routing Problem (VRP) describes the problem of assigning loads to the vehicles and sequencing the customers assigned to each vehicle to obtain optimal routes.
+\paragraph{}
+VRP is one of the most studied combinatorial optimization problems. Its popularity is due to the fact that VRP can be used in many real-life scenarios in the fields of distribution, collection, and logistics.
+In a VRP the fleet of vehicles has to visit a set of customers starting from a given depot and deliver commodities to them, taking into consideration all given constraints. There are various constraints that could be introduced to the problem, for example,the time windows for the customers or the capacity of vehicles.
+\paragraph{}
+Depending on the problem variant, VRP is a combination of two or more NP-hard problems, which makes VRP also NP-hard. The fact that the problem is NP-hard makes the process of finding an exact solution very time-consuming. Therefore it is necessary to use a heuristic approach to get good solutions in an acceptable time.
+\section{Objective and scope of the thesis}
+In this thesis a web application solving Capacitated Vehicle Routing Problem with Time Windows (CVRPTW) is considered. The user defines the problem by picking waypoints on the map and determining the capacity and time window constraints. Application, if feasible, solves the problem and presents the results in a user-friendly way by visualizing all routes on the map.
+The problem is solved using Push Forward Insertion Heuristic and optimized using Local Search with {$\lambda$} interchange method. 
+The fleet of vehicles is homogeneus, which means that every vehicle has the same amount of goods that can be transported in it. Every customer has its own time window within which the delivery must be made.
+The goal was to create a tool that will simplify the process of defining and solving the CVRPTW for the end user.
+
+
+\section{Content outline}
+ The second chapter provides history and explores scientific background material for the Capacitated Vehicle Routing Problem with Time Windows. Moreover it provides formal and detailed definition of the problem and the solution methods based on the researched literature. Chapter 3 focuses on the design and implementation process of the project. It shows the functional and nonfuctional requirements as well as diagrams describing the system. The tools and metodologies used for the design and implementation process are also described there. The fourth chapter covers the hardware and software requirements for the application. It provides the step by step installation procedure along with the user manual. The usage examples and screenshots of the working application can also be found there. Chapter 5 discusses the software part of the project in detail. Description of the architecture, code and structure of the project is explained in this chapter. Furthermore, it specifies in detail the software-side of the entire process of solving the CVRPTW. Chapter 6 shows how the project was tested and verified if the requirements set during the design process were fulfilled. The last chapter summarizes the achieved results and describes the encountered difficulties.
+
+
+
+\chapter{Problem analysis}
+
+\section{Vehicle Routing Problem}
+The problem concerns a set of customers to whom products need to be delivered in such a way that the delivery cost is as low as possible. Transport is performed by a fleet of vehicles, each of which can carry a certain number of goods. The goal is to serve all customers with as few vehicles as possible and to keep the total distance travelled by all vehicles as short as possible within predefined constraints. The classic version of VRP has the following constraints: 
+\begin{enumerate}
+	\item Each vehicle's route starts and ends at a depot.
+	\item All goods must be delivered.
+	\item Customer must receive all goods at one time delivered by one vehicle.
+	\item The vehicle may not carry more goods than its capacity allows.	
+\end{enumerate}
+\paragraph{}
+The VRP can be formally defined as a directed graph $\textit{G = (V,A)}$, where $\textit{V = $\lbrace$0,\ldots,n$\rbrace$}$ is the set of vertices representing customers and the depot, and \textit{A} is the set of arcs \textit{(i,j)} connecting these vertices. The set of vehicles is denoted by \textit{W}. The depot is marked as vertex 0. The number of vehicles is denoted by \textit{m}, and each vehicle has a capacity of \textit{Q}. The cost of travel between vertices \textit{i} and \textit{j} is denoted by \textit{$c_{ij}$}. The cost is the distance, duration or other costs that may occur during the travel between nodes. The demand of customer \textit{i} is represented as \textit{$q_{i}$}.
+The customer subset \textit{S $\subseteq$ V$\setminus$ $\lbrace$0$\rbrace$} can be served by a minimum of \textit{r(S)} vehicles. This number can be obtained by solving the Bin Packing Problem (BPP) with bin set \textit{S} with capacities \textit{Q}, but because BPP is an NP-hard problem, it can be approximated by its lower bound: $\lceil$ $\sum$\textsubscript{i$\in$S} $q_{i}$/Q $\rceil$ \cite{bib:article:CordeauVehicleRouting}.
+\paragraph{}
+The Integer Linear Programming formulation of the problem is as follows:\cite{bib:book:TothAndVigo}
+\begin{equation}
+Minimize \sum_{i,j \in V} c_{ij}x_{ij}
+\end{equation}
+
+\textit{subject to:}
+
+\begin{equation}
+\sum_{i \in V}x_{ij} = 1 \qquad \forall j \in V \setminus \lbrace 0 \rbrace
+\end{equation}
+
+\begin{equation}
+\sum_{j \in V}x_{ij} = 1 \qquad \forall i \in V \setminus \lbrace 0 \rbrace
+\end{equation}
+
+\begin{equation}
+\sum_{j \in V}x_{0j} = m 
+\end{equation}
+
+\begin{equation}
+\sum_{i \in V}x_{i0} = m 
+\end{equation}
+
+\begin{equation}
+\sum_{i \not\in S} \sum_{j \in S}x_{ij} \geq \lceil \sum_{i \in S} q_{i} / Q \rceil \qquad \forall S \subseteq V \setminus \lbrace 0 \rbrace , S \neq \emptyset
+\end{equation}
+
+\begin{equation}
+x_{ij} \in \lbrace 0,1 \rbrace \qquad \forall i,j \in V
+\end{equation}
+
+In this formula, $x_{ij}$  is a binary variable whose value indicates whether the arc between vertices i and j is traversed in the solution.  
+If the connection between these vertices belongs to the solution, then the variable $x_{ij}$ is equal to 1, otherwise it is equal to 0. \textit{Indegree} Eq. 2.2 and \textit{outdegree} Eq. 2.3 constraints guarantee that every customer is visited only once. Constraints 2.4 and 2.5 ensure that the solution has \textit{m} routes, one for each vehicle (the number of routes does not exceed the number of vehicles).
+Constraints 2.6 are called \textit{capacity-cut constraints} and refer to the minimum number of vehicles needed to serve a set of customers whose total demand is $\sum$\textsubscript{i$\in$S} $q_{i}$. These constraints ensure the connectivity of the solution and that there are no paths whose load would exceed the capacity of the vehicle. The last constraint 2.7 ensures the binarity of the variable $x_{ij}$. If $x_{0j}$ is equal to 1 it means that \textit{j} belongs to this route. Any route from the solution can be reconstructed in this way: the next customer in the route is customer \textit{i}, for whom $x_{ij}$ is equal to 1. The last customer is customer i for whom $x_{i0}$ is equal to 1 \cite{bib:book:TothAndVigo}.
+\paragraph{}
+The problem of vehicle routing was first introduced by Dantzig and Ramser in 1959 as "The truck dispatching problem" \cite{bib:article:TruckDispatching}. In the following years it became very popular, resulting in many studies, books and scientific publications exploring the topic. The problem is one of the most studied combinatorial optimisation problems, since it offers many benefits for logistics and transport companies. Different implementations can save as much as 5\% to 30\% of transport-related costs \cite{bib:book:GeometricModellingCostSavings}.
+
+\section{Vehicle Routing Problem with Time Windows}
+
+The Vehicle Routing Problem with Time Windows (VRPTW) is a variant of VRP in which a constraint due to time windows is added. In this variant of the problem, each customer \textit{i} has a time window [$a_{i}$,$b_{i}$] in which it must be served. A customer cannot be served earlier than $a_{i}$ and later than $b_{i}$. In case the vehicle arrives earlier than $a_{i}$ it must wait until the window opens. Moreover, to each arc(i,j) the time \textit{$t_{ij}$} is assigned. For each vertex \textit{i} and vehicle \textit{k} a decision variable \textit{$s_{ik}$} is defined. This variable represents the time at which the vehicle \textit{k} starts to serve the customer \textit{i} \cite{bib:chapter:VRPTW}.
+This variant of VRP is also an NP-hard problem \cite{bib:article:Savelsbergh}.
+\paragraph{}
+The VRPTW can be stated mathematically as multicommodity network flow formulation with time windows and capacity constraints:\cite{bib:chapter:VRPTW} 
+
+\begin{equation}
+min \sum_{k \in W}\sum_{i,j \in V} c_{ij}x_{ijk}
+\end{equation}
+
+\textit{subject to:}
+
+\begin{equation}
+\sum_{k \in W}\sum_{i \in V}x_{ijk} = 1 \qquad \forall j \in V \setminus \lbrace 0 \rbrace
+\end{equation}
+
+\begin{equation}
+\sum_{i \in V \setminus \lbrace 0 \rbrace}q_{i} \sum_{j \in V}x_{ijk} \leq Q \qquad \forall k \in W
+\end{equation}
+
+\begin{equation}
+\sum_{j \in V}x_{0jk} = 1 \qquad \forall k \in W
+\end{equation}
+
+\begin{equation}
+\sum_{i \in V}x_{ihk} -\sum_{j \in V}x_{hjk} = 0 \qquad \forall h \in V \setminus \lbrace 0 \rbrace, \forall k \in W
+\end{equation}
+
+\begin{equation}
+\sum_{i \in V}x_{i0k} = 1 \qquad \forall k \in W
+\end{equation}
+
+\begin{equation}
+x_{ijk}(s_{ik}+t_{ij}-s_{jk}) \leq 0 \qquad \forall i,j \in V ,\forall k \in W
+\end{equation}
+
+\begin{equation}
+a_{i}\leq s_{ik} \leq b_{i} \qquad \forall i \in V ,\forall k \in W
+\end{equation}
+
+\begin{equation}
+x_{ijk} \in \lbrace 0,1 \rbrace \qquad \forall i,j \in V ,\forall k \in W
+\end{equation}
+
+Objective function 2.8 minimizes travel cost. Constraints 2.9 and 2.10 ensure that each customer is visited once and vehicle cannot surpass its capacity. Equations 2.11, 2.12 and 2.13 indicate that each vehicle must leave the depot, once it has reached the customer it must travel to the next location and finally return to the depot. Inequality 2.14 shows the relationship between vehicle departure time and its successor. Inequalities 2.15 provide that the time windows are observed. Constraints 2.16 are the integrality constraints \cite{bib:chapter:VRPTW}.
+
+\section{Solution approaches}
+
+There are two approaches to solving VRPs. The first is to solve using exact methods, which are guaranteed to find the optimal solution. However, these methods are very expensive in terms of memory and computation time, which makes them applicable only to problems of low complexity. The second approach is to use approximate methods (heuristics), which allow solving larger and more complex problems in a reasonable time. However, heuristics do not guarantee finding the optimal solution. 
+
+\subsection{Exact methods}
+The exact methods were divided by Laporte and Norbert's into three families: Direct Tree Search methods, Dynamic Programming and Integer Linear Programming \cite{bib:chapter:ExactMethods}.
+\paragraph{}
+The Direct Tree Search family includes branch and bound algorithms. The solution using this algorithm was first proposed by Christofides and Eilon in 1969 \cite{bib:article:Eilon}. However, the algorithm was only able to solve problems up to 13 clients, due to time complexity. Over the years, the methods in this family have been improved, allowing solutions for problems with up to 25 \cite{bib:article:LowerBound} clients and even, in later years, 250 \cite{bib:article:Laporte}.
+\paragraph{}
+The Dynamic Programming solutions were, at first, able to solve problems up to 25 customers. Later, significant improvements were made that allowed to solve problems up to 50 customers.
+\paragraph{}
+The Integer Linear Programming methods produced some of the best exact solutions. This has been achieved by extending the set partitioning algorithm using the column generation method \cite{bib:article:ILP}. 
+
+\subsection{Heuristics}
+Heuristics do not guarantee the best solution, their aim is to obtain a solution close to the best, in a relatively short time. They make it possible to solve larger and more complex problems that would not be possible to solve with exact methods. For VRP, we can distinguish between two types of herustics: construction and improvement. The process of solving a VRP usually can be divided into two steps: an initial solution is created using the construction heuristic, and then the improvement heuristics improves the solution. 
+\subsubsection{Construction heuristics}
+One of the best known construction heuristics is Clarke and Wright's savings algorithm. In the first step, separate routes are created for each customer, even if the number of vehicles is insufficient. Then, the  savings for all connections between edges (\textit{i,j}) are calculated using the formula \textit{$s_{ij}$ = $c_{i0}$ + $c_{0j}$ - $c_{ij}$}. After that, the savings are sorted in the descending order and algorithm tries to merge two routes that will reduce the total costs of travel. Routes are merged by connecting the customer from one route to the customer from the second route. A merge between \textit{i} and \textit{j} is only possible if they are the first or last vertices of their routes and the vehicle capacity constraint is not violated. The algorithm stops when there are no more possible connections.
+\paragraph{}
+Another type of Construction herustics is insertion heuristics. The Push forward insertion heuristics used in this thesis will be discussed in detail later in the chapter.
+\paragraph{}
+The last type of design heuristics are two-phase heuristics. They divide the problem into two sub-problems and then solve each of them. One such method is cluster first, route second. In this approach, customers are clustered into a base set of routes. Each cluster is treated as a separate TSP instance. There are various methods of clustering customers, one of which is the sweep algorithm. The sweep algorithm builds routes by sweeping a ray, centered at the depot, clockwise adding each customer lying on the line of the circle to the cluster.
+\subsubsection{Improvement heuristics}
+Once an initial solution is found using the construction heuristics, it is improved using the improvement heuristics. One type of such heuristics is the local search heuristic, in which the best solution is selected from the neighbourhood until a stopping criterion is reached. Neighbourhood solutions are created from the current one by applying operators that modify the original solution. 
+\paragraph{}
+Local search with $\lambda$ interchange heuristic will be discussed later in the chapter. This improvement heuristic method was used in the project.
+\paragraph{}
+Simulated annealing is another example. This method replicates the process of heating up a material and then slowly lowering the temperature to reduce defects. The main assumption of the algorithm is to infrequently accept worse solutions in order to avoid a local optimum. The solution is accepted with a probability calculated by means of a function depending on the difference in quality between the new and the current solution, and a parameter called the current temperature.
+\paragraph{}
+Another method is Tabu search. Based on the initial solution, neighbouring solutions are determined and the best of these solutions is selected as the new best solution. The previous solutions are stored in a tabu list, it has a predefined length, and when it is full, adding another solution removes the oldest one from the list. Such a mechanism avoids a local optimum and a return to previous solutions. 
+\paragraph{}
+VRP can be solved using many other heuristics, including: Large Neighbourhood Searches, Genetic Algorithms or Ant Colonies.
+\subsection{Push forward insertion heuristic}
+In this thesis, the initial solution is created using Push Forward Insertion Heuristic. It was introduced by Solomon \cite{bib:article:solomon} in 1987 and it is an efficient method to insert customers into routes. The algorithm creates a new route by selecting the starting customer furthest from the depot and then inserts each unassigned customer into the route until the capacity or time constraints are met. Then new route is created and the process repeats until all customers are routed. The feasibility check ensures that all constraints are not violated. This method generates a good starting solution for later improvements, in a short time.
+\paragraph{}
+For the pseudocode for PFIH algorithm for VPRTW see figure \ref{fig:PFIH} \cite{bib:chapter:PFIH}.
+\begin{figure}
+\centering
+\begin{lstlisting}[mathescape=true]
+Begin an empty route $r_{0}$ starting from the depot; $i := 0$;
+Among all unassigned customers, select the customer farthest from the depot and insert into the current route $r_{i}$;
+if all customers are routed then goto line 13.
+else
+    if the capacity $Q$ of the vehicle $k$ involved in the current route $r_{i}$ is exceeded then goto line 12.
+	else
+    	foreach unassigned customer
+    		find the best position for insertion in $r_{i}$ without violating any specified time window to compare the cost of starting a new route against that for the best position found.   
+if there exists no feasible position for insertion into the current route $r_{i}$ then goto line 12.
+else
+	Pick the customer with the greatest cost difference and insert it into $r_{i}$ and update the capacity $Q$ of the vehicle $k$ involved. goto line 3.
+Start a new route $r_{i+1}$ starting from the depot; $i := i+1$; goto line 2.
+Return the current solution
+\end{lstlisting}
+\caption{Push Forward Insertion Heuristic for Vehicle Routing Problem with Time Windows}
+\label{fig:PFIH}
+\end{figure}
+\subsection{Local search with $\lambda$ interchange}
+The $\lambda$ interchange neighbourhood generation method was introduced by Osman and Christofides \cite{bib:article:osman}. Local Search is performed by interchanging clients between routes. The interchanges are performed through operators whose number depends on the $\lambda$ parameter. In this work, this parameter is set to 2, which means that the maximum number of interchanged clients between routes will be 2. For this parameter value, we can distinguish 8 interchange operators: (0,1), (1,0), (1,1), (0,2), (2,0), (2,1), (1,2), (2,2). Operator (1,1) means that one customer will be transferred from route $R_{i}$ to $R_{j}$ and also one customer will be transferred from route $R_{j}$ to $R_{i}$. Operator 2,1 means that two customers will be moved from route $R_{i}$ to $R_{j}$ and only one customer will be moved from route $R_{j}$ to $R_{i}$. The other operators work on the same principle. If the solution has improved after the interchange of customers between routes, it is then accepted, otherwise such a solution is rejected \cite{bib:article:LocalSearchLambda}. 
+\paragraph{}
+To select between the candidate solutions a global-best strategy was chosen. The global-best strategy searches all solutions in the neighbourhood of the current solution for all operators and selects the one that gives the greatest cost reduction. The local search is stopped after a fixed number of iterations or other specified stopping criterion \cite{bib:article:LocalSearchLambda}. 
+\paragraph{}
+The algorithm can be summarised as follows: After generating a starting solution its entire neighbourhood (generated using the operators) is searched for a candidate solution. The candidate becomes the new current solution and its neighbourhood is searched to find a better solution. In case there are no more solutions in the neighbourhood that improve our current solution the algorithm is stopped.
+\chapter{Requirements and tools}
+
+\begin{itemize}
+\item functional and nonfunctional requirements
+\item use cases (UML diagrams)
+\item description of tools
+\item methodology of design and implementation
+\end{itemize} 
+
+
+\chapter{External specification}
+\begin{itemize}
+\item hardware and software requirements
+\item installation procedure
+\item activation procedure
+\item types of users
+\item user manual
+\item system administration
+\item security issues
+\item example of usage
+\item working scenarios (with screenshots or output files)
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics[width=2cm]{logo_eng.jpg}
+\caption{Figure caption (below the figure).}
+\label{fig:2}
+\end{figure}
+
+
+\chapter{Internal specification}
+
+\begin{itemize}
+\item concept of the system
+\item system architecture
+\item description of data structures (and data bases)
+\item components, modules, libraries, resume of important classes (if used)
+\item resume of important algorithms (if used)
+\item details of implementation of selected parts
+\item applied design patterns
+\item UML diagrams
+\end{itemize}
+
+
+Use special environment for inline code, eg \lstinline|descriptor| or \lstinline|descriptor_gaussian|. 
+Longer parts of code put in the figure environment, eg. code in Fig. \ref{fig:pseudokod}. Very long listings–move to an appendix.
+
+\begin{figure}
+\centering
+\begin{lstlisting}
+class descriptor_gaussian : virtual public descriptor
+{
+   protected:
+      /** core of the gaussian fuzzy set */
+      double _mean;
+      /** fuzzyfication of the gaussian fuzzy set */
+      double _stddev;
+      
+   public:
+      /** @param mean core of the set
+          @param stddev standard deviation */
+      descriptor_gaussian (double mean, double stddev);
+      descriptor_gaussian (const descriptor_gaussian & w);
+      virtual ~descriptor_gaussian();
+      virtual descriptor * clone () const;
+      
+      /** The method elaborates membership to the gaussian fuzzy set. */
+      virtual double getMembership (double x) const;
+     
+};
+\end{lstlisting}
+\caption{The \lstinline|descriptor_gaussian| class.}
+\label{fig:pseudokod}
+\end{figure}
+
+
+\chapter{Verification and validation}
+\begin{itemize}
+\item testing paradigm (eg V model)
+\item test cases, testing scope (full / partial)
+\item detected and fixed bugs
+\item results of experiments (optional)
+\end{itemize}
+
+ 
+ 
+
+\chapter{Conclusions}
+\begin{itemize}
+\item achieved results with regard to objectives of the thesis and requirements
+\item path of further development (eg functional extension …)
+\item encountered difficulties and problems
+\end{itemize}
+
+ 
+\begin{table}
+\centering
+\caption{A caption of a table is \textbf{above} it.}
+\label{id:tab:wyniki}
+\begin{tabular}{rrrrrrrr}
+\toprule
+	         &                                     \multicolumn{7}{c}{method}                                      \\
+	         \cmidrule{2-8}
+	         &         &         &        \multicolumn{3}{c}{alg. 3}        & \multicolumn{2}{c}{alg. 4, $\gamma = 2$} \\
+	         \cmidrule(r){4-6}\cmidrule(r){7-8}
+	$\zeta$ &     alg. 1 &   alg. 2 & $\alpha= 1.5$ & $\alpha= 2$ & $\alpha= 3$ &   $\beta = 0.1$  &   $\beta = -0.1$ \\
+\midrule
+	       0 &  8.3250 & 1.45305 &       7.5791 &    14.8517 &    20.0028 & 1.16396 &                       1.1365 \\
+	       5 &  0.6111 & 2.27126 &       6.9952 &    13.8560 &    18.6064 & 1.18659 &                       1.1630 \\
+	      10 & 11.6126 & 2.69218 &       6.2520 &    12.5202 &    16.8278 & 1.23180 &                       1.2045 \\
+	      15 &  0.5665 & 2.95046 &       5.7753 &    11.4588 &    15.4837 & 1.25131 &                       1.2614 \\
+	      20 & 15.8728 & 3.07225 &       5.3071 &    10.3935 &    13.8738 & 1.25307 &                       1.2217 \\
+	      25 &  0.9791 & 3.19034 &       5.4575 &     9.9533 &    13.0721 & 1.27104 &                       1.2640 \\
+	      30 &  2.0228 & 3.27474 &       5.7461 &     9.7164 &    12.2637 & 1.33404 &                       1.3209 \\
+	      35 & 13.4210 & 3.36086 &       6.6735 &    10.0442 &    12.0270 & 1.35385 &                       1.3059 \\
+	      40 & 13.2226 & 3.36420 &       7.7248 &    10.4495 &    12.0379 & 1.34919 &                       1.2768 \\
+	      45 & 12.8445 & 3.47436 &       8.5539 &    10.8552 &    12.2773 & 1.42303 &                       1.4362 \\
+	      50 & 12.9245 & 3.58228 &       9.2702 &    11.2183 &    12.3990 & 1.40922 &                       1.3724 \\
+\bottomrule
+\end{tabular}
+\end{table}  
+
+ 
+
+ 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\backmatter
+\pagenumbering{Roman}
+\stepcounter{PagesWithoutNumbers}
+\setcounter{page}{\value{PagesWithoutNumbers}}
+
+\pagestyle{onlyPageNumbers}
+
+%%%%%%%%%%% bibliography %%%%%%%%%%%%
+%\bibliographystyle{plain}
+%\bibliography{bibliography}
+
+\addcontentsline{toc}{chapter}{Bibliography}
+\printbibliography
+%%%%%%%%%  appendices %%%%%%%%%%%%%%%%%%% 
+
+\begin{appendices} 
+
+
+ 
+
+\chapter*{Index of abbreviations and symbols}
+\addcontentsline{toc}{chapter}{Index of abbreviations and symbols}
+
+\begin{itemize}
+\item[VRP] Vehicle Routing Problem
+\item[VRPTW] Vehicle Routing Problem with Time Windows
+\item[CVRPTW] Capacitated Vehicle Routing Problem with Time Windows
+\item[$V$] Set of vertices representing customers and the depot
+\item[$A$] Arcs connecting vertices from $V$
+\item[$W$] Set of vehicles
+\item[$Q$] Capacity of vehicle
+\end{itemize}
+
+
+\chapter*{Listings}
+\addcontentsline{toc}{chapter}{Listings}
+
+(Put long listings in the appendix.)
+
+\begin{lstlisting}
+partition fcm_possibilistic::doPartition
+                             (const dataset & ds)
+{
+   try
+   {
+      if (_nClusters < 1)
+         throw std::string ("unknown number of clusters");
+      if (_nIterations < 1 and _epsilon < 0)
+         throw std::string ("You should set a maximal number of iteration or minimal difference -- epsilon.");
+      if (_nIterations > 0 and _epsilon > 0)
+         throw std::string ("Both number of iterations and minimal epsilon set -- you should set either number of iterations or minimal epsilon.");
+   
+      auto mX = ds.getMatrix();
+      std::size_t nAttr = ds.getNumberOfAttributes();
+      std::size_t nX    = ds.getNumberOfData();
+      std::vector<std::vector<double>> mV;
+      mU = std::vector<std::vector<double>> (_nClusters);
+      for (auto & u : mU)
+         u = std::vector<double> (nX);
+      randomise(mU);
+      normaliseByColumns(mU);
+      calculateEtas(_nClusters, nX, ds);
+      if (_nIterations > 0)
+      {
+         for (int iter = 0; iter < _nIterations; iter++)
+         {
+            mV = calculateClusterCentres(mU, mX);
+            mU = modifyPartitionMatrix (mV, mX);
+         }
+      }
+      else if (_epsilon > 0)
+      {
+         double frob;
+         do 
+         {
+            mV = calculateClusterCentres(mU, mX);
+            auto mUnew = modifyPartitionMatrix (mV, mX);
+            
+            frob = Frobenius_norm_of_difference (mU, mUnew);
+            mU = mUnew;
+         } while (frob > _epsilon);
+      }
+      mV = calculateClusterCentres(mU, mX);
+      std::vector<std::vector<double>> mS = calculateClusterFuzzification(mU, mV, mX);
+      
+      partition part;
+      for (int c = 0; c < _nClusters; c++)
+      {
+         cluster cl; 
+         for (std::size_t a = 0; a < nAttr; a++)
+         {
+            descriptor_gaussian d (mV[c][a], mS[c][a]);
+            cl.addDescriptor(d);
+         }
+         part.addCluster(cl);
+      }
+      return part;
+   }
+   catch (my_exception & ex)                                  
+   {                                                       
+      throw my_exception (__FILE__, __FUNCTION__, __LINE__, ex.what()); 
+   }                                                          
+   catch (std::exception & ex)                                 
+   {                                                            
+      throw my_exceptionn (__FILE__, __FUNCTION__, __LINE__, ex.what()); 
+   }                                                            
+   catch (std::string & ex)                                     
+   {                                                            
+      throw my_exception (__FILE__, __FUNCTION__, __LINE__, ex);        
+   }                                                             
+   catch (...)                                                   
+   {                                                             
+      throw my_exception (__FILE__, __FUNCTION__, __LINE__, "unknown expection");       
+   }  
+}
+\end{lstlisting} 
+
+\chapter*{List of additional files in electronic submission }
+\addcontentsline{toc}{chapter}{List of additional files in electronic submission (if applicable)}
+
+Additional files uploaded to the system include:
+\begin{itemize}
+																
+\item source code of the application,
+\item test data,
+\item a video showing how software or hardware developed for thesis is used
+\item etc.
+\end{itemize}
+ 
+\listoffigures
+\addcontentsline{toc}{chapter}{List of figures}
+\listoftables
+\addcontentsline{toc}{chapter}{List of tables}
+	
+
+\end{appendices}
+
+
+\end{document}
+
+
+%% Finis coronat opus.

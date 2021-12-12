@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
@@ -23,6 +23,13 @@ import { MapSidebarComponent } from './map-sidebar/map-sidebar.component';
 import { MapLayoutComponent } from './map-layout/map-layout.component';
 import {MapService} from './services/map.service';
 import {OsrmService} from './services/osrm.service';
+import { MapSidebarCustomersComponent } from './map-sidebar/map-sidebar-customers/map-sidebar-customers.component';
+import { MapSidebarDepotComponent } from './map-sidebar/map-sidebar-depot/map-sidebar-depot.component';
+import { MapSidebarSolutionComponent } from './map-sidebar/map-sidebar-solution/map-sidebar-solution.component';
+import { MapSidebarGettingStartedComponent } from './map-sidebar/map-sidebar-getting-started/map-sidebar-getting-started.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import {TimepickerModule} from 'ngx-bootstrap';
+import { MapSidebarProblemInfoComponent } from './map-sidebar/map-sidebar-problem-info/map-sidebar-problem-info.component';
 
 
 
@@ -37,7 +44,12 @@ import {OsrmService} from './services/osrm.service';
     TokenComponent,
     MapComponent,
     MapSidebarComponent,
-    MapLayoutComponent
+    MapLayoutComponent,
+    MapSidebarCustomersComponent,
+    MapSidebarDepotComponent,
+    MapSidebarSolutionComponent,
+    MapSidebarGettingStartedComponent,
+    MapSidebarProblemInfoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -50,7 +62,10 @@ import {OsrmService} from './services/osrm.service';
     ModalModule.forRoot(),
     LeafletModule,
     SharedModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    MatStepperModule,
+    TimepickerModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },

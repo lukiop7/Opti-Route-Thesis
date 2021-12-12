@@ -18,6 +18,7 @@ export class OsrmService {
   getDistancesAndDurationsTable(coordinates: LatLng[]): Observable<IDistDur> {
     let params: HttpParams = new HttpParams();
     params = params.append('annotations', 'distance,duration');
+    console.log(this.TABLE_API_SERVER + coordinates.map(({lng, lat}) => `${lng},${lat}`).join(';'));
     return this._httpClient.get(this.TABLE_API_SERVER + coordinates.map(({lng, lat}) => `${lng},${lat}`).join(';'), {
       params: params
     }).pipe(

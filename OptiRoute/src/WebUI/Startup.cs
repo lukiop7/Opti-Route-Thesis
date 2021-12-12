@@ -15,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using System.Linq;
+using AlgorithmCoreVRPTW.Solver.Interfaces;
+using AlgorithmCoreVRPTW.Solver.Services;
 
 namespace OptiRoute.WebUI
 {
@@ -126,7 +128,7 @@ namespace OptiRoute.WebUI
 
                 if (env.IsDevelopment())
                 {
-                   // spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseAngularCliServer(npmScript: "start");
                     spa.UseProxyToSpaDevelopmentServer(Configuration["SpaBaseUrl"] ?? "http://localhost:4200");
                 }
             });

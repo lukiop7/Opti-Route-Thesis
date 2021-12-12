@@ -1,6 +1,11 @@
-.anyClass {
-height:100%;
-  width:100%;
+.sidebar{
+  position: relative;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
 }
 .hidden-scroll{
   overflow-y: scroll;
@@ -8,6 +13,16 @@ height:100%;
 .hidden-scroll::-webkit-scrollbar{
   display:none;
 }
-.card-full-height{
-  height:100%;
+.mat-horizontal-content-container{
+  height: 100%;
+}
+.mat-horizontal-stepper-content{
+  height: 100%;
+  display: flex;
+}
+
+.footer{
+  padding: .75rem 1.25rem;
+  border-top: 1px solid rgba(0,0,0,.125);
+  background-color: rgb(247 247 247);
 }
