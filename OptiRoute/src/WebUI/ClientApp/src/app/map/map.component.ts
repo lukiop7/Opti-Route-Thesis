@@ -1,28 +1,16 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output} from '@angular/core';
-import {
-  icon,
-  LatLng,
-  latLng,
-  Layer,
-  LeafletMouseEvent,
-  marker,
-  polyline,
-  tileLayer,
-  Map as lMap,
-  popup,
-  Polyline,
-  Marker,
-  Zoom, control, LayerGroup
-} from 'leaflet';
+import {control} from 'leaflet';
+
 import {MapService} from '../services/map.service';
 import {Subscription} from 'rxjs';
 
+declare let L;
 import 'leaflet';
 import 'leaflet-routing-machine';
+
 import {OsrmService} from '../services/osrm.service';
 import zoom = control.zoom;
-
-declare let L;
+import {VrptwSolutionResponse} from '../../shared/models/vrptwSolutionResponse';
 
 @Component({
   selector: 'app-map',
@@ -36,19 +24,19 @@ export class MapComponent implements OnInit, OnDestroy {
   private _viewSubscription: Subscription;
   private _viewCounter: number;
   public showPath = false;
-  customersLayer: LayerGroup;
-  depotLayer: LayerGroup;
-  pathsLayer: LayerGroup;
+  customersLayer: L.LayerGroup;
+  depotLayer: L.LayerGroup;
+  pathsLayer: any[] = [];
   options = {
     layers: [
-      tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'})
+      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'})
     ],
     zoom: 5,
-    center: latLng(50.276093992810296, 18.93446445465088),
+    center: L.latLng(50.276093992810296, 18.93446445465088),
     zoomControl: false
   };
 
-  map: lMap;
+  map: L.Map;
   counter = 0;
   path: any;
   colors: string[] = ['blue', 'red', 'green'];
@@ -58,7 +46,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this._markersSubscription = this._mapService.getMarkers().subscribe((markers: Marker[]) => {
+    this._markersSubscription = this._mapService.getMarkers().subscribe((markers: L.Marker[]) => {
       this.customersLayer.clearLayers();
       markers.forEach(marker => {
         this.customersLayer.addLayer(marker);
@@ -67,26 +55,59 @@ export class MapComponent implements OnInit, OnDestroy {
       this.changeDetector.detectChanges();
     });
 
-    this._depotMarkerSubscription = this._mapService.getDepot().subscribe((depot: Marker) => {
+    this._depotMarkerSubscription = this._mapService.getDepotMarker().subscribe((depot: L.Marker) => {
       this.depotLayer.clearLayers();
       this.depotLayer.addLayer(depot);
       this.changeDetector.detectChanges();
     });
 
-    this._pathsSubscription = this._mapService.getPaths().subscribe((paths: LatLng[][]) => {
-      this.pathsLayer.clearLayers();
+    this._pathsSubscription = this._mapService.getPaths().subscribe((result: VrptwSolutionResponse) => {
+      this.pathsLayer.forEach(path => {
+        this.map.removeControl(path);
+      });
+      this.pathsLayer = [];
+    //  this.pathsLayer.clearLayers();
       this.colorsCounter = 0;
-      paths.forEach(path => {
+      let index = 2000;
+      // const router = new L.Routing.osrmv1();
+      // result.paths.forEach(path => {
+      //   console.log(`path: ${path}`);
+      //   const waypoints = [];
+      //   path.forEach(point => {
+      //     waypoints.push(new L.Routing.waypoint([point.lat, point.lng]));
+      //   });
+      //   console.log(`router: ${router}`);
+      //   router.route(waypoints, function (err, routes) {
+      //     console.log(`routes: ${routes}`);
+      //     if (err) {
+      //       alert(err);
+      //     } else {
+      //       const route = new L.Routing.line(routes[0]);
+      //       console.log(`route: ${route}`);
+      //       this.pathsLayer.addLayer(route);
+      //     }
+      //   });
+      // });
+      for (let i = 0; i < result.paths.length; i++) {
         const routeControl = L.Routing.control({
-          waypoints: path,
+          createMarker: function () {
+            return null;
+          },
+          waypoints: result.paths[i],
           routeWhileDragging: false,
           lineOptions: {
+            addWaypoints: false,
             styles: [{color: this.colors[this.colorsCounter++], opacity: 1, weight: 5}]
           }
+        }).addTo(this.map);
+        routeControl.hide();
+        this.pathsLayer.push(routeControl);
+      }
+      setTimeout(function () {
+        this.pathsLayer.forEach(layer => {
         });
-        this.pathsLayer.addLayer(routeControl);
-        this.changeDetector.detectChanges();
-      });
+      }, 5000);
+      this.changeDetector.detectChanges();
     });
 
     this._viewSubscription = this._mapService.getView().subscribe(value => {
@@ -103,28 +124,28 @@ export class MapComponent implements OnInit, OnDestroy {
 
   onMapReady(map: L.Map) {
     this.map = map;
-    map.on('click', (e: LeafletMouseEvent) => {
+    map.on('click', (e: L.LeafletMouseEvent) => {
       this.addMarker(e.latlng);
       this.changeDetector.detectChanges();
     });
     this.map.addControl(zoom({
       position: 'bottomright'
     }));
-    this.customersLayer = new LayerGroup<any>();
+    this.customersLayer = new L.LayerGroup();
     this.customersLayer.addTo(this.map);
-    this.depotLayer = new LayerGroup<any>();
+    this.depotLayer = new L.LayerGroup();
     this.depotLayer.addTo(this.map);
-    this.pathsLayer = new LayerGroup<any>();
-    this.pathsLayer.addTo(this.map);
+    // this.pathsLayer = new L.LayerGroup();
+    // this.pathsLayer.addTo(this.map);
   }
 
-  addMarker(latlng: LatLng) {
+  addMarker(latlng: L.LatLng) {
     if (this.depotLayer.getLayers().length > 0 && this._viewCounter === 3) {
-      const newMarker = marker(
+      const newMarker = L.marker(
         [latlng.lat, latlng.lng],
         {
           icon:
-            icon({
+            L.icon({
               iconSize: [25, 41],
               iconAnchor: [13, 41],
               iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
@@ -139,11 +160,11 @@ export class MapComponent implements OnInit, OnDestroy {
       );
       this._mapService.addMarker(newMarker);
     } else if (this._viewCounter === 2) {
-      const newMarker = marker(
+      const newMarker = L.marker(
         [latlng.lat, latlng.lng],
         {
           icon:
-            icon({
+            L.icon({
               iconSize: [25, 41],
               iconAnchor: [13, 41],
               iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
