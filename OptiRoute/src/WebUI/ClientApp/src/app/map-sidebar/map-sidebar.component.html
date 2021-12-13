@@ -9,7 +9,8 @@
                              (continueClicked)="viewShown()"></app-map-sidebar-depot>
       <app-map-sidebar-customers [group]="vrptwForm.controls.customersInfoForm"
                                  *ngSwitchCase="3"></app-map-sidebar-customers>
-
+      <app-map-sidebar-solution
+        *ngSwitchCase="4"></app-map-sidebar-solution>
       <div class="footer" *ngIf="viewCounter===3">
         <button class=" w-100" [ngClass]="vrptwForm.valid ? 'btn-primary' : 'btn-secondary'" type="submit"
                 [disabled]="!vrptwForm.valid">

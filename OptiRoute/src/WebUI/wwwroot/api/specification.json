@@ -489,6 +489,10 @@
           "distance": {
             "type": "number",
             "format": "double"
+          },
+          "time": {
+            "type": "number",
+            "format": "double"
           }
         }
       },
@@ -503,6 +507,14 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          "totalTime": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalDistance": {
+            "type": "number",
+            "format": "double"
           }
         }
       },

@@ -26,8 +26,9 @@ export class MapService {
   private _customersSubject = new Subject<Customer[]>();
   private _depotMarkerSubject = new Subject<Marker>();
   private _depotSubject = new Subject<Customer>();
-  private _pathsSubject = new Subject<VrptwSolutionResponse>();
-  private _viewSubject = new Subject<number>();
+  private _pathsSubject = new ReplaySubject<VrptwSolutionResponse>(1);
+  private _viewSubject = new BehaviorSubject<number>(0);
+  private _selectedPathSubject = new Subject<number>();
 
   constructor(private _vrptwClient: CVRPTWClient, private _osrmService: OsrmService) {
   }
@@ -58,6 +59,14 @@ export class MapService {
 
   setView(value: number) {
     this._viewSubject.next(value);
+  }
+
+  getSelectedPath(): Observable<number> {
+    return this._selectedPathSubject.asObservable();
+  }
+
+  setSelectedPath(value: number) {
+    this._selectedPathSubject.next(value);
   }
 
   addMarker(marker: Marker) {
@@ -108,6 +117,7 @@ export class MapService {
       }
       console.log(routes);
       this._pathsSubject.next({solution: solution, paths: routes});
+      this.setView(this._viewSubject.value + 1);
     }
   }
 

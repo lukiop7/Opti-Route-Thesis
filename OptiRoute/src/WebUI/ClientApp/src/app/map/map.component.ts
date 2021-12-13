@@ -22,7 +22,9 @@ export class MapComponent implements OnInit, OnDestroy {
   private _pathsSubscription: Subscription;
   private _depotMarkerSubscription: Subscription;
   private _viewSubscription: Subscription;
+  private _selectedPathIndexSubscription: Subscription;
   private _viewCounter: number;
+  private _selectedPathIndex: number;
   public showPath = false;
   customersLayer: L.LayerGroup;
   depotLayer: L.LayerGroup;
@@ -63,6 +65,7 @@ export class MapComponent implements OnInit, OnDestroy {
     });
 
     this._pathsSubscription = this._mapService.getPaths().subscribe((result: VrptwSolutionResponse) => {
+
       this.panes.forEach((pane: HTMLElement)  => {
         pane.remove();
       });
@@ -118,6 +121,21 @@ export class MapComponent implements OnInit, OnDestroy {
 
     this._viewSubscription = this._mapService.getView().subscribe(value => {
       this._viewCounter = value;
+    });
+
+    this._selectedPathIndexSubscription = this._mapService.getSelectedPath().subscribe(value => {
+      this._selectedPathIndex = value;
+      let max = 0;
+      let index = 0;
+      this.panes.forEach(function (v, k) {
+        if (max < +v.style.zIndex) {
+          max = +v.style.zIndex;
+          index = k;
+        }
+      });
+      const tmp = this.panes[this._selectedPathIndex].style.zIndex;
+      this.panes[this._selectedPathIndex].style.zIndex = max;
+      this.panes[index].style.zIndex = tmp;
     });
   }
 
