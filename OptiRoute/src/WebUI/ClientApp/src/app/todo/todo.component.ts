@@ -75,10 +75,12 @@ export class TodoComponent {
             },
             error => {
                 let errors = JSON.parse(error.response);
-
-                if (errors && errors.Title) {
-                    this.newListEditor.error = errors.Title[0];
+                console.log(errors);
+                if (errors && errors.errors.Title) {
+                    console.log("siema");
+                    this.newListEditor.error = errors.errors.Title[0];
                 }
+                console.log(this.newListEditor);
 
                 setTimeout(() => document.getElementById("title").focus(), 250);
             }

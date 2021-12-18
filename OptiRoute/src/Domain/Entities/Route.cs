@@ -9,7 +9,6 @@ namespace AlgorithmCoreVRPTW.Models
         public List<Customer> Customers { get; set; } = new List<Customer>();
         public List<List<double>> Distances { get; set; } = new List<List<double>>();
         public List<List<double>> Durations { get; set; } = new List<List<double>>();
-        private Dictionary<int, double> WaitingTimeDictionary { get; set; } = new Dictionary<int, double>();
         public Vehicle Vehicle { get; set; }
         public Depot Depot { get; set; }
 

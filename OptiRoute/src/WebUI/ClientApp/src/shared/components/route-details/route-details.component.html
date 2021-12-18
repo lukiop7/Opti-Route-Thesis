@@ -1,1 +1,9 @@
-<p>route-details works!</p>
+<div class="card card-body position-relative">
+<div class="d-flex flex-column">
+  <span>Time: {{route.totalTime}}</span>
+  <span>Distance: {{route.totalDistance}}</span>
+  <li *ngFor="let client of route.customers; let i = index">
+    {{ client }}
+  </li>
+</div>
+</div>

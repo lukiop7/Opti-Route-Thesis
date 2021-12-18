@@ -17,6 +17,7 @@ export class RouteDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.route);
   }
 
   @HostListener('mouseenter') mouseover(event: Event) {
