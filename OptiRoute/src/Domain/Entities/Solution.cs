@@ -17,5 +17,13 @@ namespace AlgorithmCoreVRPTW.Models
                 return Math.Round(Routes.Sum(x => x.TotalDistance), 2);
             }
         }
+
+        public double Time
+        {
+            get
+            {
+                return Math.Round(Routes.Sum(x => x.TotalTime), 2);
+            }
+        }
     }
 }

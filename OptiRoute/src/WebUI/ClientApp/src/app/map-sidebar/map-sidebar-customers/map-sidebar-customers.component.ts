@@ -23,8 +23,9 @@ export class MapSidebarCustomersComponent implements OnInit, OnDestroy {
     this.customersInfo = <FormArray>this.customersInfoForm.controls['customersInfo'];
     this._subscription = this._mapService.getCustomers().subscribe((customers: Customer[]) => {
       this.customers = customers;
-      const control = <FormArray>this.customersInfoForm.controls['customersInfo'];
-      control.push(this.initCustomer());
+      if(this.customersInfo.length < this.customers.length){
+        this.customersInfo.push(this.initCustomer());
+      }
       this.changeDetector.detectChanges();
     });
   }
@@ -39,10 +40,8 @@ export class MapSidebarCustomersComponent implements OnInit, OnDestroy {
 
   removeCustomer(customer: Customer) {
     const index = this.customers.indexOf(customer);
-    const control = <FormArray>this.customersInfoForm.controls['customersInfo'];
-    control.removeAt(index);
+    this.customersInfo.removeAt(index);
     this._mapService.removeCustomer(customer);
-    this.changeDetector.detectChanges();
   }
 
   initCustomer(): FormGroup {

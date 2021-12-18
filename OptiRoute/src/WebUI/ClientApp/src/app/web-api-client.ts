@@ -721,6 +721,7 @@ export class SolutionDto implements ISolutionDto {
     feasible?: boolean;
     routes?: RouteDto[] | undefined;
     distance?: number;
+    time?: number;
 
     constructor(data?: ISolutionDto) {
         if (data) {
@@ -740,6 +741,7 @@ export class SolutionDto implements ISolutionDto {
                     this.routes!.push(RouteDto.fromJS(item));
             }
             this.distance = _data["distance"];
+            this.time = _data["time"];
         }
     }
 
@@ -759,6 +761,7 @@ export class SolutionDto implements ISolutionDto {
                 data["routes"].push(item.toJSON());
         }
         data["distance"] = this.distance;
+        data["time"] = this.time;
         return data; 
     }
 }
@@ -767,10 +770,13 @@ export interface ISolutionDto {
     feasible?: boolean;
     routes?: RouteDto[] | undefined;
     distance?: number;
+    time?: number;
 }
 
 export class RouteDto implements IRouteDto {
     customers?: number[] | undefined;
+    totalTime?: number;
+    totalDistance?: number;
 
     constructor(data?: IRouteDto) {
         if (data) {
@@ -788,6 +794,8 @@ export class RouteDto implements IRouteDto {
                 for (let item of _data["customers"])
                     this.customers!.push(item);
             }
+            this.totalTime = _data["totalTime"];
+            this.totalDistance = _data["totalDistance"];
         }
     }
 
@@ -805,12 +813,16 @@ export class RouteDto implements IRouteDto {
             for (let item of this.customers)
                 data["customers"].push(item);
         }
+        data["totalTime"] = this.totalTime;
+        data["totalDistance"] = this.totalDistance;
         return data; 
     }
 }
 
 export interface IRouteDto {
     customers?: number[] | undefined;
+    totalTime?: number;
+    totalDistance?: number;
 }
 
 export class ProblemDto implements IProblemDto {

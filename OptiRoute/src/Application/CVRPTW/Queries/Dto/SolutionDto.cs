@@ -15,5 +15,6 @@ namespace OptiRoute.Application.CVRPTW.Dtos
         public List<RouteDto> Routes { get; set; } = new List<RouteDto>();
 
         public double Distance { get; set; }
+        public double Time { get; set; }
     }
 }

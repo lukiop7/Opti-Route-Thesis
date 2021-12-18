@@ -4,16 +4,19 @@ import { MarkerDetailsComponent } from './components/marker-details/marker-detai
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {TimepickerModule} from 'ngx-bootstrap/timepicker';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { RouteDetailsComponent } from './components/route-details/route-details.component';
 
 
 
 @NgModule({
   declarations: [
-    MarkerDetailsComponent
+    MarkerDetailsComponent,
+    RouteDetailsComponent
   ],
-  exports: [
-    MarkerDetailsComponent
-  ],
+    exports: [
+        MarkerDetailsComponent,
+        RouteDetailsComponent
+    ],
   imports: [
     CommonModule,
     FontAwesomeModule,

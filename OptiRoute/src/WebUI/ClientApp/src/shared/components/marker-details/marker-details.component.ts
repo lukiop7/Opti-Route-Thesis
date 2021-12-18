@@ -27,7 +27,7 @@ export class MarkerDetailsComponent implements OnInit {
     this.customerInfoForm.patchValue({
       dueDate: (currentDate.slice(0, 16)),
       readyTime: (currentDate.slice(0, 16)),
-      serviceTime:  (currentDate.slice(11, 16)),
+      serviceTime: '00:00',
     });
   }
 

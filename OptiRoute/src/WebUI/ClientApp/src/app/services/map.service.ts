@@ -13,6 +13,8 @@ import {
 import {OsrmService} from './osrm.service';
 import {IDistDur} from '../../shared/models/osrmTableResponse';
 import {FormGroup} from '@angular/forms';
+import {VrptwSolutionResponse} from '../../shared/models/vrptwSolutionResponse';
+import {addHours} from '../../shared/utils/addHours';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +25,10 @@ export class MapService {
   private _markersSubject = new Subject<Marker[]>();
   private _customersSubject = new Subject<Customer[]>();
   private _depotMarkerSubject = new Subject<Marker>();
-  private _pathsSubject = new Subject<LatLng[][]>();
-  private _viewSubject = new Subject<number>();
+  private _depotSubject = new Subject<Customer>();
+  private _pathsSubject = new ReplaySubject<VrptwSolutionResponse>(1);
+  private _viewSubject = new BehaviorSubject<number>(0);
+  private _selectedPathSubject = new Subject<number>();
 
   constructor(private _vrptwClient: CVRPTWClient, private _osrmService: OsrmService) {
   }
@@ -33,15 +37,19 @@ export class MapService {
     return this._customersSubject.asObservable();
   }
 
-  getDepot(): Observable<Marker> {
+  getDepotMarker(): Observable<Marker> {
     return this._depotMarkerSubject.asObservable();
+  }
+
+  getDepot(): Observable<Customer> {
+    return this._depotSubject.asObservable();
   }
 
   getMarkers(): Observable<Marker[]> {
     return this._markersSubject.asObservable();
   }
 
-  getPaths(): Observable<LatLng[][]> {
+  getPaths(): Observable<VrptwSolutionResponse> {
     return this._pathsSubject.asObservable();
   }
 
@@ -51,6 +59,14 @@ export class MapService {
 
   setView(value: number) {
     this._viewSubject.next(value);
+  }
+
+  getSelectedPath(): Observable<number> {
+    return this._selectedPathSubject.asObservable();
+  }
+
+  setSelectedPath(value: number) {
+    this._selectedPathSubject.next(value);
   }
 
   addMarker(marker: Marker) {
@@ -74,6 +90,7 @@ export class MapService {
     const newItem: MapCustomer = {customer: customer, marker: marker};
     this._depot = newItem;
     this._depotMarkerSubject.next(this._depot.marker);
+    this._depotSubject.next(this._depot.customer);
   }
 
   removeCustomer(customer: Customer) {
@@ -99,7 +116,8 @@ export class MapService {
         routes.push(route);
       }
       console.log(routes);
-      this._pathsSubject.next(routes);
+      this._pathsSubject.next({solution: solution, paths: routes});
+      this.setView(this._viewSubject.value + 1);
     }
   }
 
@@ -121,7 +139,7 @@ export class MapService {
         id: 0,
         x: Math.floor(coordinated[0].lng),
         y: Math.floor(coordinated[0].lat),
-        dueDate: data.depotInfo.dueDate,
+        dueDate: addHours(data.depotInfo.dueDate as Date, 1),
       }),
       customers: customers,
       distances: distDur.distances,
@@ -142,9 +160,9 @@ export class MapService {
         x: Math.floor(coordinated[i].lng),
         y: Math.floor(coordinated[i].lat),
         demand: data.customersInfoForm.customersInfo[i - 1].demand,
-        readyTime: data.customersInfoForm.customersInfo[i - 1].readyTime,
-        dueDate: data.customersInfoForm.customersInfo[i - 1].dueDate,
-        serviceTime: new Date(today.toDateString() + ' ' + data.customersInfoForm.customersInfo[i - 1].serviceTime)
+        readyTime: addHours(data.customersInfoForm.customersInfo[i - 1].readyTime as Date, 1),
+        dueDate: addHours(data.customersInfoForm.customersInfo[i - 1].dueDate as Date, 1),
+        serviceTime: addHours(new Date(today.toDateString() + ' ' + data.customersInfoForm.customersInfo[i - 1].serviceTime), 1)
       }));
     }
     console.log(customers);
