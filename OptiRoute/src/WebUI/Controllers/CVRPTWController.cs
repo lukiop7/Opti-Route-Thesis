@@ -1,5 +1,4 @@
-﻿using AlgorithmCoreVRPTW.Models;
-using AlgorithmCoreVRPTW.Solver.Interfaces;
+﻿using AlgorithmCoreVRPTW.Solver.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

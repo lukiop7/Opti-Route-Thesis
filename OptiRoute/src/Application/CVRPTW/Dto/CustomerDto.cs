@@ -1,6 +1,6 @@
-﻿using AlgorithmCoreVRPTW.Models;
-using AutoMapper;
+﻿using AutoMapper;
 using OptiRoute.Application.Common.Mappings;
+using OptiRoute.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +24,10 @@ namespace OptiRoute.Application.CVRPTW.Dtos
                      .ForMember(dest => dest.DueDate, opt => opt.MapFrom(src => src.DueDate.TimeOfDay.TotalSeconds))
                  .ForMember(dest => dest.ReadyTime, opt => opt.MapFrom(src => src.ReadyTime.TimeOfDay.TotalSeconds))
                  .ForMember(dest => dest.ServiceTime, opt => opt.MapFrom(src => src.ServiceTime.TimeOfDay.TotalSeconds))
+                 .ForMember(dest => dest.DepotTimeFrom, act => act.Ignore())
+                 .ForMember(dest => dest.DepotTimeTo, act => act.Ignore())
+                 .ForMember(dest => dest.DepotDistanceFrom, act => act.Ignore())
+                 .ForMember(dest => dest.DepotDistanceTo, act => act.Ignore())
                  .ReverseMap(); 
         }
     }

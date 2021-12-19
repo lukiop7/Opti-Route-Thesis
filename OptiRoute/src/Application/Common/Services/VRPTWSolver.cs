@@ -1,5 +1,5 @@
-﻿using AlgorithmCoreVRPTW.Models;
-using AlgorithmCoreVRPTW.Solver.Interfaces;
+﻿using AlgorithmCoreVRPTW.Solver.Interfaces;
+using OptiRoute.Domain.Entities;
 
 namespace AlgorithmCoreVRPTW.Solver.Services
 {

@@ -4,8 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using OptiRoute.Application.CVRPTW.Dtos;
 using AlgorithmCoreVRPTW.Solver.Interfaces;
-using AlgorithmCoreVRPTW.Models;
 using OptiRoute.Application.Common.Security;
+using OptiRoute.Domain.Entities;
 
 namespace OptiRoute.Application.CVRPTW.Queries
 {

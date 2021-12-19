@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AlgorithmCoreVRPTW.Models
+namespace OptiRoute.Domain.Entities
 {
     public class Problem
     {

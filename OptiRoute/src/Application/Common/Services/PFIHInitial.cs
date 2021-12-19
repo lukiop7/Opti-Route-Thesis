@@ -1,5 +1,5 @@
-﻿using AlgorithmCoreVRPTW.Models;
-using AlgorithmCoreVRPTW.Solver.Interfaces;
+﻿using AlgorithmCoreVRPTW.Solver.Interfaces;
+using OptiRoute.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,7 +85,7 @@ namespace AlgorithmCoreVRPTW.Solver.Services
         {
             foreach (var customer in customers)
             {
-                customer.CalculateDepotTimesAndDistances(distances, durations, depot);
+                customer.CalculateDepotTimesAndDistances(distances, durations);
             }
             customers = customers.OrderByDescending(x => x.DepotDistanceFrom).ToList();
         }

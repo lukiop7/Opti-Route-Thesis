@@ -1,5 +1,5 @@
 ﻿using AlgorithmCoreVRPTW.FileReaders.Interfaces;
-using AlgorithmCoreVRPTW.Models;
+using OptiRoute.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;

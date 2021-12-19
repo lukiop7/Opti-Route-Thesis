@@ -1,4 +1,4 @@
-﻿namespace AlgorithmCoreVRPTW.Models
+﻿namespace OptiRoute.Domain.Entities
 {
     public class Vehicle
     {
@@ -18,6 +18,7 @@
         public int Capacity { get; set; }
         public int CurrentLoad { get; set; }
         public double CurrentTime { get; set; }
+
         public Vehicle Clone()
         {
             return new Vehicle()

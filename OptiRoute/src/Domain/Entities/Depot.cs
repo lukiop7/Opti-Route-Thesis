@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AlgorithmCoreVRPTW.Models
+namespace OptiRoute.Domain.Entities
 {
     public class Depot
     {

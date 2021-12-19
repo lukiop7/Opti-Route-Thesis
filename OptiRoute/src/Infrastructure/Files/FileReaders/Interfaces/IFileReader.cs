@@ -1,4 +1,5 @@
-﻿using AlgorithmCoreVRPTW.Models;
+﻿
+using OptiRoute.Domain.Entities;
 
 namespace AlgorithmCoreVRPTW.FileReaders.Interfaces
 {
