@@ -1,16 +1,11 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using OptiRoute.Application.Common.Interfaces;
-using OptiRoute.Application.Common.Mappings;
-using OptiRoute.Application.Common.Models;
 using MediatR;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using OptiRoute.Application.CVRPTW.Dtos;
 using AlgorithmCoreVRPTW.Solver.Interfaces;
 using AlgorithmCoreVRPTW.Models;
-using System.Collections.Generic;
+using OptiRoute.Application.Common.Security;
 
 namespace OptiRoute.Application.CVRPTW.Queries
 {

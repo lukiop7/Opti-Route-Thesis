@@ -17,6 +17,11 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             Construct(problem, unroutedCustomers, routes);
             bool Feasible = routes.Count <= problem.Vehicles;
 
+            if (Feasible)
+            {
+                Feasible = routes.TrueForAll(x => x.IsFeasible());
+            }
+
             return new Solution() { Feasible = Feasible, Depot = problem.Depot, Routes = routes };
         }
 

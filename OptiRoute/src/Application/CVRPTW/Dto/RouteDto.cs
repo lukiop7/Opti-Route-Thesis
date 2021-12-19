@@ -14,12 +14,14 @@ namespace OptiRoute.Application.CVRPTW.Dtos
         public List<int> Customers { get; set; } = new List<int>();
         public double TotalTime { get; set; }
         public double TotalDistance { get; set; }
+        public double TotalLoad { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Route,RouteDto>()
                 .ForMember(dest => dest.Customers, opt => opt.MapFrom(src => src.Customers.Select(y => y.Id).ToList()))
-                .ForMember(dest => dest.TotalTime, opt => opt.MapFrom(src => src.TotalTime))
-                .ForMember(dest => dest.TotalDistance, opt => opt.MapFrom(src => src.TotalDistance));
+                .ForMember(dest => dest.TotalTime, opt => opt.MapFrom(src => src.Vehicle.CurrentTime/60))
+                .ForMember(dest => dest.TotalLoad, opt => opt.MapFrom(src => src.Vehicle.CurrentLoad))
+                .ForMember(dest => dest.TotalDistance, opt => opt.MapFrom(src => src.TotalDistance/1000));
         }
     }
 }

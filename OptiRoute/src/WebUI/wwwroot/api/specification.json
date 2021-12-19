@@ -515,6 +515,10 @@
           "totalDistance": {
             "type": "number",
             "format": "double"
+          },
+          "totalLoad": {
+            "type": "number",
+            "format": "double"
           }
         }
       },
