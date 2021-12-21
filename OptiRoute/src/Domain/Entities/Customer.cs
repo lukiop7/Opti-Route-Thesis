@@ -49,5 +49,15 @@ namespace OptiRoute.Domain.Entities
             this.DepotTimeTo = durations[this.Id][0];
             this.DepotTimeFrom = durations[0][this.Id];
         }
+
+        public double CalculateDistanceBetween(Customer destination)
+        {
+            return Math.Sqrt((Math.Pow(this.X - destination.X, 2) + Math.Pow(this.Y - destination.Y, 2)));
+        }
+
+        public double CalculateDistanceBetween(Depot destination)
+        {
+            return Math.Sqrt((Math.Pow(this.X - destination.X, 2) + Math.Pow(this.Y - destination.Y, 2)));
+        }
     }
 }
