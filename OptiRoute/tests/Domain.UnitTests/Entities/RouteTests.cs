@@ -71,7 +71,7 @@ namespace OptiRoute.Domain.UnitTests.Entities
             double customersTime = GetValidCustomerTime(route);
             route.CustomersTime.Should().Be(customersTime);
 
-            customersTime += route.TimeFromDepot + route.TimeToDepot;
+            customersTime += route.TimeFromDepot + route.TimeToDepot + route.WaitingTime;
             route.TotalTime.Should().Be(customersTime);
         }
 
@@ -94,7 +94,7 @@ namespace OptiRoute.Domain.UnitTests.Entities
             double customersTime = GetValidCustomerTime(route);
             route.CustomersTime.Should().Be(customersTime);
 
-            customersTime += route.TimeFromDepot + route.TimeToDepot;
+            customersTime += route.TimeFromDepot + route.TimeToDepot + route.WaitingTime;
             route.TotalTime.Should().Be(customersTime);
         }
 
@@ -312,6 +312,25 @@ namespace OptiRoute.Domain.UnitTests.Entities
             }
 
             route.IsFeasible().Should().BeFalse();
+        }
+
+        [Test]
+        public void ShouldNotChangeAfterIndexAdd()
+        {
+            Route route = EntityHelper.GetRouteCase(0, 10, 100);
+
+            var customers = EntityHelper.GetCustomers();
+
+            foreach (var customer in customers)
+            {
+                customer.CalculateDepotTimesAndDistances(route.Distances, route.Durations);
+                route.AddCustomer(customer);
+            }
+            var firstTime = route.TotalTime;
+            route.DeleteCustomer(customers[2]);
+            route.AddCustomer(customers[2], 2);
+
+            route.TotalTime.Should().Be(firstTime);
         }
 
 

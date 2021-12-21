@@ -13,6 +13,9 @@ namespace OptiRoute.Domain.Entities
         public Depot Depot { get; set; }
 
         private double _distance = 0;
+        private double _waitingTime = 0;
+        private Dictionary<int, double> _waitingTimeDictionary = new Dictionary<int, double>();
+
         public double TotalDistance
         {
             get
@@ -25,7 +28,7 @@ namespace OptiRoute.Domain.Entities
         {
             get
             {
-                return _time + TimeToDepot + TimeFromDepot;
+                return _time + _waitingTime + TimeToDepot + TimeFromDepot;
             }
         }
 
@@ -50,6 +53,18 @@ namespace OptiRoute.Domain.Entities
             set
             {
                 this._time = value;
+            }
+        }
+
+        public double WaitingTime
+        {
+            get
+            {
+                return _waitingTime;
+            }
+            set
+            {
+                this._waitingTime = value;
             }
         }
 
@@ -107,8 +122,10 @@ namespace OptiRoute.Domain.Entities
                 CustomersTime = this.CustomersTime,
                 Depot = this.Depot,
                 Vehicle = this.Vehicle.Clone(),
-                Distances=this.Distances,
-                Durations=this.Durations
+                Distances = this.Distances,
+                Durations = this.Durations,
+                _waitingTimeDictionary = this._waitingTimeDictionary,
+                WaitingTime = this.WaitingTime
             };
         }
 
@@ -148,7 +165,16 @@ namespace OptiRoute.Domain.Entities
             }
             this.Customers.Add(customer);
 
+            if (TimeFromDepot + CustomersTime + WaitingTime < customer.ReadyTime)
+            {
+                double waitingTime = customer.ReadyTime - (TimeFromDepot + CustomersTime + WaitingTime);
+                this._waitingTime += waitingTime;
+                this._waitingTimeDictionary.Add(customer.Id, waitingTime);
+            }
+
             CustomersTime += customer.ServiceTime;
+
+
             this.Vehicle.CurrentLoad += customer.Demand;
             this.Vehicle.CurrentTime = this.TotalTime;
         }
@@ -162,19 +188,14 @@ namespace OptiRoute.Domain.Entities
                 {
                     CustomersDistance += customer.CalculateDistanceBetween(this.Distances, this.Customers[index]);
                     CustomersDistance += this.Customers[index - 1].CalculateDistanceBetween(this.Distances, customer);
-
-                    CustomersTime += customer.CalculateDistanceBetween(this.Durations, this.Customers[index]);
-                    CustomersTime += this.Customers[index - 1].CalculateTimeBetween(this.Durations, customer);
                 }
                 else
                 {
                     CustomersDistance += customer.CalculateDistanceBetween(this.Distances, this.Customers[index]);
-                    CustomersTime += customer.CalculateTimeBetween(this.Durations, this.Customers[index]);
                 }
                 this.Customers.Insert(index, customer);
-                CustomersTime += customer.ServiceTime;
                 this.Vehicle.CurrentLoad += customer.Demand;
-                this.Vehicle.CurrentTime = this.TotalTime;
+                CalculateTime();
             }
             else
                 AddCustomer(customer);
@@ -187,13 +208,11 @@ namespace OptiRoute.Domain.Entities
             double distanceDifference = 0;
             double previousTotal = this.TotalDistance;
 
-            double timeDifference = 0;
             double previousTime = this.TotalTime;
 
             if (Customers.Count == 1)
             {
                 distanceDifference = 0;
-                timeDifference = 0;
             }
             else if (IsInterior(customer))
             {
@@ -201,40 +220,24 @@ namespace OptiRoute.Domain.Entities
                 distanceDifference = customer.CalculateDistanceBetween(this.Distances, this.Customers[customerIndex + 1]);
                 distanceDifference += this.Customers[customerIndex - 1].CalculateDistanceBetween(this.Distances, customer);
                 distanceDifference -= this.Customers[customerIndex - 1].CalculateDistanceBetween(this.Distances, this.Customers[customerIndex + 1]);
-
-                timeDifference = customer.CalculateTimeBetween(this.Durations, this.Customers[customerIndex + 1]);
-                timeDifference += this.Customers[customerIndex - 1].CalculateTimeBetween(this.Durations, customer);
-                timeDifference -= this.Customers[customerIndex - 1].CalculateTimeBetween(this.Durations, this.Customers[customerIndex + 1]);
             }
             else
             {
                 if (customerIndex == 0)
                 {
-                    distanceDifference = customer.CalculateDistanceBetween(this.Distances, this.Customers[customerIndex + 1] );
-                    timeDifference = customer.CalculateTimeBetween(this.Durations, this.Customers[customerIndex + 1] );
+                    distanceDifference = customer.CalculateDistanceBetween(this.Distances, this.Customers[customerIndex + 1]);
                 }
                 else
                 {
                     distanceDifference = this.Customers[customerIndex - 1].CalculateDistanceBetween(this.Distances, customer);
-                    timeDifference = this.Customers[customerIndex - 1].CalculateTimeBetween(this.Durations, customer);
                 }
             }
 
             this.CustomersDistance -= distanceDifference;
-            this.CustomersTime -= timeDifference + customer.ServiceTime;
             Customers.Remove(customer);
 
             this.Vehicle.CurrentLoad -= customer.Demand;
-            this.Vehicle.CurrentTime = this.TotalTime;
-        }
-
-        public void MergeRoutes(Route routeToMerge, double distanceBetween)
-        {
-            this.CustomersDistance = this.CustomersDistance + routeToMerge.CustomersDistance + distanceBetween;
-            this.Vehicle.CurrentTime = (this.Vehicle.CurrentTime - DistanceToDepot) + (routeToMerge.Vehicle.CurrentTime - routeToMerge.DistanceFromDepot) + distanceBetween;
-            this.Vehicle.CurrentLoad += routeToMerge.Vehicle.CurrentLoad;
-
-            this.Customers.AddRange(routeToMerge.Customers);
+            CalculateTime();
         }
 
         public bool IsInterior(Customer customer)
@@ -286,9 +289,49 @@ namespace OptiRoute.Domain.Entities
             arrivalTime += Customers.LastOrDefault().ServiceTime;
             arrivalTime += Customers.LastOrDefault().DepotTimeTo;
 
-            this.Vehicle.CurrentTime = arrivalTime;
-
             return arrivalTime <= Depot.DueDate;
+        }
+
+        public void CalculateTime()
+        {
+
+            _waitingTimeDictionary.Clear();
+            double arrivalTime = 0;
+            double customersTime = 0;
+            double totalWaiting = 0;
+
+            if (Customers.Count != 0)
+            {
+                Customer previousCustomer = null;
+                arrivalTime += Customers.FirstOrDefault().DepotTimeFrom;
+                foreach (Customer customer in Customers)
+                {
+                    if (previousCustomer != null)
+                    {
+                        arrivalTime += previousCustomer.ServiceTime;
+                        arrivalTime += previousCustomer.CalculateTimeBetween(Durations, customer);
+                        customersTime += previousCustomer.ServiceTime;
+                        customersTime += previousCustomer.CalculateTimeBetween(Durations, customer);
+                    }
+                    if (arrivalTime < customer.ReadyTime)
+                    {
+                        double waitingTime = customer.ReadyTime - (arrivalTime);
+
+                        totalWaiting += waitingTime;
+                        arrivalTime = customer.ReadyTime;
+
+                        _waitingTimeDictionary.Add(customer.Id, waitingTime);
+                    }
+                    previousCustomer = customer;
+                }
+                arrivalTime += Customers.LastOrDefault().ServiceTime;
+                customersTime += Customers.LastOrDefault().ServiceTime;
+                arrivalTime += Customers.LastOrDefault().DepotTimeTo;
+            }
+
+            this.CustomersTime = customersTime;
+            this.WaitingTime = totalWaiting;
+            this.Vehicle.CurrentTime = TotalTime;
         }
     }
 }
