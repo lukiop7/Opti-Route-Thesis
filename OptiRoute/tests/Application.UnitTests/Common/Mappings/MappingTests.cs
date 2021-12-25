@@ -5,6 +5,7 @@ using OptiRoute.Domain.Entities;
 using NUnit.Framework;
 using System;
 using System.Runtime.Serialization;
+using OptiRoute.Application.CVRPTW.Dtos;
 
 namespace OptiRoute.Application.UnitTests.Common.Mappings
 {
@@ -32,6 +33,11 @@ namespace OptiRoute.Application.UnitTests.Common.Mappings
         [Test]
         [TestCase(typeof(TodoList), typeof(TodoListDto))]
         [TestCase(typeof(TodoItem), typeof(TodoItemDto))]
+        [TestCase(typeof(DepotDto), typeof(Depot))]
+        [TestCase(typeof(CustomerDto), typeof(Customer))]
+        [TestCase(typeof(ProblemDto), typeof(Problem))]
+        [TestCase(typeof(Solution), typeof(SolutionDto))]
+        [TestCase(typeof(Route), typeof(RouteDto))]
         public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
         {
             var instance = GetInstanceOf(source);

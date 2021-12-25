@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AlgorithmCoreVRPTW.Models
+namespace OptiRoute.Domain.Entities
 {
     public class Solution
     {

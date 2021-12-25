@@ -1,5 +1,5 @@
-﻿using AlgorithmCoreVRPTW.Models;
-using AlgorithmCoreVRPTW.Solver.Interfaces;
+﻿using AlgorithmCoreVRPTW.Solver.Interfaces;
+using OptiRoute.Domain.Entities;
 
 namespace AlgorithmCoreVRPTW.Solver.Services
 {
@@ -27,10 +27,9 @@ namespace AlgorithmCoreVRPTW.Solver.Services
         public Solution Solve(Problem problem)
         {
             var initial = Initial.Solve(problem);
-            if(initial.Routes.TrueForAll(x=> x.IsFeasible()))
+            if(initial.Feasible)
                 return Improvement.Improve(initial);
 
-            initial.Feasible = false;
             return initial;
         }
     }

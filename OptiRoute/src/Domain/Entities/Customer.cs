@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmCoreVRPTW.Models
+namespace OptiRoute.Domain.Entities
 {
     public class Customer
     {
@@ -37,29 +37,27 @@ namespace AlgorithmCoreVRPTW.Models
             return distances[this.Id][destination.Id];
         }
 
-        public double CalculateDistanceBetween(List<List<double>> distances, Depot destination)
-        {
-            // depot
-            return distances[this.Id][0];
-        }
-
         public double CalculateTimeBetween(List<List<double>> durations, Customer destination)
         {
             return durations[this.Id][destination.Id];
         }
 
-        public double CalculateTimeBetween(List<List<double>> durations, Depot destination)
-        {
-            // depot
-            return durations[this.Id][0];
-        }
-
-        public void CalculateDepotTimesAndDistances(List<List<double>> distances, List<List<double>> durations, Depot destination)
+        public void CalculateDepotTimesAndDistances(List<List<double>> distances, List<List<double>> durations)
         {
             this.DepotDistanceTo = distances[this.Id][0];
             this.DepotDistanceFrom = distances[0][this.Id];
             this.DepotTimeTo = durations[this.Id][0];
             this.DepotTimeFrom = durations[0][this.Id];
+        }
+
+        public double CalculateDistanceBetween(Customer destination)
+        {
+            return Math.Sqrt((Math.Pow(this.X - destination.X, 2) + Math.Pow(this.Y - destination.Y, 2)));
+        }
+
+        public double CalculateDistanceBetween(Depot destination)
+        {
+            return Math.Sqrt((Math.Pow(this.X - destination.X, 2) + Math.Pow(this.Y - destination.Y, 2)));
         }
     }
 }

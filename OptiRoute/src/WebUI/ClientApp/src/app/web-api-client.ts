@@ -777,6 +777,7 @@ export class RouteDto implements IRouteDto {
     customers?: number[] | undefined;
     totalTime?: number;
     totalDistance?: number;
+    totalLoad?: number;
 
     constructor(data?: IRouteDto) {
         if (data) {
@@ -796,6 +797,7 @@ export class RouteDto implements IRouteDto {
             }
             this.totalTime = _data["totalTime"];
             this.totalDistance = _data["totalDistance"];
+            this.totalLoad = _data["totalLoad"];
         }
     }
 
@@ -815,6 +817,7 @@ export class RouteDto implements IRouteDto {
         }
         data["totalTime"] = this.totalTime;
         data["totalDistance"] = this.totalDistance;
+        data["totalLoad"] = this.totalLoad;
         return data; 
     }
 }
@@ -823,6 +826,7 @@ export interface IRouteDto {
     customers?: number[] | undefined;
     totalTime?: number;
     totalDistance?: number;
+    totalLoad?: number;
 }
 
 export class ProblemDto implements IProblemDto {

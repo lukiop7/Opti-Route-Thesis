@@ -1,6 +1,6 @@
-﻿using AlgorithmCoreVRPTW.Models;
-using AutoMapper;
+﻿using AutoMapper;
 using OptiRoute.Application.Common.Mappings;
+using OptiRoute.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +16,12 @@ namespace OptiRoute.Application.CVRPTW.Dtos
 
         public double Distance { get; set; }
         public double Time { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Solution, SolutionDto>()
+                .ForMember(dest => dest.Distance, opt => opt.MapFrom(src => src.Distance / 1000))
+                .ForMember(dest => dest.Time, opt => opt.MapFrom(src => src.Time / 60));
+        }
     }
 }

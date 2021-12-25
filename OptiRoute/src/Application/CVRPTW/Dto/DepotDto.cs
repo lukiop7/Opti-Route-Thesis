@@ -1,6 +1,6 @@
-﻿using AlgorithmCoreVRPTW.Models;
-using AutoMapper;
+﻿using AutoMapper;
 using OptiRoute.Application.Common.Mappings;
+using OptiRoute.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

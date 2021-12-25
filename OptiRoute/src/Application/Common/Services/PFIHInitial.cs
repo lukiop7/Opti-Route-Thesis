@@ -1,5 +1,5 @@
-﻿using AlgorithmCoreVRPTW.Models;
-using AlgorithmCoreVRPTW.Solver.Interfaces;
+﻿using AlgorithmCoreVRPTW.Solver.Interfaces;
+using OptiRoute.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +16,11 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             CalculateDepotDistancesAndTimes(ref unroutedCustomers, problem.Depot, problem.Distances, problem.Durations);
             Construct(problem, unroutedCustomers, routes);
             bool Feasible = routes.Count <= problem.Vehicles;
+
+            if (Feasible)
+            {
+                Feasible = routes.TrueForAll(x => x.IsFeasible());
+            }
 
             return new Solution() { Feasible = Feasible, Depot = problem.Depot, Routes = routes };
         }
@@ -80,7 +85,7 @@ namespace AlgorithmCoreVRPTW.Solver.Services
         {
             foreach (var customer in customers)
             {
-                customer.CalculateDepotTimesAndDistances(distances, durations, depot);
+                customer.CalculateDepotTimesAndDistances(distances, durations);
             }
             customers = customers.OrderByDescending(x => x.DepotDistanceFrom).ToList();
         }

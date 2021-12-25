@@ -46,7 +46,11 @@ namespace OptiRoute.WebUI
 
             services.AddControllersWithViews(options =>
                 options.Filters.Add<ApiExceptionFilterAttribute>())
-                    .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+                    .AddFluentValidation(x => {
+                        x.AutomaticValidationEnabled = false;
+                        x.ImplicitlyValidateChildProperties = true;
+                    }
+                    );
 
             services.AddRazorPages();
 

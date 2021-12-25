@@ -1,7 +1,7 @@
 <div class="card card-body position-relative">
 <div class="d-flex flex-column">
-  <span>Time: {{route.totalTime}}</span>
-  <span>Distance: {{route.totalDistance}}</span>
+  <span>Time: {{route.totalTime/60}}hrs {{route.totalTime%60}}min</span>
+  <span>Distance: {{route.totalDistance}}km</span>
   <li *ngFor="let client of route.customers; let i = index">
     {{ client }}
   </li>
