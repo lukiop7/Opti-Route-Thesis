@@ -37,11 +37,7 @@ namespace OptiRoute.Application.CVRPTW.Validators
 
             RuleFor(v => v.ServiceTime)
               .NotEmpty()
-              .Must(v =>
-              {
-                  return TimeSpan.Compare(v.TimeOfDay, TimeSpan.Zero) > 0;
-              }
-              )
+              .GreaterThan(0)
                .WithMessage(v => string.Format("Customer {0} - Service time must be greater than 00:00", v.Id));
         }
     }

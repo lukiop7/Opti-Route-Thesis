@@ -3,6 +3,7 @@ import {Subscription} from 'rxjs';
 import {Customer} from '../../../shared/models/customer';
 import {MapService} from '../../services/map.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { dateValidator } from 'shared/utils/dateValidator';
 
 @Component({
   selector: 'app-map-sidebar-customers',
@@ -50,6 +51,7 @@ export class MapSidebarCustomersComponent implements OnInit, OnDestroy {
       readyTime: [null, Validators.required],
       dueDate: [null, Validators.required],
       serviceTime: [null, Validators.required],
-    });
+    },
+    {validators: dateValidator});
   }
 }
