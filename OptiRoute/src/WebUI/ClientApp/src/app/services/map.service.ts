@@ -23,9 +23,9 @@ export class MapService {
   private _mapCustomers: MapCustomer[] = [];
   private _depot: MapCustomer;
   private _markersSubject = new Subject<Marker[]>();
-  private _customersSubject = new Subject<Customer[]>();
+  private _customersSubject = new ReplaySubject<Customer[]>(1);
   private _depotMarkerSubject = new Subject<Marker>();
-  private _depotSubject = new Subject<Customer>();
+  private _depotSubject = new ReplaySubject<Customer>(1);
   private _pathsSubject = new ReplaySubject<VrptwSolutionResponse>(1);
   private _viewSubject = new BehaviorSubject<number>(0);
   private _selectedPathSubject = new Subject<number>();

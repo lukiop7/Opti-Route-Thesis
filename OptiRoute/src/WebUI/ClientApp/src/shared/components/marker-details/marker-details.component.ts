@@ -24,11 +24,13 @@ export class MarkerDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     const currentDate = localIsoTime();
+    if(!this.customerInfoForm.touched){
     this.customerInfoForm.patchValue({
       dueDate: (currentDate.slice(0, 16)),
       readyTime: (currentDate.slice(0, 16)),
       serviceTime: '00:00',
     });
+  }
   }
 
   closeOnClick() {

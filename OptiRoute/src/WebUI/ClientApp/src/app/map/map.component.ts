@@ -77,25 +77,6 @@ export class MapComponent implements OnInit, OnDestroy {
       //  this.pathsLayer.clearLayers();
       this.colorsCounter = 0;
       let index = 400;
-      // const router = new L.Routing.osrmv1();
-      // result.paths.forEach(path => {
-      //   console.log(`path: ${path}`);
-      //   const waypoints = [];
-      //   path.forEach(point => {
-      //     waypoints.push(new L.Routing.waypoint([point.lat, point.lng]));
-      //   });
-      //   console.log(`router: ${router}`);
-      //   router.route(waypoints, function (err, routes) {
-      //     console.log(`routes: ${routes}`);
-      //     if (err) {
-      //       alert(err);
-      //     } else {
-      //       const route = new L.Routing.line(routes[0]);
-      //       console.log(`route: ${route}`);
-      //       this.pathsLayer.addLayer(route);
-      //     }
-      //   });
-      // });
       for (let i = 0; i < result.paths.length; i++) {
         const paneName = `pane${i}`;
         const pane = this.map.createPane(paneName);
@@ -212,23 +193,4 @@ export class MapComponent implements OnInit, OnDestroy {
       marker.getTooltip().setContent(`${i + 1}`);
     }
   }
-
-
-  // removeMarker() {
-  //   const marker = this.markers[this.markers.length - 1];
-  //   this.customersMap.delete(marker);
-  //   removeItem(this.allLayers, marker);
-  //   this.counter++;
-  //   this.customersValues = [...this.customersMap.values()];
-  // }
-
-  connectMarkers() {
-    // const coordinated = this.markers.map(c => (c as Marker).getLatLng());
-    // const path = new Polygon(coordinated, {color: 'red', fillOpacity: 0});
-    // console.log(path.getLatLngs());
-    // console.log(path.getLatLngs());
-    // this.paths.push(path);
-    // this.allLayers = [...this.markers, ...this.paths];
-  }
-
 }

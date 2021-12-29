@@ -1,4 +1,4 @@
-<div class="card h-95 w-100 border-0">
+<div class="card h-100 w-100 border-0">
   <div class="card-header">
     <h2 class="text-center">Customers</h2>
   </div>
@@ -14,6 +14,15 @@
       </div>
     </div>
   </div>
+  <div class="card-footer d-flex">
+    <button (click)="onBackClick()" class="btn-primary btn-left ">
+      Back
+    </button>
+    <button class="btn-right" (click)="onSolveClick()" [ngClass]="customersInfoForm.valid ? 'btn-primary' : 'btn-secondary'"
+            [disabled]="!customersInfoForm.valid">
+      Solve
+    </button>
+    </div>
 </div>
 
 

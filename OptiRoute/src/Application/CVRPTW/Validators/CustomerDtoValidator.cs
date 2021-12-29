@@ -28,7 +28,8 @@ namespace OptiRoute.Application.CVRPTW.Validators
               .GreaterThan(0);
 
             RuleFor(v => v.ReadyTime)
-               .NotEmpty();
+               .NotNull()
+               .GreaterThanOrEqualTo(0);
 
             RuleFor(v => v.DueDate)
                .NotEmpty()

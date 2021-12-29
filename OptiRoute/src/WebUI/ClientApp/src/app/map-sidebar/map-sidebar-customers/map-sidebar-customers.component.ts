@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {Customer} from '../../../shared/models/customer';
 import {MapService} from '../../services/map.service';
@@ -13,6 +13,12 @@ import { dateValidator } from 'shared/utils/dateValidator';
 export class MapSidebarCustomersComponent implements OnInit, OnDestroy {
   @Input('group')
   public customersInfoForm: FormGroup;
+
+  @Output() backClicked = new EventEmitter<void>();
+  @Output() solveClicked = new EventEmitter<void>();
+
+
+  
   public customersInfo: FormArray;
   private _subscription: Subscription;
   customers: Customer[] = [];
@@ -35,9 +41,7 @@ export class MapSidebarCustomersComponent implements OnInit, OnDestroy {
     this._subscription.unsubscribe();
   }
 
-  onClick() {
-    //this._mapService.connectMarkers();
-  }
+
 
   removeCustomer(customer: Customer) {
     const index = this.customers.indexOf(customer);
@@ -53,5 +57,13 @@ export class MapSidebarCustomersComponent implements OnInit, OnDestroy {
       serviceTime: [null, Validators.required],
     },
     {validators: dateValidator});
+  }
+
+  onSolveClick() {
+    this.solveClicked.emit();
+  }
+  
+  onBackClick(){
+    this.backClicked.emit();
   }
 }

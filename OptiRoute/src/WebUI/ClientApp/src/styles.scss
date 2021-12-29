@@ -9,11 +9,23 @@ code {
   color: #e01a76;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+// .btn-primary {
+//   color: #fff;
+//   background-color: #1b6ec2;
+//   border-color: #1861ac;
+// }
+
+.btn-left{
+  margin-right: 3px;
+  flex:1;
 }
+
+.btn-right{
+  margin-left: 3px;
+  flex:1;
+}
+
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
