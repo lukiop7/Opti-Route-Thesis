@@ -14,11 +14,10 @@ namespace OptiRoute.Application.CVRPTW.Dtos
         public int Id { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public DateTime DueDate { get; set; }
+        public int DueDate { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<DepotDto, Depot>()
-                .ForMember(dest=> dest.DueDate, opt=> opt.MapFrom(src=> src.DueDate.TimeOfDay.TotalSeconds)).ReverseMap();
+            profile.CreateMap<DepotDto, Depot>().ReverseMap();
         }
     }
 }

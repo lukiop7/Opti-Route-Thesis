@@ -7,6 +7,7 @@ import {MapService} from '../services/map.service';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {minLengthArray} from '../../shared/utils/minLengthArray';
+import { dateValidator } from 'shared/utils/dateValidator';
 
 @Component({
   selector: 'app-map-sidebar',
@@ -57,8 +58,10 @@ export class MapSidebarComponent implements OnInit, OnDestroy {
         capacity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       }),
       depotInfo: this.fb.group({
+        readyTime: [null, Validators.required],
         dueDate: [null, Validators.required]
-      }),
+      },
+      {validators: dateValidator}),
       customersInfoForm: this.fb.group({
           customersInfo: this.fb.array([],minLengthArray(1))
         }

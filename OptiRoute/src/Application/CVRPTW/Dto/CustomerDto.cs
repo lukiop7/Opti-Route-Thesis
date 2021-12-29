@@ -15,15 +15,12 @@ namespace OptiRoute.Application.CVRPTW.Dtos
         public int X { get; set; }
         public int Y { get; set; }
         public int Demand { get; set; }
-        public DateTime ReadyTime { get; set; }
-        public DateTime DueDate { get; set; }
-        public DateTime ServiceTime { get; set; }
+        public int ReadyTime { get; set; }
+        public int DueDate { get; set; }
+        public int ServiceTime { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CustomerDto, Customer>()
-                     .ForMember(dest => dest.DueDate, opt => opt.MapFrom(src => src.DueDate.TimeOfDay.TotalSeconds))
-                 .ForMember(dest => dest.ReadyTime, opt => opt.MapFrom(src => src.ReadyTime.TimeOfDay.TotalSeconds))
-                 .ForMember(dest => dest.ServiceTime, opt => opt.MapFrom(src => src.ServiceTime.TimeOfDay.TotalSeconds))
                  .ForMember(dest => dest.DepotTimeFrom, act => act.Ignore())
                  .ForMember(dest => dest.DepotTimeTo, act => act.Ignore())
                  .ForMember(dest => dest.DepotDistanceFrom, act => act.Ignore())

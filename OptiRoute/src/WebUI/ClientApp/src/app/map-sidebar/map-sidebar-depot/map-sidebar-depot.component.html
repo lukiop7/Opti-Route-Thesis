@@ -3,10 +3,18 @@
     <h2 class="text-center">Depot</h2>
   </div>
   <div [formGroup]="depotInfoForm" class="h-100 hidden-scroll d-flex flex-column">
+    <label>Start date</label>
+    <input type="datetime-local" formControlName="readyTime" [min]="this.minDate">   
+    <small [hidden]="depotInfoForm.controls.readyTime.valid">
+      Start date is required
+    </small>
     <label>Due date</label>
-    <input type="datetime-local" formControlName="dueDate" >
+    <input type="datetime-local" formControlName="dueDate" [min]="this.minDate">
     <small [hidden]="depotInfoForm.controls.dueDate.valid">
       Due date is required
+    </small>
+    <small *ngIf="depotInfoForm.errors?.dateValid  && (depotInfoForm.touched ||depotInfoForm.dirty)">
+      Due date must be greater than Start Date
     </small>
   </div>
   <div class="card-footer">

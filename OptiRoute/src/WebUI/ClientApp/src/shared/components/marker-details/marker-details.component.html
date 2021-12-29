@@ -23,5 +23,8 @@
     <small [hidden]="customerInfoForm.controls.demand.valid">
       demand is required
     </small>
+    <small *ngIf="customerInfoForm.errors?.dateValid  && (customerInfoForm.touched ||customerInfoForm.dirty)">
+      Due date must be greater than Ready Time
+    </small>
   </div>
 </div>

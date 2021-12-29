@@ -139,7 +139,7 @@ export class MapService {
         id: 0,
         x: Math.floor(coordinated[0].lng),
         y: Math.floor(coordinated[0].lat),
-        dueDate: addHours(data.depotInfo.dueDate as Date, 1),
+        dueDate: (addHours(data.depotInfo.dueDate as Date, 1).getTime() - addHours(data.depotInfo.readyTime as Date, 1).getTime())/1000,
       }),
       customers: customers,
       distances: distDur.distances,
@@ -152,6 +152,7 @@ export class MapService {
     let time = 0;
     const today = new Date();
     today.setDate(today.getDate() - 1);
+    today.setHours(0,0,0,0);
     console.log(data.customersInfoForm);
 
     for (let i = 1; i < coordinated.length; i++) {
@@ -160,9 +161,9 @@ export class MapService {
         x: Math.floor(coordinated[i].lng),
         y: Math.floor(coordinated[i].lat),
         demand: data.customersInfoForm.customersInfo[i - 1].demand,
-        readyTime: addHours(data.customersInfoForm.customersInfo[i - 1].readyTime as Date, 1),
-        dueDate: addHours(data.customersInfoForm.customersInfo[i - 1].dueDate as Date, 1),
-        serviceTime: addHours(new Date(today.toDateString() + ' ' + data.customersInfoForm.customersInfo[i - 1].serviceTime), 1)
+        readyTime: (addHours(data.customersInfoForm.customersInfo[i - 1].readyTime as Date, 1).getTime() - addHours(data.depotInfo.readyTime as Date, 1).getTime())/1000,
+        dueDate: (addHours(data.customersInfoForm.customersInfo[i - 1].dueDate as Date, 1).getTime() - addHours(data.depotInfo.readyTime as Date, 1).getTime())/1000,
+        serviceTime: (new Date(today.toDateString() + ' ' + data.customersInfoForm.customersInfo[i - 1].serviceTime).getTime() - today.getTime())/1000
       }));
     }
     console.log(customers);
