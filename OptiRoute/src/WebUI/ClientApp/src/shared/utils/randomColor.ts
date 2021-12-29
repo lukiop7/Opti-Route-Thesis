@@ -1,4 +1,4 @@
-export function randomColor(){
-        var color = Math.floor(0x1000000 * Math.random()).toString(16);
-        return '#' + ('000000' + color).slice(-6);
+export function randomColor(number: number){
+    const hue = number * 137.508; // use golden angle approximation
+    return `hsl(${hue},50%,75%)`;
 }

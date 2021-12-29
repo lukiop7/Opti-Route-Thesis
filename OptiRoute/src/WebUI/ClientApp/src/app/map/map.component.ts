@@ -97,7 +97,7 @@ export class MapComponent implements OnInit, OnDestroy {
           fitSelectedRoutes: false,
           lineOptions: {
             addWaypoints: false,
-            styles: [{pane: paneName, color: randomColor(), opacity: 1, weight: 5}]
+            styles: [{pane: paneName, color: randomColor(i), opacity: 1, weight: 5}]
           }
         }).addTo(this.map);
         routeControl.hide();
