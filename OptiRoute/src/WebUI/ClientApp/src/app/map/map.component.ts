@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output} from '@angular/core';
-import {control} from 'leaflet';
+import {control, Polyline} from 'leaflet';
 
 import {MapService} from '../services/map.service';
 import {Subscription} from 'rxjs';
@@ -11,6 +11,7 @@ import 'leaflet-routing-machine';
 import {OsrmService} from '../services/osrm.service';
 import zoom = control.zoom;
 import {VrptwSolutionResponse} from '../../shared/models/vrptwSolutionResponse';
+import { randomColor } from 'shared/utils/randomColor';
 
 @Component({
   selector: 'app-map',
@@ -25,6 +26,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private _selectedPathIndexSubscription: Subscription;
   private _viewCounter: number;
   private _selectedPathIndex: number;
+  private _selectedPolyLine: any;
   public showPath = false;
   customersLayer: L.LayerGroup;
   depotLayer: L.LayerGroup;
@@ -42,8 +44,6 @@ export class MapComponent implements OnInit, OnDestroy {
   map: L.Map;
   counter = 0;
   path: any;
-  colors: string[] = ['blue', 'red', 'green'];
-  colorsCounter = 0;
 
   constructor(private changeDetector: ChangeDetectorRef, private _mapService: MapService, private _osrmService: OsrmService) {
   }
@@ -67,15 +67,20 @@ export class MapComponent implements OnInit, OnDestroy {
     this._pathsSubscription = this._mapService.getPaths().subscribe((result: VrptwSolutionResponse) => {
 
       this.panes.forEach((pane: HTMLElement)  => {
-        pane.remove();
+        var parent = pane.parentNode;
+        if (parent) {
+          parent.removeChild(pane);
+        }
       });
+      
       this.panes = [];
+      console.log(`pane ${this.panes}`);
       this.pathsLayer.forEach(path => {
         this.map.removeControl(path);
       });
       this.pathsLayer = [];
+      console.log(`paths ${this.pathsLayer}`);
       //  this.pathsLayer.clearLayers();
-      this.colorsCounter = 0;
       let index = 400;
       for (let i = 0; i < result.paths.length; i++) {
         const paneName = `pane${i}`;
@@ -88,14 +93,17 @@ export class MapComponent implements OnInit, OnDestroy {
           },
           waypoints: result.paths[i],
           routeWhileDragging: false,
+          show: false,
+          fitSelectedRoutes: false,
           lineOptions: {
             addWaypoints: false,
-            styles: [{pane: paneName, color: this.colors[this.colorsCounter++], opacity: 1, weight: 5}]
+            styles: [{pane: paneName, color: randomColor(), opacity: 1, weight: 5}]
           }
         }).addTo(this.map);
         routeControl.hide();
         this.pathsLayer.push(routeControl);
         this.panes.push(pane);
+        console.log(`panes dalej ${this.panes}`);
       }
       this.changeDetector.detectChanges();
     });
@@ -117,6 +125,16 @@ export class MapComponent implements OnInit, OnDestroy {
       const tmp = this.panes[this._selectedPathIndex].style.zIndex;
       this.panes[this._selectedPathIndex].style.zIndex = max;
       this.panes[index].style.zIndex = tmp;
+
+      if(this._selectedPolyLine != null){
+        this.map.removeControl(this._selectedPolyLine);
+      }
+      // Background continuous black stroke, wider than dashed line.
+this._selectedPolyLine = L.polyline(this.pathsLayer[this._selectedPathIndex]._selectedRoute.coordinates, {
+  weight: 15,
+  lineCap: 'square', // Optional, just to avoid round borders.
+  color: '#757373'
+}).addTo(this.map);
     });
   }
 
