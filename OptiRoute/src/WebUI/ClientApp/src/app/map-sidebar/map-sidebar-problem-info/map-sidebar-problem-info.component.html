@@ -16,8 +16,11 @@
       capacity is required
     </small>
   </div>
-  <div class="card-footer">
-    <button class="w-100" (click)="onClick()" [ngClass]="problemInfoForm.valid ? 'btn-primary' : 'btn-secondary'" [disabled]="!problemInfoForm.valid">
+  <div class="card-footer d-flex">
+    <button (click)="onBackClick()" class="btn-primary btn-left">
+      Back
+    </button>
+    <button class="btn-right" (click)="onClick()" [ngClass]="problemInfoForm.valid ? 'btn-primary' : 'btn-secondary'" [disabled]="!problemInfoForm.valid">
       Continue
     </button>
   </div>

@@ -10,6 +10,8 @@ export class MapSidebarProblemInfoComponent implements OnInit {
   @Input('group')
   public problemInfoForm: FormGroup;
   @Output() continueClicked = new EventEmitter<void>();
+  @Output() backClicked = new EventEmitter<void>();
+
 
   constructor() { }
 
@@ -18,6 +20,10 @@ export class MapSidebarProblemInfoComponent implements OnInit {
 
   onClick() {
     this.continueClicked.emit();
+  }
+
+  onBackClick(){
+    this.backClicked.emit();
   }
 
 }

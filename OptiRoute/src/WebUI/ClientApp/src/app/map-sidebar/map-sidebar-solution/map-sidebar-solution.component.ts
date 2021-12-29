@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {MapService} from '../../services/map.service';
 import {VrptwSolutionResponse} from '../../../shared/models/vrptwSolutionResponse';
@@ -10,6 +10,8 @@ import {RouteDto} from '../../web-api-client';
   styleUrls: ['./map-sidebar-solution.component.scss']
 })
 export class MapSidebarSolutionComponent implements OnInit, OnDestroy {
+  @Output() backClicked = new EventEmitter<void>();
+  
   private _solutionSubscription: Subscription;
   solution: VrptwSolutionResponse;
 
@@ -31,4 +33,7 @@ export class MapSidebarSolutionComponent implements OnInit, OnDestroy {
     this._mapService.setSelectedPath(this.solution.solution.routes.indexOf(route));
   }
 
+  onBackClick(){
+    this.backClicked.emit();
+  }
 }
