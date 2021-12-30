@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -33,6 +33,8 @@ import {TimepickerModule} from 'ngx-bootstrap';
 import { MapSidebarProblemInfoComponent } from './map-sidebar/map-sidebar-problem-info/map-sidebar-problem-info.component';
 import { LoaderService } from './services/loader.service';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
+import { ToastrModule } from 'ngx-toastr';
+import { AppErrorHandler } from './error-handler/error-handler';
 
 
 
@@ -69,11 +71,17 @@ import { LoaderInterceptor } from './interceptors/loader.interceptor';
     ReactiveFormsModule,
     MatStepperModule,
     MatProgressSpinnerModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut:3000,
+      progressBar:true,
+    }),
     TimepickerModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+    {provide: ErrorHandler, useClass: AppErrorHandler},
     MapService,
     OsrmService,
     LoaderService

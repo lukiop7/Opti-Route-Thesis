@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import '~ngx-toastr/toastr';
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
@@ -14,6 +14,9 @@ code {
 //   background-color: #1b6ec2;
 //   border-color: #1861ac;
 // }
+.toast-top-right {
+  top: 7%;
+}
 
 .btn-left{
   margin-right: 3px;
