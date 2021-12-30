@@ -28,8 +28,11 @@ import { MapSidebarDepotComponent } from './map-sidebar/map-sidebar-depot/map-si
 import { MapSidebarSolutionComponent } from './map-sidebar/map-sidebar-solution/map-sidebar-solution.component';
 import { MapSidebarGettingStartedComponent } from './map-sidebar/map-sidebar-getting-started/map-sidebar-getting-started.component';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {TimepickerModule} from 'ngx-bootstrap';
 import { MapSidebarProblemInfoComponent } from './map-sidebar/map-sidebar-problem-info/map-sidebar-problem-info.component';
+import { LoaderService } from './services/loader.service';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 
 
 
@@ -65,12 +68,15 @@ import { MapSidebarProblemInfoComponent } from './map-sidebar/map-sidebar-proble
     FontAwesomeModule,
     ReactiveFormsModule,
     MatStepperModule,
+    MatProgressSpinnerModule,
     TimepickerModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     MapService,
-    OsrmService
+    OsrmService,
+    LoaderService
   ],
   bootstrap: [AppComponent]
 })
