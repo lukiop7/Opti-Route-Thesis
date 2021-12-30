@@ -4,27 +4,27 @@
   </button>
   <div [formGroup]="customerInfoForm" class="d-flex flex-column">
     <label>Ready time</label>
-    <input type="datetime-local"  formControlName="readyTime">
-    <small [hidden]="customerInfoForm.controls.readyTime.valid">
-      readyTime is required
+    <input type="datetime-local"  formControlName="readyTime" [ngClass]="{'ng-invalid': customerInfoForm.errors?.dateValid }">
+    <small *ngIf="!customerInfoForm.controls.readyTime.valid && (customerInfoForm.controls.readyTime.touched ||customerInfoForm.controls.readyTime.dirty)">
+      Ready Time is required
     </small>
     <label>Due date</label>
-    <input type="datetime-local"  formControlName="dueDate">
-    <small [hidden]="customerInfoForm.controls.dueDate.valid">
-      dueDate is required
-    </small>
-    <label>Service time</label>
-    <input type="time" formControlName="serviceTime">
-    <small [hidden]="customerInfoForm.controls.serviceTime.valid">
-      serviceTime is required
-    </small>
-    <label>Demand</label>
-    <input type="text" formControlName="demand">
-    <small [hidden]="customerInfoForm.controls.demand.valid">
-      demand is required
+    <input type="datetime-local"  formControlName="dueDate" [ngClass]="{'ng-invalid': customerInfoForm.errors?.dateValid }">
+    <small *ngIf="!customerInfoForm.controls.dueDate.valid && (customerInfoForm.controls.dueDate.touched ||customerInfoForm.controls.dueDate.dirty)">
+      Due Date is required
     </small>
     <small *ngIf="customerInfoForm.errors?.dateValid  && (customerInfoForm.touched ||customerInfoForm.dirty)">
       Due date must be greater than Ready Time
+    </small>
+    <label>Service time</label>
+    <input type="time" formControlName="serviceTime" [ngClass]="{'is-invalid': !customerInfoForm.controls.serviceTime.valid}">
+    <small *ngIf="!customerInfoForm.controls.serviceTime.valid && (customerInfoForm.controls.serviceTime.touched ||customerInfoForm.controls.duserviceTimeeDate.dirty)">
+      Service Time is required
+    </small>
+    <label>Demand</label>
+    <input type="text" formControlName="demand" [ngClass]="{'is-invalid': !customerInfoForm.controls.demand.valid}">
+    <small *ngIf="!customerInfoForm.controls.demand.valid && (customerInfoForm.controls.demand.touched ||customerInfoForm.controls.demand.dirty)">
+      Demand is required
     </small>
   </div>
 </div>

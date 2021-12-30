@@ -6,21 +6,21 @@
     <label>Vehicles</label>
     <input type="text" formControlName="vehicles">
     <!--display error message if street is not valid-->
-    <small [hidden]="problemInfoForm.controls.vehicles.valid">
-      vehicle is required
+    <small *ngIf="!problemInfoForm.controls.vehicles.valid && (problemInfoForm.controls.vehicles.touched ||problemInfoForm.controls.vehicles.dirty)">
+      Vehicles are required
     </small>
     <label>Capacity</label>
     <input type="text" formControlName="capacity">
     <!--display error message if street is not valid-->
-    <small [hidden]="problemInfoForm.controls.capacity.valid">
-      capacity is required
+    <small *ngIf="!problemInfoForm.controls.capacity.valid && (problemInfoForm.controls.capacity.touched ||problemInfoForm.controls.capacity.dirty)">
+      Capacity is required
     </small>
   </div>
   <div class="card-footer d-flex">
-    <button (click)="onBackClick()" class="btn-primary btn-left">
+    <button (click)="onBackClick()" class="btn btn-primary btn-left">
       Back
     </button>
-    <button class="btn-right" (click)="onClick()" [ngClass]="problemInfoForm.valid ? 'btn-primary' : 'btn-secondary'" [disabled]="!problemInfoForm.valid">
+    <button class="btn btn-right" (click)="onClick()" [ngClass]="problemInfoForm.valid ? 'btn-primary' : 'btn-secondary'" [disabled]="!problemInfoForm.valid">
       Continue
     </button>
   </div>
