@@ -1,20 +1,22 @@
-import {Injectable} from '@angular/core';
-import {MapCustomer} from '../../shared/models/mapCustomer';
-import {Customer} from '../../shared/models/customer';
-import {LatLng, Marker, Polygon} from 'leaflet';
-import {removeItem} from '../../shared/utils/removeItem';
-import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { MapCustomer } from '../../shared/models/mapCustomer';
+import { Customer } from '../../shared/models/customer';
+import { LatLng, Marker, Polygon } from 'leaflet';
+import { removeItem } from '../../shared/utils/removeItem';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 import {
   CustomerDto,
   CVRPTWClient,
   DepotDto,
   ProblemDto,
+  SolutionDto,
 } from '../web-api-client';
-import {OsrmService} from './osrm.service';
-import {IDistDur} from '../../shared/models/osrmTableResponse';
-import {FormGroup} from '@angular/forms';
-import {VrptwSolutionResponse} from '../../shared/models/vrptwSolutionResponse';
-import {addHours} from '../../shared/utils/addHours';
+import { OsrmService } from './osrm.service';
+import { IDistDur } from '../../shared/models/osrmTableResponse';
+import { FormGroup } from '@angular/forms';
+import { VrptwSolutionResponse } from '../../shared/models/vrptwSolutionResponse';
+import { addHours } from '../../shared/utils/addHours';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +32,7 @@ export class MapService {
   private _viewSubject = new BehaviorSubject<number>(0);
   private _selectedPathSubject = new Subject<number>();
 
-  constructor(private _vrptwClient: CVRPTWClient, private _osrmService: OsrmService) {
+  constructor(private _vrptwClient: CVRPTWClient, private _osrmService: OsrmService, private toastr: ToastrService) {
   }
 
   getCustomers(): Observable<Customer[]> {
@@ -75,7 +77,7 @@ export class MapService {
       lat: marker.getLatLng().lat,
       lng: marker.getLatLng().lng,
     };
-    const newItem: MapCustomer = {customer: customer, marker: marker};
+    const newItem: MapCustomer = { customer: customer, marker: marker };
     this._mapCustomers.push(newItem);
     this._customersSubject.next(this._mapCustomers.map(c => c.customer));
     this._markersSubject.next(this._mapCustomers.map(c => c.marker));
@@ -87,7 +89,7 @@ export class MapService {
       lat: marker.getLatLng().lat,
       lng: marker.getLatLng().lng,
     };
-    const newItem: MapCustomer = {customer: customer, marker: marker};
+    const newItem: MapCustomer = { customer: customer, marker: marker };
     this._depot = newItem;
     this._depotMarkerSubject.next(this._depot.marker);
     this._depotSubject.next(this._depot.customer);
@@ -101,11 +103,23 @@ export class MapService {
   }
 
   async connectMarkers(data) {
-    const {coordinated, problem} = await this.prepareRequestData(data);
-    const solution = await this._vrptwClient.getSolution(problem).toPromise();
+    const { coordinated, problem } = await this.prepareRequestData(data);
+    let solution: SolutionDto = null;
+    await this._vrptwClient.getSolution(problem)
+      .toPromise()
+      .then(response => {
+        console.log(response);
+        solution = response;
+      })
+      .catch(error => {
+        this.toastr.error("Something went wrong. Try again!", "Oops!");
+        return;
+      });
     const routes: LatLng[][] = new Array<Array<LatLng>>();
-
+    if (solution === null)
+      return;
     if (solution.feasible) {
+      this.toastr.success("Your problem is feasible!", "Success!");
       for (let i = 0; i < solution.routes.length; i++) {
         const route: LatLng[] = new Array<LatLng>();
         route.push(coordinated[0]);
@@ -116,8 +130,11 @@ export class MapService {
         routes.push(route);
       }
       console.log(routes);
-      this._pathsSubject.next({solution: solution, paths: routes});
+      this._pathsSubject.next({ solution: solution, paths: routes });
       this.setView(this._viewSubject.value + 1);
+    }
+    else {
+      this.toastr.warning("Your problem cannot be solved", "Problem is not feasible");
     }
   }
 
@@ -128,7 +145,7 @@ export class MapService {
     const distDur = await this._osrmService.getDistancesAndDurationsTable(coordinated).toPromise();
     const customers = this.prepareCustomers(coordinated, data);
     const problem = this.prepareProblem(data, coordinated, customers, distDur);
-    return {coordinated, problem};
+    return { coordinated, problem };
   }
 
   private prepareProblem(data, coordinated: LatLng[], customers: CustomerDto[], distDur: IDistDur) {
@@ -139,7 +156,7 @@ export class MapService {
         id: 0,
         x: Math.floor(coordinated[0].lng),
         y: Math.floor(coordinated[0].lat),
-        dueDate: (addHours(data.depotInfo.dueDate as Date, 1).getTime() - addHours(data.depotInfo.readyTime as Date, 1).getTime())/1000,
+        dueDate: (addHours(data.depotInfo.dueDate as Date, 1).getTime() - addHours(data.depotInfo.readyTime as Date, 1).getTime()) / 1000,
       }),
       customers: customers,
       distances: distDur.distances,
@@ -152,7 +169,7 @@ export class MapService {
     let time = 0;
     const today = new Date();
     today.setDate(today.getDate() - 1);
-    today.setHours(0,0,0,0);
+    today.setHours(0, 0, 0, 0);
     console.log(data.customersInfoForm);
 
     for (let i = 1; i < coordinated.length; i++) {
@@ -161,9 +178,9 @@ export class MapService {
         x: Math.floor(coordinated[i].lng),
         y: Math.floor(coordinated[i].lat),
         demand: data.customersInfoForm.customersInfo[i - 1].demand,
-        readyTime: (addHours(data.customersInfoForm.customersInfo[i - 1].readyTime as Date, 1).getTime() - addHours(data.depotInfo.readyTime as Date, 1).getTime())/1000,
-        dueDate: (addHours(data.customersInfoForm.customersInfo[i - 1].dueDate as Date, 1).getTime() - addHours(data.depotInfo.readyTime as Date, 1).getTime())/1000,
-        serviceTime: (new Date(today.toDateString() + ' ' + data.customersInfoForm.customersInfo[i - 1].serviceTime).getTime() - today.getTime())/1000
+        readyTime: (addHours(data.customersInfoForm.customersInfo[i - 1].readyTime as Date, 1).getTime() - addHours(data.depotInfo.readyTime as Date, 1).getTime()) / 1000,
+        dueDate: (addHours(data.customersInfoForm.customersInfo[i - 1].dueDate as Date, 1).getTime() - addHours(data.depotInfo.readyTime as Date, 1).getTime()) / 1000,
+        serviceTime: (new Date(today.toDateString() + ' ' + data.customersInfoForm.customersInfo[i - 1].serviceTime).getTime() - today.getTime()) / 1000
       }));
     }
     console.log(customers);

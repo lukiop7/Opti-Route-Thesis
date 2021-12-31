@@ -8,6 +8,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
 import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
 import {minLengthArray} from '../../shared/utils/minLengthArray';
 import { dateValidator } from 'shared/utils/dateValidator';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-map-sidebar',
@@ -34,7 +35,7 @@ export class MapSidebarComponent implements OnInit, OnDestroy {
   public viewCounter = 0;
   private _viewSubscription: Subscription;
 
-  constructor(private changeDetector: ChangeDetectorRef, private _mapService: MapService, private fb: FormBuilder) {
+  constructor(private toastr: ToastrService,private changeDetector: ChangeDetectorRef, private _mapService: MapService, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {

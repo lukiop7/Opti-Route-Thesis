@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import '~ngx-toastr/toastr';
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
@@ -14,6 +14,9 @@ code {
 //   background-color: #1b6ec2;
 //   border-color: #1861ac;
 // }
+.toast-top-right {
+  top: 7%;
+}
 
 .btn-left{
   margin-right: 3px;
@@ -25,6 +28,26 @@ code {
   flex:1;
 }
 
+small{
+  width: 100% !important;
+  margin-top: 0.25rem !important;
+    font-size: 80% !important;
+    color: #dc3545 !important;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red !important; 
+  box-shadow: none !important; 
+}
+
+input.ng-invalid.ng-touched:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255,10,29,0.25) !important;
+}
+
+label{
+  margin-bottom:0 !important;
+  margin-top: 0.5rem !important;
+}
 
 
 html, body { height: 100%; }

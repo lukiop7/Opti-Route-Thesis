@@ -108,7 +108,7 @@ namespace OptiRoute.Domain.Entities
                 if (this.Customers.Count == 0)
                     return 0;
 
-                return this.Customers.First().DepotDistanceFrom;
+                return this.Customers.First().DepotTimeFrom;
             }
         }
 
