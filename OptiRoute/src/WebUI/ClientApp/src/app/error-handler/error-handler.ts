@@ -1,4 +1,5 @@
-import { ErrorHandler, Inject, Injector, Injectable } from "@angular/core";
+import { ErrorHandler, Inject, Injector, Injectable, isDevMode } from "@angular/core";
+import { environment } from "environments/environment";
 import { ToastrService } from "ngx-toastr";
 
 @Injectable()
@@ -25,7 +26,9 @@ export class AppErrorHandler extends ErrorHandler {
     .onHidden
     .subscribe(()=>{
         super.handleError(error);
-        window.location.reload();
+        if(environment.production){
+          window.location.reload();
+        }
     });
   }
 

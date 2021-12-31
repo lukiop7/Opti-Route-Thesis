@@ -112,7 +112,7 @@ export class MapComponent implements OnInit, OnDestroy {
     console.log(`paths ${this.pathsLayer}`);
     //  this.pathsLayer.clearLayers();
     for (let i = 0; i < result.paths.length; i++) {
-      if (i == 10)
+      if (i % 10 === 0)
         await delay(3000);
 
       const paneName = `pane${i}`;
