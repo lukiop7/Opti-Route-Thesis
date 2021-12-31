@@ -29,6 +29,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private _selectedPathIndex: number;
   private _selectedPolyLine: any;
   public showPath = false;
+  private index:number = 400;
   customersLayer: L.LayerGroup;
   depotLayer: L.LayerGroup;
   pathsLayer: any[] = [];
@@ -100,29 +101,27 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   private async handlePaths(result: VrptwSolutionResponse) {
-    this.panes.forEach((pane: HTMLElement) => {
-      var parent = pane.parentNode;
-      if (parent) {
-        parent.removeChild(pane);
-      }
-    });
-
-    this.panes = [];
-    console.log(`pane ${this.panes}`);
+    if (this._selectedPolyLine != null) {
+      this.map.removeControl(this._selectedPolyLine);
+    }
+    console.log(`pane ${this.panes.length}`);
     this.pathsLayer.forEach(path => {
       this.map.removeControl(path);
     });
     this.pathsLayer = [];
     console.log(`paths ${this.pathsLayer}`);
     //  this.pathsLayer.clearLayers();
-    let index = 400;
     for (let i = 0; i < result.paths.length; i++) {
       if (i == 10)
         await delay(3000);
+
       const paneName = `pane${i}`;
-      const pane = this.map.createPane(paneName);
-      pane.style.zIndex = index.toString();
-      index += 1;
+      if(i >  this.panes.length - 1){
+        const pane = this.map.createPane(paneName);
+        pane.style.zIndex = this.index.toString();
+        this.index += 1;
+      this.panes.push(pane);
+      }
       const routeControl = L.Routing.control({
         createMarker: function () {
           return null;
@@ -138,8 +137,6 @@ export class MapComponent implements OnInit, OnDestroy {
       }).addTo(this.map);
       routeControl.hide();
       this.pathsLayer.push(routeControl);
-      this.panes.push(pane);
-      console.log(`panes dalej ${this.panes}`);
     }
     this.changeDetector.detectChanges();
   }
