@@ -7,18 +7,24 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RouteDetailsComponent } from './components/route-details/route-details.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { DistanceFormattedPipe } from './pipes/distanceFormatted';
+import { TimeFormattedPipe } from './pipes/timeFormatted';
 
 
 @NgModule({
   declarations: [
     MarkerDetailsComponent,
     LoaderComponent,
-    RouteDetailsComponent
+    RouteDetailsComponent,
+    DistanceFormattedPipe,
+    TimeFormattedPipe
   ],
     exports: [
         MarkerDetailsComponent,
         RouteDetailsComponent,
-        LoaderComponent
+        LoaderComponent,
+        DistanceFormattedPipe,
+        TimeFormattedPipe
     ],
   imports: [
     CommonModule,
@@ -27,6 +33,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     FormsModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule
-  ]
+  ],
 })
 export class SharedModule { }

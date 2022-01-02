@@ -1,16 +1,23 @@
-<div class="card h-100 w-100  border-0 ">
+<div class="card h-100 w-100  border-0 shadowed">
   <div class="card-header">
-    <h2 class="text-center">Solution</h2>
+    <div class="solution-header d-flex flex-row flex-wrap">
+      <div  class="time solution-header-detail">
+        <b>Total time:</b>
+        <label>{{solution.solution.time | timeFormatted}}</label>
+      </div>
+      <div class="distance solution-header-detail">
+        <b>Total distance:</b>
+        <label>{{solution.solution.distance | distanceFormatted}}</label>
+      </div>     
+    </div>
   </div>
-  <div class="h-100 hidden-scroll p-2  d-flex flex-column">
-    <label>Total distance: {{solution.solution.distance}}</label>
-    <label>Total time: {{solution.solution.time}}</label>
+  <div class="h-100 hidden-scroll  d-flex flex-column">   
     <div *ngFor="let route of  solution.solution.routes; let i=index">
       <app-route-details [route]="route" (routeMouseOver)="selectedRouteChanged($event)"></app-route-details>
     </div>
   </div>
   <div class="card-footer">
-    <button (click)="onBackClick()" class="btn-primary w-100">
+    <button (click)="onBackClick()" class="btn btn-primary w-100">
       Back
     </button>
   </div>

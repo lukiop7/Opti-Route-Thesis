@@ -49,6 +49,13 @@ label{
   margin-top: 0.5rem !important;
 }
 
+.leaflet-right .leaflet-routing-container.leaflet-routing-container-hide{
+  display:none !important;
+}
+
+.shadowed{
+  box-shadow: 1px 0 7px rgb(16 16 18 / 20%);
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
