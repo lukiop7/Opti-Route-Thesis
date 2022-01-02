@@ -7,7 +7,7 @@
       <div formArrayName="customersInfo">
         <div *ngFor="let customer of  customersInfo.controls; let i=index">
           <div [formGroup]="customer">
-            <app-marker-details [group]="customer" [customer]="customers[i]"
+            <app-marker-details [group]="customer" [customer]="customers[i]" [id]="i+1"
                                 (closed)="removeCustomer($event)"></app-marker-details>
           </div>
         </div>

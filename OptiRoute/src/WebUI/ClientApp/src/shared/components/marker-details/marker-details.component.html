@@ -2,6 +2,9 @@
   <button type="button" class="close close-button" aria-label="Close" (click)="closeOnClick()">
     <fa-icon [icon]="faTimes" class="fa-sm"></fa-icon>
   </button>
+  <label class="id">
+    {{this.id}}
+  </label>
   <div [formGroup]="customerInfoForm" class="d-flex flex-column">
     <label>Ready time</label>
     <input type="datetime-local"  formControlName="readyTime" [ngClass]="{'ng-invalid': customerInfoForm.errors?.dateValid }">
