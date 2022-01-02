@@ -12,6 +12,8 @@ import {localIsoTime} from '../../utils/localIsoTime';
 export class MarkerDetailsComponent implements OnInit {
   @Input()
   public customer: Customer;
+  @Input()
+  public id: number;
   @Input('group')
   public customerInfoForm: FormGroup;
   @Output()

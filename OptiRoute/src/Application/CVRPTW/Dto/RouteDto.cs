@@ -19,9 +19,9 @@ namespace OptiRoute.Application.CVRPTW.Dtos
         {
             profile.CreateMap<Route,RouteDto>()
                 .ForMember(dest => dest.Customers, opt => opt.MapFrom(src => src.Customers.Select(y => y.Id).ToList()))
-                .ForMember(dest => dest.TotalTime, opt => opt.MapFrom(src => src.Vehicle.CurrentTime/60))
+                .ForMember(dest => dest.TotalTime, opt => opt.MapFrom(src => src.Vehicle.CurrentTime))
                 .ForMember(dest => dest.TotalLoad, opt => opt.MapFrom(src => src.Vehicle.CurrentLoad))
-                .ForMember(dest => dest.TotalDistance, opt => opt.MapFrom(src => src.TotalDistance/1000));
+                .ForMember(dest => dest.TotalDistance, opt => opt.MapFrom(src => src.TotalDistance));
         }
     }
 }

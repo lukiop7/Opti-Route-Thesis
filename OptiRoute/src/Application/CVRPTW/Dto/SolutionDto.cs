@@ -20,8 +20,8 @@ namespace OptiRoute.Application.CVRPTW.Dtos
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Solution, SolutionDto>()
-                .ForMember(dest => dest.Distance, opt => opt.MapFrom(src => src.Distance / 1000))
-                .ForMember(dest => dest.Time, opt => opt.MapFrom(src => src.Time / 60));
+                .ForMember(dest => dest.Distance, opt => opt.MapFrom(src => src.Distance))
+                .ForMember(dest => dest.Time, opt => opt.MapFrom(src => src.Time));
         }
     }
 }

@@ -13,6 +13,8 @@ export class RouteDetailsComponent implements OnInit {
   @Output()
   public routeMouseOver = new EventEmitter<RouteDto>();
 
+  public isExpanded: boolean = false;
+
   constructor() {
   }
 
@@ -22,5 +24,10 @@ export class RouteDetailsComponent implements OnInit {
 
   @HostListener('mouseenter') mouseover(event: Event) {
     this.routeMouseOver.emit(this.route);
+    this.isExpanded = true;
+  }
+  @HostListener('mouseleave') mouseout(event: Event) {
+    this.routeMouseOver.emit(this.route);
+    this.isExpanded = false;
   }
 }
