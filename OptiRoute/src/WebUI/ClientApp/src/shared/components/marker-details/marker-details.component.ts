@@ -28,7 +28,7 @@ export class MarkerDetailsComponent implements OnInit {
     const currentDate = localIsoTime();
     if(!this.customerInfoForm.touched){
     this.customerInfoForm.patchValue({
-      dueDate: (currentDate.slice(0, 16).replace("13","23")),
+      dueDate: (currentDate.slice(0, 16).replace("20:16","23:16")),
       readyTime: (currentDate.slice(0, 16)),
       serviceTime: '00:01',
       demand: 1

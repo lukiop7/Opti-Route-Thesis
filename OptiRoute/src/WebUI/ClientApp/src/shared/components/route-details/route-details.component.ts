@@ -27,7 +27,6 @@ export class RouteDetailsComponent implements OnInit {
     this.isExpanded = true;
   }
   @HostListener('mouseleave') mouseout(event: Event) {
-    this.routeMouseOver.emit(this.route);
     this.isExpanded = false;
   }
 }

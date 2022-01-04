@@ -1,77 +1,89 @@
-﻿using AlgorithmCoreVRPTW.FileReaders.Interfaces;
+﻿using OptiRoute.Application.Common.Exceptions;
+using OptiRoute.Application.Common.Interfaces;
 using OptiRoute.Domain.Entities;
+using OptiRoute.Infrastructure.Files.FileReaders.BenchmarkTemplate;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
-namespace AlgorithmCoreVRPTW.FileReaders.Services
+namespace OptiRoute.Infrastructure.FileReaders.Services
 {
-    public class BenchmarkFileReader : IFileReader
+    public class BenchmarkFileReader : IBenchmarkFileReader
     {
-        public Problem ReadBenchmarkFile(string filePath)
+        private string _errorTemplate = "Line: {0} Error: {1}";
+        private Dictionary<int, Action<Problem, string>> _handlersDictionary;
+
+        public BenchmarkFileReader()
         {
-            if (File.Exists(filePath))
+            _handlersDictionary = new Dictionary<int, Action<Problem, string>>()
             {
-                var data = File.ReadAllText(filePath);
-                bool isValid = ValidateDataFormat(data);
-                if (isValid)
-                {
-                    var dataLines = data.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).ToList();
-                    return ParseInputData(dataLines);
-                }
-                throw new InvalidDataException();
-            }
-
-            throw new FileNotFoundException();
-        }
-
-        public Problem ReadBenchmark(string content)
-        {
-            bool isValid = ValidateDataFormat(content);
-            if (isValid)
-            {
-                var dataLines = content.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).ToList();
-                var problem = ParseInputData(dataLines);
-                CalculateDurationsAndDistances(problem);
-                return problem;
-                }
-            throw new InvalidDataException();
-        }
-
-
-        private bool ValidateDataFormat(string data)
-        {
-            string pattern = @"(.+(\n|\r|\r\n).*(\n|\r|\r\n)(VEHICLE)(\n|\r|\r\n)(NUMBER\s+CAPACITY)(\n|\r|\r\n)(\s+\d+\s+\d+)(\n|\r|\r\n)(\n|\r|\r\n)(CUSTOMER)(\n|\r|\r\n)
-(CUST NO\.\s+XCOORD\.\s+YCOORD\.\s+DEMAND\s+READY\s+TIME\s+DUE\s+DATE\s+SERVICE\s+TIME)(\n|\r|\r\n)\s+(\n|\r|\r\n)
-((\s+\d+){7}((\n|\r|\r\n)|$)){2,})";
-            //return Regex.Match(data, pattern).Success;
-            return true;
-        }
-
-        private Problem ParseInputData(List<string> dataLines)
-        {
-            // tu to trzeba dobrze sprawdzic bo sie wywalaja randomowe ilosci linijek
-            var vehicleLine = dataLines[3].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            string depotLine = dataLines[7];
-            var customersLines = dataLines.Skip(8);
-
-            Depot depot = Depot.Parse(depotLine);
-            Problem problem = new Problem()
-            {
-                Depot = depot,
-                Vehicles = Int32.Parse(vehicleLine[0]),
-                Capacity = Int32.Parse(vehicleLine[1]),
+                {4, ParseVehicle},
+                {9, ParseDepot},
+                {10, ParseCustomer},
             };
-
-            foreach (var customer in customersLines)
-            {
-                problem.Customers.Add(Customer.Parse(customer));
-            }
-
-            return problem;
         }
 
+        public Problem ReadBenchmarkFile(string content)
+        {
+            var dataLines = content.Split("\r\n").ToList();
+
+            if (dataLines.Count < BenchmarkTemplate.MinimumNumberOfLines)
+            {
+                throw new ValidationException(new KeyValuePair<string, string[]>("File", new string[]
+                { "The number of lines in the file is less than specified in the documentation." }));
+            }
+
+            Problem benchmarkProblem = new Problem();
+
+            ProcessData(dataLines, benchmarkProblem);
+            CalculateDurationsAndDistances(benchmarkProblem);
+
+            return benchmarkProblem;
+        }
+
+        private void ProcessData(List<string> dataLines, Problem problem)
+        {
+            dataLines = dataLines.Take(dataLines.FindLastIndex(x => !string.IsNullOrEmpty(x)) + 1).ToList();
+            for (int i = 0; i < dataLines.Count; i++)
+            {
+                int index = i <= 10 ? i : 10;
+                if (ValidateLine(index, dataLines[i]))
+                {
+                    if (_handlersDictionary.ContainsKey(index))
+                        _handlersDictionary[index].Invoke(problem, dataLines[i]);
+                }
+                else
+                {
+                    string message = string.Format(_errorTemplate, i, "Data does not correspond to the format given in the documentation");
+                    throw new ValidationException(new KeyValuePair<string, string[]>("File", new string[] { message }));
+                }
+            }
+        }
+
+
+        private bool ValidateLine(int index, string line)
+        {
+            return Regex.Match(line, BenchmarkTemplate.FromBenchmarkTemplate(index), RegexOptions.IgnoreCase).Success;
+        }
+
+        private void ParseDepot(Problem problem, string data)
+        {
+            problem.Depot = Depot.Parse(data);
+        }
+
+        private void ParseVehicle(Problem problem, string data)
+        {
+            var dataSplit = data.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            problem.Vehicles = Int32.Parse(dataSplit[0]);
+            problem.Capacity = Int32.Parse(dataSplit[1]);
+        }
+
+        private void ParseCustomer(Problem problem, string data)
+        {
+            problem.Customers.Add(Customer.Parse(data));
+        }
         private void CalculateDurationsAndDistances(Problem benchmarkProblem)
         {
             List<List<double>> distances = new List<List<double>>();
