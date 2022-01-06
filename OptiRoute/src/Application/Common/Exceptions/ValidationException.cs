@@ -21,6 +21,12 @@ namespace OptiRoute.Application.Common.Exceptions
                 .ToDictionary(failureGroup => failureGroup.Key, failureGroup => failureGroup.ToArray());
         }
 
+        public ValidationException(KeyValuePair<string, string[]> error)
+            : this()
+        {
+            Errors.Add(error);
+        }
+
         public IDictionary<string, string[]> Errors { get; }
     }
 }

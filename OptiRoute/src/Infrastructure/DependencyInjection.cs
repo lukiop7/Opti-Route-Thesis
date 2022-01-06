@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OptiRoute.Infrastructure.FileReaders.Services;
 
 namespace OptiRoute.Infrastructure
 {
@@ -43,6 +44,7 @@ namespace OptiRoute.Infrastructure
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
+            services.AddTransient<IBenchmarkFileReader, BenchmarkFileReader>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

@@ -35,11 +35,13 @@ import { LoaderService } from './services/loader.service';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { AppErrorHandler } from './error-handler/error-handler';
-
+import { BenchmarkComponent } from './benchmark/benchmark.component';
+import {  MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     NavMenuComponent,
     HomeComponent,
@@ -54,8 +56,9 @@ import { AppErrorHandler } from './error-handler/error-handler';
     MapSidebarDepotComponent,
     MapSidebarSolutionComponent,
     MapSidebarGettingStartedComponent,
-    MapSidebarProblemInfoComponent
-  ],
+    MapSidebarProblemInfoComponent,
+      BenchmarkComponent
+   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
     FontAwesomeModule,
@@ -71,6 +74,8 @@ import { AppErrorHandler } from './error-handler/error-handler';
     ReactiveFormsModule,
     MatStepperModule,
     MatProgressSpinnerModule,
+    MatIconModule,
+    MatButtonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut:3000,

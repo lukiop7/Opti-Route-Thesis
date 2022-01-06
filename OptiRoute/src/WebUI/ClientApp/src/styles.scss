@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~ngx-toastr/toastr';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
@@ -55,6 +56,29 @@ label{
 
 .shadowed{
   box-shadow: 1px 0 7px rgb(16 16 18 / 20%);
+}
+
+.hidden-scroll{
+  overflow-y: scroll;
+}
+.hidden-scroll::-webkit-scrollbar{
+  display:none;
+}
+
+.client{
+  display: inline-block;
+  vertical-align: top;
+  min-width: 25px;
+  padding: 0 5px;
+  height: 22px;
+  background-color: #fff;
+  border-radius: 4px;
+  font-weight: 700;
+  color: #32304a;
+  font-size: 14px;
+  text-align: center;
+  line-height: 22px;
+  box-shadow: 0 1px 2px #a09fa7;
 }
 
 html, body { height: 100%; }
