@@ -791,6 +791,7 @@ export class WeatherForecastClient implements IWeatherForecastClient {
 export class SolutionDto implements ISolutionDto {
     feasible?: boolean;
     routes?: RouteDto[] | undefined;
+    depot?: DepotDto | undefined;
     distance?: number;
     time?: number;
 
@@ -811,6 +812,7 @@ export class SolutionDto implements ISolutionDto {
                 for (let item of _data["routes"])
                     this.routes!.push(RouteDto.fromJS(item));
             }
+            this.depot = _data["depot"] ? DepotDto.fromJS(_data["depot"]) : <any>undefined;
             this.distance = _data["distance"];
             this.time = _data["time"];
         }
@@ -831,6 +833,7 @@ export class SolutionDto implements ISolutionDto {
             for (let item of this.routes)
                 data["routes"].push(item.toJSON());
         }
+        data["depot"] = this.depot ? this.depot.toJSON() : <any>undefined;
         data["distance"] = this.distance;
         data["time"] = this.time;
         return data; 
@@ -840,12 +843,13 @@ export class SolutionDto implements ISolutionDto {
 export interface ISolutionDto {
     feasible?: boolean;
     routes?: RouteDto[] | undefined;
+    depot?: DepotDto | undefined;
     distance?: number;
     time?: number;
 }
 
 export class RouteDto implements IRouteDto {
-    customers?: number[] | undefined;
+    customers?: CustomerDto[] | undefined;
     totalTime?: number;
     totalDistance?: number;
     totalLoad?: number;
@@ -864,7 +868,7 @@ export class RouteDto implements IRouteDto {
             if (Array.isArray(_data["customers"])) {
                 this.customers = [] as any;
                 for (let item of _data["customers"])
-                    this.customers!.push(item);
+                    this.customers!.push(CustomerDto.fromJS(item));
             }
             this.totalTime = _data["totalTime"];
             this.totalDistance = _data["totalDistance"];
@@ -884,7 +888,7 @@ export class RouteDto implements IRouteDto {
         if (Array.isArray(this.customers)) {
             data["customers"] = [];
             for (let item of this.customers)
-                data["customers"].push(item);
+                data["customers"].push(item.toJSON());
         }
         data["totalTime"] = this.totalTime;
         data["totalDistance"] = this.totalDistance;
@@ -894,10 +898,118 @@ export class RouteDto implements IRouteDto {
 }
 
 export interface IRouteDto {
-    customers?: number[] | undefined;
+    customers?: CustomerDto[] | undefined;
     totalTime?: number;
     totalDistance?: number;
     totalLoad?: number;
+}
+
+export class CustomerDto implements ICustomerDto {
+    id?: number;
+    x?: number;
+    y?: number;
+    demand?: number;
+    readyTime?: number;
+    dueDate?: number;
+    serviceTime?: number;
+
+    constructor(data?: ICustomerDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.x = _data["x"];
+            this.y = _data["y"];
+            this.demand = _data["demand"];
+            this.readyTime = _data["readyTime"];
+            this.dueDate = _data["dueDate"];
+            this.serviceTime = _data["serviceTime"];
+        }
+    }
+
+    static fromJS(data: any): CustomerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CustomerDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["x"] = this.x;
+        data["y"] = this.y;
+        data["demand"] = this.demand;
+        data["readyTime"] = this.readyTime;
+        data["dueDate"] = this.dueDate;
+        data["serviceTime"] = this.serviceTime;
+        return data; 
+    }
+}
+
+export interface ICustomerDto {
+    id?: number;
+    x?: number;
+    y?: number;
+    demand?: number;
+    readyTime?: number;
+    dueDate?: number;
+    serviceTime?: number;
+}
+
+export class DepotDto implements IDepotDto {
+    id?: number;
+    x?: number;
+    y?: number;
+    dueDate?: number;
+
+    constructor(data?: IDepotDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.x = _data["x"];
+            this.y = _data["y"];
+            this.dueDate = _data["dueDate"];
+        }
+    }
+
+    static fromJS(data: any): DepotDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DepotDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["x"] = this.x;
+        data["y"] = this.y;
+        data["dueDate"] = this.dueDate;
+        return data; 
+    }
+}
+
+export interface IDepotDto {
+    id?: number;
+    x?: number;
+    y?: number;
+    dueDate?: number;
 }
 
 export class ProblemDto implements IProblemDto {
@@ -978,114 +1090,6 @@ export interface IProblemDto {
     customers?: CustomerDto[] | undefined;
     distances?: number[][] | undefined;
     durations?: number[][] | undefined;
-}
-
-export class DepotDto implements IDepotDto {
-    id?: number;
-    x?: number;
-    y?: number;
-    dueDate?: number;
-
-    constructor(data?: IDepotDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.x = _data["x"];
-            this.y = _data["y"];
-            this.dueDate = _data["dueDate"];
-        }
-    }
-
-    static fromJS(data: any): DepotDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new DepotDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["x"] = this.x;
-        data["y"] = this.y;
-        data["dueDate"] = this.dueDate;
-        return data; 
-    }
-}
-
-export interface IDepotDto {
-    id?: number;
-    x?: number;
-    y?: number;
-    dueDate?: number;
-}
-
-export class CustomerDto implements ICustomerDto {
-    id?: number;
-    x?: number;
-    y?: number;
-    demand?: number;
-    readyTime?: number;
-    dueDate?: number;
-    serviceTime?: number;
-
-    constructor(data?: ICustomerDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.x = _data["x"];
-            this.y = _data["y"];
-            this.demand = _data["demand"];
-            this.readyTime = _data["readyTime"];
-            this.dueDate = _data["dueDate"];
-            this.serviceTime = _data["serviceTime"];
-        }
-    }
-
-    static fromJS(data: any): CustomerDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CustomerDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["x"] = this.x;
-        data["y"] = this.y;
-        data["demand"] = this.demand;
-        data["readyTime"] = this.readyTime;
-        data["dueDate"] = this.dueDate;
-        data["serviceTime"] = this.serviceTime;
-        return data; 
-    }
-}
-
-export interface ICustomerDto {
-    id?: number;
-    x?: number;
-    y?: number;
-    demand?: number;
-    readyTime?: number;
-    dueDate?: number;
-    serviceTime?: number;
 }
 
 export class PaginatedListOfTodoItemDto implements IPaginatedListOfTodoItemDto {

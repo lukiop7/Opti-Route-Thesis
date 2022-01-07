@@ -1,0 +1,23 @@
+:host {
+    display: block;
+    height: 100%;
+  }
+
+mat-dialog-container{
+    display:flex !important;
+    flex-direction: column;
+}
+
+.visualizer-header{
+flex: 0 0 10%;
+display:flex;
+justify-content: center;
+}
+.visualizer-content{
+flex: 1 1 80%;
+height:85%;
+}
+.visualizer-footer{
+flex: 0 0 10%;
+float:right;
+}

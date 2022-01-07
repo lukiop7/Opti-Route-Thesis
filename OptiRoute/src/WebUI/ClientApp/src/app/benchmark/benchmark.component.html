@@ -35,7 +35,10 @@
         <div class="solution-header-detail">
           <b>Routes: </b>
           <label>{{solution.routes.length}}</label>
-        </div>          
+        </div>   
+        <div class="solution-header-detail">
+          <button class="btn btn-primary" (click)="visualizeDialogOpen()">Visualize</button>
+        </div>       
       </div>
       <div class="solution-routes-container hidden-scroll">
         <div class="route" *ngFor="let route of solution.routes; let i = index">
@@ -44,7 +47,7 @@
           </div>
           <div class="route-clients-container">
             <div class="client" *ngFor="let client of route.customers; let j = index">
-              {{client}}
+              {{client.id}}
             </div>
           </div>
         </div>
