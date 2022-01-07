@@ -1,9 +1,11 @@
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FileUploadControl, FileUploadValidators } from '@iplab/ngx-file-upload';
 import { BenchmarksClient, FileParameter, SolutionDto } from 'app/web-api-client';
 import { ToastrService } from 'ngx-toastr';
+import { VisualizerComponent } from 'shared/components/visualizer/visualizer.component';
 
 @Component({
   selector: 'app-benchmark',
@@ -18,7 +20,8 @@ export class BenchmarkComponent implements OnInit {
   @Output() public onUploadFinished = new EventEmitter();
   @ViewChild("fileInput") input : ElementRef;
 
-  constructor(private _benchmarkClient: BenchmarksClient, private changeDetector: ChangeDetectorRef, private toastr: ToastrService) {
+  constructor(private _benchmarkClient: BenchmarksClient, private changeDetector: ChangeDetectorRef,
+     private toastr: ToastrService, private visualizeDialog : MatDialog) {
   }
 
   ngOnInit() {
@@ -42,6 +45,21 @@ export class BenchmarkComponent implements OnInit {
   public fileButtonClick(){
     this.input.nativeElement.value = null;
     this.input.nativeElement.click();
+  }
+
+  public visualizeDialogOpen(){
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.height="80vh";
+    dialogConfig.width="80vw";
+
+    dialogConfig.data={
+      solution: this.solution
+    }
+
+    this.visualizeDialog.open(VisualizerComponent, dialogConfig);
   }
 
   private validateFile(files) {

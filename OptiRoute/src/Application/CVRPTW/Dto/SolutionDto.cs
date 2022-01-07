@@ -13,6 +13,8 @@ namespace OptiRoute.Application.CVRPTW.Dtos
     {
         public bool Feasible { get; set; }
         public List<RouteDto> Routes { get; set; } = new List<RouteDto>();
+        
+        public DepotDto Depot { get; set; }
 
         public double Distance { get; set; }
         public double Time { get; set; }

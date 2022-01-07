@@ -124,7 +124,7 @@ export class MapService {
         const route: LatLng[] = new Array<LatLng>();
         route.push(coordinated[0]);
         for (let j = 0; j < solution.routes[i].customers.length; j++) {
-          route.push(coordinated[solution.routes[i].customers[j]]);
+          route.push(coordinated[solution.routes[i].customers[j].id]);
         }
         route.push(coordinated[0]);
         routes.push(route);

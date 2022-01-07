@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import {FormGroup} from '@angular/forms';
   templateUrl: './map-sidebar-problem-info.component.html',
   styleUrls: ['./map-sidebar-problem-info.component.scss']
 })
-export class MapSidebarProblemInfoComponent implements OnInit {
+export class MapSidebarProblemInfoComponent implements OnInit, OnDestroy {
   @Input('group')
   public problemInfoForm: FormGroup;
   @Output() continueClicked = new EventEmitter<void>();
@@ -14,6 +14,8 @@ export class MapSidebarProblemInfoComponent implements OnInit {
 
 
   constructor() { }
+  ngOnDestroy(): void {
+  }
 
   ngOnInit(): void {
   }

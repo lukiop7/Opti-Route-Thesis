@@ -522,6 +522,14 @@
               "$ref": "#/components/schemas/RouteDto"
             }
           },
+          "depot": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DepotDto"
+              }
+            ]
+          },
           "distance": {
             "type": "number",
             "format": "double"
@@ -540,8 +548,7 @@
             "type": "array",
             "nullable": true,
             "items": {
-              "type": "integer",
-              "format": "int32"
+              "$ref": "#/components/schemas/CustomerDto"
             }
           },
           "totalTime": {
@@ -555,6 +562,62 @@
           "totalLoad": {
             "type": "number",
             "format": "double"
+          }
+        }
+      },
+      "CustomerDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "y": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "demand": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "readyTime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dueDate": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "serviceTime": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "DepotDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "y": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dueDate": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -606,62 +669,6 @@
                 "format": "double"
               }
             }
-          }
-        }
-      },
-      "DepotDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "x": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "y": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "dueDate": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "CustomerDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "x": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "y": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "demand": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "readyTime": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "dueDate": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "serviceTime": {
-            "type": "integer",
-            "format": "int32"
           }
         }
       },
