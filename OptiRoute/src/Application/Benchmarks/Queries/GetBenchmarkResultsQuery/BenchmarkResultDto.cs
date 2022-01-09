@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OptiRoute.Application.Benchmarks.Queries
+namespace OptiRoute.Application.Benchmarks.Queries.GetBenchmarkResultsQuery
 {
    public class BenchmarkResultDto : IMapFrom<BenchmarkResult>
     {

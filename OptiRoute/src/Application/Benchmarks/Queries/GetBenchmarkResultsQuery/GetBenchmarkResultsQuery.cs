@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OptiRoute.Application.Benchmarks.Queries
+namespace OptiRoute.Application.Benchmarks.Queries.GetBenchmarkResultsQuery
 {
     public class GetBenchmarkResultsQuery : IRequest<List<BenchmarkResultDto>>
     {

@@ -45,7 +45,7 @@
         "tags": [
           "Benchmarks"
         ],
-        "operationId": "Benchmarks_GetBenchmarkResults",
+        "operationId": "Benchmarks_GetBenchmarkResultsAll",
         "responses": {
           "200": {
             "description": "",
@@ -56,6 +56,38 @@
                   "items": {
                     "$ref": "#/components/schemas/BenchmarkResultDto"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Benchmarks/{id}": {
+      "get": {
+        "tags": [
+          "Benchmarks"
+        ],
+        "operationId": "Benchmarks_GetBenchmarkResults",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BenchmarkResultDetailsDto"
                 }
               }
             }
@@ -677,6 +709,74 @@
           "benchmarkInstanceDbId": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "BenchmarkResultDetailsDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "dbId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "bestDistance": {
+            "type": "number",
+            "format": "double"
+          },
+          "bestVehicles": {
+            "type": "number",
+            "format": "double"
+          },
+          "solutionDto": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SolutionDto"
+              }
+            ]
+          },
+          "benchmarkInstanceDto": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/BenchmarkInstanceDto"
+              }
+            ]
+          },
+          "solutionDbId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "benchmarkInstanceDbId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "BenchmarkInstanceDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "dbId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "bestDistance": {
+            "type": "number",
+            "format": "double"
+          },
+          "bestVehicles": {
+            "type": "number",
+            "format": "double"
           }
         }
       },
