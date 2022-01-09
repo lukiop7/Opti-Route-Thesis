@@ -34,6 +34,12 @@ namespace OptiRoute.Infrastructure.Persistence
         public DbSet<TodoItem> TodoItems { get; set; }
 
         public DbSet<TodoList> TodoLists { get; set; }
+        public DbSet<BenchmarkResult> BenchmarkResults { get; set; }
+        public DbSet<BenchmarkInstance> BenchmarkInstances { get; set; }
+        public DbSet<Route> Routes { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Depot> Depots { get; set; }
+        public DbSet<Solution> Solutions { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

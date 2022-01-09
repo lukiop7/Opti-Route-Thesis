@@ -5,12 +5,16 @@ namespace OptiRoute.Domain.Entities
 {
     public class Route
     {
+        public int DbId { get; set; }
         public int Id { get; set; }
         public List<Customer> Customers { get; set; } = new List<Customer>();
         public List<List<double>> Distances { get; set; } = new List<List<double>>();
         public List<List<double>> Durations { get; set; } = new List<List<double>>();
         public Vehicle Vehicle { get; set; }
+        public int DepotDbId { get; set; }
         public Depot Depot { get; set; }
+        public int SolutionDbId { get; set; }
+        public Solution Solution { get; set; }
 
         private double _distance = 0;
         private double _waitingTime = 0;

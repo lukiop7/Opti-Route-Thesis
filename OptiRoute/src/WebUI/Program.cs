@@ -24,6 +24,7 @@ namespace OptiRoute.WebUI
                 try
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
+                    var environment = services.GetService<IWebHostEnvironment>();
 
                     if (context.Database.IsNpgsql())
                     {

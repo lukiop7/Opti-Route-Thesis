@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OptiRoute.Infrastructure.FileReaders.Services;
+using OptiRoute.Infrastructure.HostedService;
 
 namespace OptiRoute.Infrastructure
 {
@@ -45,6 +46,7 @@ namespace OptiRoute.Infrastructure
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
             services.AddTransient<IBenchmarkFileReader, BenchmarkFileReader>();
+            services.AddTransient<IFileProviderService, SolomonInstancesFileProviderService>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
@@ -53,6 +55,8 @@ namespace OptiRoute.Infrastructure
             {
                 options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator"));
             });
+
+            services.AddHostedService<SolomonBenchmarkHostedService>();
 
             return services;
         }
