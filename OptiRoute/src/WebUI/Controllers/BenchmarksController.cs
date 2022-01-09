@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OptiRoute.Application.Benchmarks.Commands;
+using OptiRoute.Application.Benchmarks.Queries;
 using OptiRoute.Application.CVRPTW.Dtos;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,12 @@ namespace OptiRoute.WebUI.Controllers
         public async Task<ActionResult<SolutionDto>> GetSolution(IFormFile file)
         {
             return await Mediator.Send(new SolveBenchmarkProblemCommand() { File = file });
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BenchmarkResultDto>>> GetBenchmarkResults()
+        {
+            return await Mediator.Send(new GetBenchmarkResultsQuery());
         }
     }
 }
