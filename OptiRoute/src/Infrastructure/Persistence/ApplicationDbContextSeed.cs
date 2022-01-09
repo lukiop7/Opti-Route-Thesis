@@ -23,7 +23,7 @@ namespace OptiRoute.Infrastructure.Persistence
             if (userManager.Users.All(u => u.UserName != administrator.UserName))
             {
                 await userManager.CreateAsync(administrator, "Administrator1!");
-                await userManager.AddToRolesAsync(administrator, new [] { administratorRole.Name });
+                await userManager.AddToRolesAsync(administrator, new[] { administratorRole.Name });
             }
         }
 
@@ -51,6 +51,10 @@ namespace OptiRoute.Infrastructure.Persistence
 
                 await context.SaveChangesAsync();
             }
+        }
+
+        public static async Task SeedBenchmarksDataAsync(ApplicationDbContext context)
+        {
 
             if (!context.BenchmarkInstances.Any())
             {

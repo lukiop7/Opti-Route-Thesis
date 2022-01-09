@@ -29,6 +29,10 @@ import { MapSidebarSolutionComponent } from './map-sidebar/map-sidebar-solution/
 import { MapSidebarGettingStartedComponent } from './map-sidebar/map-sidebar-getting-started/map-sidebar-getting-started.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatInputModule} from '@angular/material/input';
+import {MatSortModule} from '@angular/material/sort';
 import {TimepickerModule} from 'ngx-bootstrap';
 import { MapSidebarProblemInfoComponent } from './map-sidebar/map-sidebar-problem-info/map-sidebar-problem-info.component';
 import { LoaderService } from './services/loader.service';
@@ -38,10 +42,11 @@ import { AppErrorHandler } from './error-handler/error-handler';
 import { BenchmarkComponent } from './benchmark/benchmark.component';
 import {  MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { BenchmarkResultsComponent } from './benchmark-results/benchmark-results.component';
 
 
 @NgModule({
-  declarations: [	
+  declarations: [		
     AppComponent,
     NavMenuComponent,
     HomeComponent,
@@ -57,7 +62,8 @@ import { MatButtonModule } from '@angular/material/button';
     MapSidebarSolutionComponent,
     MapSidebarGettingStartedComponent,
     MapSidebarProblemInfoComponent,
-      BenchmarkComponent
+      BenchmarkComponent,
+      BenchmarkResultsComponent
    ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -76,6 +82,10 @@ import { MatButtonModule } from '@angular/material/button';
     MatProgressSpinnerModule,
     MatIconModule,
     MatButtonModule,
+    MatTableModule,
+        MatSortModule,
+        MatInputModule,
+        MatPaginatorModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut:3000,

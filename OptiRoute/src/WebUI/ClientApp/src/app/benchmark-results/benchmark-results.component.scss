@@ -1,0 +1,50 @@
+:host {
+    display: block;
+    margin: 0;
+    padding: 50px 0;
+    font-family: sans-serif;
+    background-color: rgba(205, 217, 237, 0.5215686274509804);
+    height: calc(100vh - 57px);
+  }
+  
+.section{
+    height:100%;
+    width:100%;
+    padding: 10px;
+}
+
+.table {
+    width: 100%;
+    overflow-x: auto;
+  }
+  th.mat-header-cell {
+    text-align: left;
+    max-width: 300px;
+  }
+  
+  .mat-row:hover .mat-cell {
+   background-color: rgb(225, 228, 228);
+  }
+
+  .mat-cell, .mat-header-cell{
+      justify-content: center;
+  }
+
+  .mat-column-name{
+      flex: 0 0 15%;
+  }
+  .mat-column-distance{
+    flex: 0 0 15%;
+}
+.mat-column-vehicles{
+    flex: 0 0 15%;
+}
+.mat-column-bestDistance{
+    flex: 0 0 15%;
+}
+.mat-column-bestVehicles{
+    flex: 0 0 15%;
+}
+.mat-column-actions{
+    flex: 0 0 25%;
+}

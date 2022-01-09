@@ -36,6 +36,7 @@ namespace OptiRoute.WebUI
 
                     await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager, roleManager);
                     await ApplicationDbContextSeed.SeedSampleDataAsync(context);
+                    await ApplicationDbContextSeed.SeedBenchmarksDataAsync(context);
                 }
                 catch (Exception ex)
                 {

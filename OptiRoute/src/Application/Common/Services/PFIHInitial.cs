@@ -22,7 +22,14 @@ namespace AlgorithmCoreVRPTW.Solver.Services
                 Feasible = routes.TrueForAll(x => x.IsFeasible());
             }
 
-            return new Solution() { Feasible = Feasible, Depot = problem.Depot, Routes = routes };
+            return new Solution()
+            {
+                Feasible = Feasible,
+                Depot = problem.Depot,
+                Routes = routes,
+                Distance = Math.Round(routes.Sum(x => x.TotalDistance), 2),
+                Time = Math.Round(routes.Sum(x => x.TotalTime), 2)
+            };
         }
 
         private void Construct(Problem problem, List<Customer> unroutedCustomers, List<Route> routes)
@@ -30,8 +37,14 @@ namespace AlgorithmCoreVRPTW.Solver.Services
             int counter = 0;
             while (unroutedCustomers.Count > 0)
             {
-                Route currentRouteCustomerList = new Route() { Id = counter, Vehicle = new Vehicle(counter, problem.Capacity, 0, 0), Depot = problem.Depot, Distances = problem.Distances,
-                Durations = problem.Durations};
+                Route currentRouteCustomerList = new Route()
+                {
+                    Id = counter,
+                    Vehicle = new Vehicle(counter, problem.Capacity, 0, 0),
+                    Depot = problem.Depot,
+                    Distances = problem.Distances,
+                    Durations = problem.Durations
+                };
                 Customer seedCustomer = FindSeedCustomer(unroutedCustomers);
                 currentRouteCustomerList.AddCustomer(seedCustomer);
                 unroutedCustomers.Remove(seedCustomer);

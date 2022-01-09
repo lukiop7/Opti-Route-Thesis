@@ -25,7 +25,14 @@ namespace AlgorithmCoreVRPTW.Solver.Services
                 iterationsLimit = CheckImprovement(iterationsLimit, previousDistance, currentDistance);
                 iterationsCounter++;
             }
-            return new Solution() { Feasible = true, Depot = currentSolution.Depot, Routes = routeList };
+            return new Solution()
+            {
+                Feasible = true,
+                Depot = currentSolution.Depot,
+                Routes = routeList,
+                Distance = Math.Round(routeList.Sum(x => x.TotalDistance), 2),
+                Time = Math.Round(routeList.Sum(x => x.TotalTime), 2)
+            };
         }
 
         private int CheckImprovement(int iterationsLimit, double previousDistance, double currentDistance)

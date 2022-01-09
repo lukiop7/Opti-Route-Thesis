@@ -29,8 +29,10 @@ namespace OptiRoute.Application.Benchmarks.Queries.GetBenchmarkResultsQuery
         public async Task<List<BenchmarkResultDto>> Handle(GetBenchmarkResultsQuery request, CancellationToken cancellationToken)
         {
             var results = await _context.BenchmarkResults
-                .Include(x=> x.Solution)
-                .Include(x=>x.BenchmarkInstance)
+                 .Include(x => x.Solution)
+                 .ThenInclude(x => x.Routes)
+                .Include(x => x.BenchmarkInstance)
+                .OrderBy(x => x.BenchmarkInstance.Name)
                 .ToListAsync();
             return _mapper.Map<List<BenchmarkResultDto>>(results);
         }
