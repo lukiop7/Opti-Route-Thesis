@@ -2,7 +2,6 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { FileUploadControl, FileUploadValidators } from '@iplab/ngx-file-upload';
 import { BenchmarksClient, FileParameter, SolutionDto } from 'app/web-api-client';
 import { ToastrService } from 'ngx-toastr';
 import { VisualizerComponent } from 'shared/components/visualizer/visualizer.component';

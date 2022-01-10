@@ -33,7 +33,7 @@ export class BenchmarkResultsComponent implements OnInit, AfterViewInit {
   }
 
   private getBenchmarkResults() {
-    this.client.getBenchmarkResultsAll()
+    this.client.getBenchmarkResults()
       .subscribe((result) => {
         this.dataSource.data = result;
       })
