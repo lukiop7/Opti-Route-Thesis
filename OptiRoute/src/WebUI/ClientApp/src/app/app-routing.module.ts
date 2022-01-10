@@ -1,25 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthorizeGuard } from 'api-authorization/authorize.guard';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { HomeComponent } from './home/home.component';
-import { TodoComponent } from './todo/todo.component';
-import { TokenComponent } from './token/token.component';
 import {MapLayoutComponent} from './map-layout/map-layout.component';
 import { BenchmarkComponent } from './benchmark/benchmark.component';
 import { BenchmarkResultsComponent } from './benchmark-results/benchmark-results.component';
 
 export const routes: Routes = [
 
-  { path: 'counter', component: CounterComponent },
-  { path: 'fetch-data', component: FetchDataComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'todo', component: TodoComponent, canActivate: [AuthorizeGuard] },
-  { path: 'token', component: TokenComponent, canActivate: [AuthorizeGuard] },
-  { path: 'map', component: MapLayoutComponent, canActivate: [AuthorizeGuard] },
-  { path: 'benchmark', component: BenchmarkComponent, canActivate: [AuthorizeGuard] },
-  { path: 'benchmark-results', component: BenchmarkResultsComponent, canActivate: [AuthorizeGuard] },
+  { path: 'map', component: MapLayoutComponent},
+  { path: 'benchmark', component: BenchmarkComponent},
+  { path: 'benchmark-results', component: BenchmarkResultsComponent},
 ];
 
 @NgModule({

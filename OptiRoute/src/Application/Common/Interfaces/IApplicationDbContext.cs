@@ -7,9 +7,6 @@ namespace OptiRoute.Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
-        DbSet<TodoItem> TodoItems { get; set; }
-
-        DbSet<TodoList> TodoLists { get; set; }
         DbSet<BenchmarkResult> BenchmarkResults { get; set; }
         DbSet<BenchmarkInstance> BenchmarkInstances { get; set; }
         DbSet<Route> Routes { get; set; }

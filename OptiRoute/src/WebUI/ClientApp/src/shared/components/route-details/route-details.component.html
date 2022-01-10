@@ -1,6 +1,6 @@
 <div class="card card-body position-relative">
 <div class="route-hover-line"></div>
-<div class="d-flex flex-row flex-wrap wrapper" [ngClass]="{'expanded'  : isExpanded===true}">
+<div class="d-flex flex-row flex-wrap route-wrapper" [ngClass]="{'expanded'  : isExpanded===true}">
   <div class="route-details d-flex flex-column">
     <b>Time:</b>
     <span>{{route.totalTime | timeFormatted}}</span>

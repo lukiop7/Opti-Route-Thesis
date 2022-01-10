@@ -8,7 +8,6 @@ using OptiRoute.Infrastructure.FileReaders.Services;
 using OptiRoute.Infrastructure.Files;
 using OptiRoute.Infrastructure.Files.FileReaders.Services;
 using OptiRoute.Infrastructure.HostedService;
-using OptiRoute.Infrastructure.Identity;
 using OptiRoute.Infrastructure.Persistence;
 using OptiRoute.Infrastructure.Services;
 
@@ -33,30 +32,10 @@ namespace OptiRoute.Infrastructure
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
-            services.AddScoped<IDomainEventService, DomainEventService>();
-
-            services
-                .AddDefaultIdentity<ApplicationUser>()
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
-
             services.AddTransient<IDateTime, DateTimeService>();
-            services.AddTransient<IIdentityService, IdentityService>();
-            services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
             services.AddTransient<IBenchmarkInstanceFileReader, BenchmarkInstanceFileReader>();
             services.AddTransient<IBenchmarkBestFileReader, BenchmarkBestFileReader>();
             services.AddTransient<IFileProviderService, SolomonInstancesFileProviderService>();
-
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator"));
-            });
 
             services.AddHostedService<SolomonBenchmarkHostedService>();
 

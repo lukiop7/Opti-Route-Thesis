@@ -11,7 +11,7 @@
       </div>     
     </div>
   </div>
-  <div class="h-100 hidden-scroll  d-flex flex-column">   
+  <div class="h-100 hidden-scroll hidden-scroll-x d-flex flex-column">   
     <div *ngFor="let route of  solution.solution.routes; let i=index">
       <app-route-details [route]="route" (routeMouseOver)="selectedRouteChanged($event)"></app-route-details>
     </div>

@@ -8,15 +8,9 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { TodoComponent } from './todo/todo.component';
-import { ApiAuthorizationModule } from 'api-authorization/api-authorization.module';
-import { AuthorizeInterceptor } from 'api-authorization/authorize.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AppRoutingModule } from './app-routing.module';
-import { TokenComponent } from './token/token.component';
 import { MapComponent } from './map/map.component';
 import {SharedModule} from '../shared/shared.module';
 import { MapSidebarComponent } from './map-sidebar/map-sidebar.component';
@@ -50,10 +44,6 @@ import { BenchmarkResultsComponent } from './benchmark-results/benchmark-results
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
-    TodoComponent,
-    TokenComponent,
     MapComponent,
     MapSidebarComponent,
     MapLayoutComponent,
@@ -70,7 +60,6 @@ import { BenchmarkResultsComponent } from './benchmark-results/benchmark-results
     FontAwesomeModule,
     HttpClientModule,
     FormsModule,
-    ApiAuthorizationModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ModalModule.forRoot(),
@@ -94,7 +83,6 @@ import { BenchmarkResultsComponent } from './benchmark-results/benchmark-results
     TimepickerModule.forRoot()
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     {provide: ErrorHandler, useClass: AppErrorHandler},
     MapService,
