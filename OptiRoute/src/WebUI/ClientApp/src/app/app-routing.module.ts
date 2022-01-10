@@ -8,6 +8,7 @@ import { TodoComponent } from './todo/todo.component';
 import { TokenComponent } from './token/token.component';
 import {MapLayoutComponent} from './map-layout/map-layout.component';
 import { BenchmarkComponent } from './benchmark/benchmark.component';
+import { BenchmarkResultsComponent } from './benchmark-results/benchmark-results.component';
 
 export const routes: Routes = [
 
@@ -18,6 +19,7 @@ export const routes: Routes = [
   { path: 'token', component: TokenComponent, canActivate: [AuthorizeGuard] },
   { path: 'map', component: MapLayoutComponent, canActivate: [AuthorizeGuard] },
   { path: 'benchmark', component: BenchmarkComponent, canActivate: [AuthorizeGuard] },
+  { path: 'benchmark-results', component: BenchmarkResultsComponent, canActivate: [AuthorizeGuard] },
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
-﻿using OptiRoute.Application.Common.Exceptions;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using OptiRoute.Application.Common.Exceptions;
 using System;
 using System.Collections.Generic;
 
@@ -9,7 +9,6 @@ namespace OptiRoute.WebUI.Filters
 {
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     {
-
         private readonly IDictionary<Type, Action<ExceptionContext>> _exceptionHandlers;
 
         public ApiExceptionFilterAttribute()

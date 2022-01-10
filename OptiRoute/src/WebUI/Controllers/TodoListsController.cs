@@ -1,10 +1,10 @@
-﻿using OptiRoute.Application.TodoLists.Commands.CreateTodoList;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using OptiRoute.Application.TodoLists.Commands.CreateTodoList;
 using OptiRoute.Application.TodoLists.Commands.DeleteTodoList;
 using OptiRoute.Application.TodoLists.Commands.UpdateTodoList;
 using OptiRoute.Application.TodoLists.Queries.ExportTodos;
 using OptiRoute.Application.TodoLists.Queries.GetTodos;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace OptiRoute.WebUI.Controllers

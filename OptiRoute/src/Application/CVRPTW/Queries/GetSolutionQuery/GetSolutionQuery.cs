@@ -1,11 +1,10 @@
-﻿using AutoMapper;
+﻿using AlgorithmCoreVRPTW.Solver.Interfaces;
+using AutoMapper;
 using MediatR;
+using OptiRoute.Application.CVRPTW.Dtos;
+using OptiRoute.Domain.Entities;
 using System.Threading;
 using System.Threading.Tasks;
-using OptiRoute.Application.CVRPTW.Dtos;
-using AlgorithmCoreVRPTW.Solver.Interfaces;
-using OptiRoute.Application.Common.Security;
-using OptiRoute.Domain.Entities;
 
 namespace OptiRoute.Application.CVRPTW.Queries
 {
@@ -27,7 +26,6 @@ namespace OptiRoute.Application.CVRPTW.Queries
 
         public async Task<SolutionDto> Handle(GetSolutionQuery request, CancellationToken cancellationToken)
         {
-
             Problem problemMapped = _mapper.Map<ProblemDto, Problem>(request.Problem);
 
             var solution = this._solver.Solve(problemMapped);

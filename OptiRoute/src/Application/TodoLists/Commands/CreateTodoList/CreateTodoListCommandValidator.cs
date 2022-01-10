@@ -1,6 +1,6 @@
-﻿using OptiRoute.Application.Common.Interfaces;
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using OptiRoute.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 

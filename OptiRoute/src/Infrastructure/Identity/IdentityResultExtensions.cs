@@ -1,5 +1,5 @@
-﻿using OptiRoute.Application.Common.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using OptiRoute.Application.Common.Models;
 using System.Linq;
 
 namespace OptiRoute.Infrastructure.Identity

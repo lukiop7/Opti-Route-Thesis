@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using MediatR;
 using OptiRoute.Application.Common.Interfaces;
 using OptiRoute.Application.Common.Mappings;
 using OptiRoute.Application.Common.Models;
 using OptiRoute.Application.TodoLists.Queries.GetTodos;
-using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

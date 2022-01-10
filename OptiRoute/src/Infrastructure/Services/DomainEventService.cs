@@ -1,8 +1,8 @@
-﻿using OptiRoute.Application.Common.Interfaces;
+﻿using MediatR;
+using Microsoft.Extensions.Logging;
+using OptiRoute.Application.Common.Interfaces;
 using OptiRoute.Application.Common.Models;
 using OptiRoute.Domain.Common;
-using MediatR;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 

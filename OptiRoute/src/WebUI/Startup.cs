@@ -1,22 +1,19 @@
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 using OptiRoute.Application;
 using OptiRoute.Application.Common.Interfaces;
 using OptiRoute.Infrastructure;
 using OptiRoute.Infrastructure.Persistence;
 using OptiRoute.WebUI.Filters;
 using OptiRoute.WebUI.Services;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using NSwag;
-using NSwag.Generation.Processors.Security;
 using System.Linq;
-using AlgorithmCoreVRPTW.Solver.Interfaces;
-using AlgorithmCoreVRPTW.Solver.Services;
 
 namespace OptiRoute.WebUI
 {
@@ -46,7 +43,8 @@ namespace OptiRoute.WebUI
 
             services.AddControllersWithViews(options =>
                 options.Filters.Add<ApiExceptionFilterAttribute>())
-                    .AddFluentValidation(x => {
+                    .AddFluentValidation(x =>
+                    {
                         x.AutomaticValidationEnabled = false;
                         x.ImplicitlyValidateChildProperties = true;
                     }
@@ -132,7 +130,7 @@ namespace OptiRoute.WebUI
 
                 if (env.IsDevelopment())
                 {
-                   // spa.UseAngularCliServer(npmScript: "start");
+                    // spa.UseAngularCliServer(npmScript: "start");
                     spa.UseProxyToSpaDevelopmentServer(Configuration["SpaBaseUrl"] ?? "http://localhost:4200");
                 }
             });

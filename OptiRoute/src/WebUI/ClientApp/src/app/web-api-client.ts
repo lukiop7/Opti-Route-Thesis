@@ -16,6 +16,9 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IBenchmarksClient {
     getSolution(file: FileParameter | null | undefined): Observable<SolutionDto>;
+    getBenchmarkResults(): Observable<BenchmarkResultDto[]>;
+    getSolutionByBenchmarkResultId(benchmarkResultId: number): Observable<SolutionDto>;
+    getBestSolutionByBenchmarkResultId(benchmarkResultId: number): Observable<SolutionDto>;
 }
 
 @Injectable({
@@ -63,6 +66,160 @@ export class BenchmarksClient implements IBenchmarksClient {
     }
 
     protected processGetSolution(response: HttpResponseBase): Observable<SolutionDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = SolutionDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SolutionDto>(<any>null);
+    }
+
+    getBenchmarkResults(): Observable<BenchmarkResultDto[]> {
+        let url_ = this.baseUrl + "/api/Benchmarks";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetBenchmarkResults(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetBenchmarkResults(<any>response_);
+                } catch (e) {
+                    return <Observable<BenchmarkResultDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<BenchmarkResultDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetBenchmarkResults(response: HttpResponseBase): Observable<BenchmarkResultDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(BenchmarkResultDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<BenchmarkResultDto[]>(<any>null);
+    }
+
+    getSolutionByBenchmarkResultId(benchmarkResultId: number): Observable<SolutionDto> {
+        let url_ = this.baseUrl + "/api/Benchmarks/{benchmarkResultId}/Solution";
+        if (benchmarkResultId === undefined || benchmarkResultId === null)
+            throw new Error("The parameter 'benchmarkResultId' must be defined.");
+        url_ = url_.replace("{benchmarkResultId}", encodeURIComponent("" + benchmarkResultId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSolutionByBenchmarkResultId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSolutionByBenchmarkResultId(<any>response_);
+                } catch (e) {
+                    return <Observable<SolutionDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SolutionDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetSolutionByBenchmarkResultId(response: HttpResponseBase): Observable<SolutionDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = SolutionDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SolutionDto>(<any>null);
+    }
+
+    getBestSolutionByBenchmarkResultId(benchmarkResultId: number): Observable<SolutionDto> {
+        let url_ = this.baseUrl + "/api/Benchmarks/{benchmarkResultId}/BestSolution";
+        if (benchmarkResultId === undefined || benchmarkResultId === null)
+            throw new Error("The parameter 'benchmarkResultId' must be defined.");
+        url_ = url_.replace("{benchmarkResultId}", encodeURIComponent("" + benchmarkResultId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetBestSolutionByBenchmarkResultId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetBestSolutionByBenchmarkResultId(<any>response_);
+                } catch (e) {
+                    return <Observable<SolutionDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SolutionDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetBestSolutionByBenchmarkResultId(response: HttpResponseBase): Observable<SolutionDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1010,6 +1167,70 @@ export interface IDepotDto {
     x?: number;
     y?: number;
     dueDate?: number;
+}
+
+export class BenchmarkResultDto implements IBenchmarkResultDto {
+    dbId?: number;
+    name?: string | undefined;
+    bestDistance?: number;
+    bestVehicles?: number;
+    distance?: number;
+    vehicles?: number;
+    solutionDbId?: number;
+    benchmarkInstanceDbId?: number;
+
+    constructor(data?: IBenchmarkResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.dbId = _data["dbId"];
+            this.name = _data["name"];
+            this.bestDistance = _data["bestDistance"];
+            this.bestVehicles = _data["bestVehicles"];
+            this.distance = _data["distance"];
+            this.vehicles = _data["vehicles"];
+            this.solutionDbId = _data["solutionDbId"];
+            this.benchmarkInstanceDbId = _data["benchmarkInstanceDbId"];
+        }
+    }
+
+    static fromJS(data: any): BenchmarkResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new BenchmarkResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dbId"] = this.dbId;
+        data["name"] = this.name;
+        data["bestDistance"] = this.bestDistance;
+        data["bestVehicles"] = this.bestVehicles;
+        data["distance"] = this.distance;
+        data["vehicles"] = this.vehicles;
+        data["solutionDbId"] = this.solutionDbId;
+        data["benchmarkInstanceDbId"] = this.benchmarkInstanceDbId;
+        return data; 
+    }
+}
+
+export interface IBenchmarkResultDto {
+    dbId?: number;
+    name?: string | undefined;
+    bestDistance?: number;
+    bestVehicles?: number;
+    distance?: number;
+    vehicles?: number;
+    solutionDbId?: number;
+    benchmarkInstanceDbId?: number;
 }
 
 export class ProblemDto implements IProblemDto {

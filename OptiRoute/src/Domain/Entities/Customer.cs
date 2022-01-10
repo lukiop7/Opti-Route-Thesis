@@ -5,7 +5,7 @@ namespace OptiRoute.Domain.Entities
 {
     public class Customer
     {
-
+        public int DbId { get; set; }
         public int Id { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
@@ -17,6 +17,8 @@ namespace OptiRoute.Domain.Entities
         public double DepotTimeTo { get; set; }
         public double DepotDistanceFrom { get; set; }
         public double DepotTimeFrom { get; set; }
+        public List<Route> Routes { get; set; } = new List<Route>();
+
         public static Customer Parse(string input)
         {
             var parts = input.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

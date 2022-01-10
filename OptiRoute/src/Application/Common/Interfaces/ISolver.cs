@@ -1,5 +1,4 @@
-﻿
-using OptiRoute.Domain.Entities;
+﻿using OptiRoute.Domain.Entities;
 
 namespace AlgorithmCoreVRPTW.Solver.Interfaces
 {

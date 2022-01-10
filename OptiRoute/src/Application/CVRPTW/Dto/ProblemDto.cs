@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
 using OptiRoute.Application.Common.Mappings;
 using OptiRoute.Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OptiRoute.Application.CVRPTW.Dtos
 {
-   public class ProblemDto : IMapFrom<Problem>
+    public class ProblemDto : IMapFrom<Problem>
     {
         public int Vehicles { get; set; }
         public int Capacity { get; set; }

@@ -5,12 +5,16 @@ namespace OptiRoute.Domain.Entities
 {
     public class Route
     {
+        public int DbId { get; set; }
         public int Id { get; set; }
         public List<Customer> Customers { get; set; } = new List<Customer>();
         public List<List<double>> Distances { get; set; } = new List<List<double>>();
         public List<List<double>> Durations { get; set; } = new List<List<double>>();
         public Vehicle Vehicle { get; set; }
+        public int DepotDbId { get; set; }
         public Depot Depot { get; set; }
+        public int SolutionDbId { get; set; }
+        public Solution Solution { get; set; }
 
         private double _distance = 0;
         private double _waitingTime = 0;
@@ -23,7 +27,9 @@ namespace OptiRoute.Domain.Entities
                 return _distance + DistanceToDepot + DistanceFromDepot;
             }
         }
+
         private double _time = 0;
+
         public double TotalTime
         {
             get
@@ -174,7 +180,6 @@ namespace OptiRoute.Domain.Entities
 
             CustomersTime += customer.ServiceTime;
 
-
             this.Vehicle.CurrentLoad += customer.Demand;
             this.Vehicle.CurrentTime = this.TotalTime;
         }
@@ -216,7 +221,6 @@ namespace OptiRoute.Domain.Entities
             }
             else if (IsInterior(customer))
             {
-
                 distanceDifference = customer.CalculateDistanceBetween(this.Distances, this.Customers[customerIndex + 1]);
                 distanceDifference += this.Customers[customerIndex - 1].CalculateDistanceBetween(this.Distances, customer);
                 distanceDifference -= this.Customers[customerIndex - 1].CalculateDistanceBetween(this.Distances, this.Customers[customerIndex + 1]);
@@ -294,7 +298,6 @@ namespace OptiRoute.Domain.Entities
 
         public void CalculateTime()
         {
-
             _waitingTimeDictionary.Clear();
             double arrivalTime = 0;
             double customersTime = 0;

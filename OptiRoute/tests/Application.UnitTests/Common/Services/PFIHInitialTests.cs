@@ -1,33 +1,28 @@
-﻿using AlgorithmCoreVRPTW.FileReaders.Interfaces;
-using AlgorithmCoreVRPTW.FileReaders.Services;
-using AlgorithmCoreVRPTW.Solver.Interfaces;
+﻿using AlgorithmCoreVRPTW.Solver.Interfaces;
 using AlgorithmCoreVRPTW.Solver.Services;
+using OptiRoute.Infrastructure.FileReaders.Services;
 using FluentAssertions;
 using NUnit.Framework;
 using OptiRoute.Application.UnitTests.Instances;
 using OptiRoute.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OptiRoute.Application.Common.Interfaces;
 
 namespace OptiRoute.Application.UnitTests.Common.Services
-{
+{   
     public class PFIHInitialTests
     {
-        IFileReader benchmarkReader;
+        IBenchmarkInstanceFileReader benchmarkReader;
         IMethod pfihMethod;
         [OneTimeSetUp]
         public void Init()
         {
-            benchmarkReader = new BenchmarkFileReader();
+            benchmarkReader = new BenchmarkInstanceFileReader();
             pfihMethod = new PFIHInitial();
         }
         [Test]
         public void ShouldSolveC101()
         {
-            var benchmarkProblem = benchmarkReader.ReadBenchmark(BenchmarkInstances.C101);
+            var benchmarkProblem = benchmarkReader.ReadBenchmarkFile(BenchmarkInstances.C101);
             Solution solution = pfihMethod.Solve(benchmarkProblem);
 
             solution.Feasible.Should().BeTrue();

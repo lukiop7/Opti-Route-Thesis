@@ -1,6 +1,6 @@
-﻿using OptiRoute.Application.Common.Interfaces;
+﻿using MediatR;
+using OptiRoute.Application.Common.Interfaces;
 using OptiRoute.Application.Common.Security;
-using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 

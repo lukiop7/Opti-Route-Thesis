@@ -1,5 +1,5 @@
-﻿using OptiRoute.Domain.Common;
-using MediatR;
+﻿using MediatR;
+using OptiRoute.Domain.Common;
 
 namespace OptiRoute.Application.Common.Models
 {

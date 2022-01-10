@@ -20,9 +20,9 @@ namespace OptiRoute.Application.Benchmarks.Commands
     {
         private readonly ISolver _solver;
         private readonly IMapper _mapper;
-        private readonly IBenchmarkFileReader _benchmarkFileReader;
+        private readonly IBenchmarkInstanceFileReader _benchmarkFileReader;
 
-        public SolveBenchmarkProblemCommandHandler(ISolver solver, IMapper mapper, IBenchmarkFileReader benchmarkFileReader)
+        public SolveBenchmarkProblemCommandHandler(ISolver solver, IMapper mapper, IBenchmarkInstanceFileReader benchmarkFileReader)
         {
             _solver = solver;
             _mapper = mapper;
@@ -34,7 +34,7 @@ namespace OptiRoute.Application.Benchmarks.Commands
             var content = await request.File.ReadAsStringAsync();
             Problem problemMapped = _benchmarkFileReader.ReadBenchmarkFile(content);
 
-             var solution = this._solver.Solve(problemMapped);
+            var solution = this._solver.Solve(problemMapped);
             return _mapper.Map<Solution, SolutionDto>(solution);
         }
     }

@@ -1,11 +1,11 @@
-﻿using OptiRoute.Application.Common.Interfaces;
-using OptiRoute.Domain.Common;
-using OptiRoute.Domain.Entities;
-using OptiRoute.Infrastructure.Identity;
-using IdentityServer4.EntityFramework.Options;
+﻿using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using OptiRoute.Application.Common.Interfaces;
+using OptiRoute.Domain.Common;
+using OptiRoute.Domain.Entities;
+using OptiRoute.Infrastructure.Identity;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -34,6 +34,12 @@ namespace OptiRoute.Infrastructure.Persistence
         public DbSet<TodoItem> TodoItems { get; set; }
 
         public DbSet<TodoList> TodoLists { get; set; }
+        public DbSet<BenchmarkResult> BenchmarkResults { get; set; }
+        public DbSet<BenchmarkInstance> BenchmarkInstances { get; set; }
+        public DbSet<Route> Routes { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Depot> Depots { get; set; }
+        public DbSet<Solution> Solutions { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

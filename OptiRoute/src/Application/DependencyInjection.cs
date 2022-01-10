@@ -1,11 +1,10 @@
-﻿using AutoMapper;
-using OptiRoute.Application.Common.Behaviours;
+﻿using AlgorithmCoreVRPTW.Solver.Interfaces;
+using AlgorithmCoreVRPTW.Solver.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using OptiRoute.Application.Common.Behaviours;
 using System.Reflection;
-using AlgorithmCoreVRPTW.Solver.Interfaces;
-using AlgorithmCoreVRPTW.Solver.Services;
 
 namespace OptiRoute.Application
 {
@@ -20,9 +19,9 @@ namespace OptiRoute.Application
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
-            services.AddTransient<IMethod,PFIHInitial>();
-            services.AddTransient<IImprovement,LocalSearchLambda>();
-            services.AddTransient<ISolver,VRPTWSolver>();
+            services.AddTransient<IMethod, PFIHInitial>();
+            services.AddTransient<IImprovement, LocalSearchLambda>();
+            services.AddTransient<ISolver, VRPTWSolver>();
 
             return services;
         }

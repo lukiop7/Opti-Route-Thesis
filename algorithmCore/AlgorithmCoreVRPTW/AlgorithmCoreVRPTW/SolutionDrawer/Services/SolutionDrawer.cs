@@ -16,6 +16,18 @@ namespace OptiRoute.Shared.SolutionDrawer
         private readonly int Offset;
         private readonly int Scale;
 
+        public int test
+        {
+            get
+            {
+                return test;
+            }
+            set
+            {
+                test = value;
+            }
+        }
+
         public SolutionDrawer()
         {
             Radius = 3;

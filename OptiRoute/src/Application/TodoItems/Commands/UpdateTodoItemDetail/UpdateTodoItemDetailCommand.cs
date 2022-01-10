@@ -1,8 +1,8 @@
-﻿using OptiRoute.Application.Common.Exceptions;
+﻿using MediatR;
+using OptiRoute.Application.Common.Exceptions;
 using OptiRoute.Application.Common.Interfaces;
 using OptiRoute.Domain.Entities;
 using OptiRoute.Domain.Enums;
-using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 

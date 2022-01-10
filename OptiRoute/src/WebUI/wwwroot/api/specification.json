@@ -40,6 +40,91 @@
             }
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Benchmarks"
+        ],
+        "operationId": "Benchmarks_GetBenchmarkResults",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BenchmarkResultDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Benchmarks/{benchmarkResultId}/Solution": {
+      "get": {
+        "tags": [
+          "Benchmarks"
+        ],
+        "operationId": "Benchmarks_GetSolutionByBenchmarkResultId",
+        "parameters": [
+          {
+            "name": "benchmarkResultId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolutionDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Benchmarks/{benchmarkResultId}/BestSolution": {
+      "get": {
+        "tags": [
+          "Benchmarks"
+        ],
+        "operationId": "Benchmarks_GetBestSolutionByBenchmarkResultId",
+        "parameters": [
+          {
+            "name": "benchmarkResultId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolutionDto"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/CVRPTW": {
@@ -616,6 +701,44 @@
             "format": "int32"
           },
           "dueDate": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "BenchmarkResultDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "dbId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "bestDistance": {
+            "type": "number",
+            "format": "double"
+          },
+          "bestVehicles": {
+            "type": "number",
+            "format": "double"
+          },
+          "distance": {
+            "type": "number",
+            "format": "double"
+          },
+          "vehicles": {
+            "type": "number",
+            "format": "double"
+          },
+          "solutionDbId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "benchmarkInstanceDbId": {
             "type": "integer",
             "format": "int32"
           }

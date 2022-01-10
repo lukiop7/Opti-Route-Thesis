@@ -13,7 +13,7 @@ namespace OptiRoute.WebUI
 {
     public class Program
     {
-        public async static Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
 
@@ -24,17 +24,19 @@ namespace OptiRoute.WebUI
                 try
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
+                    var environment = services.GetService<IWebHostEnvironment>();
 
                     if (context.Database.IsNpgsql())
                     {
                         context.Database.Migrate();
-                    }                   
+                    }
 
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
                     await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager, roleManager);
                     await ApplicationDbContextSeed.SeedSampleDataAsync(context);
+                    await ApplicationDbContextSeed.SeedBenchmarksDataAsync(context);
                 }
                 catch (Exception ex)
                 {
