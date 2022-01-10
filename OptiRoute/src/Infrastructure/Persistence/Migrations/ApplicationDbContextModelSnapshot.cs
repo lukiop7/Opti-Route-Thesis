@@ -15,9 +15,24 @@ namespace OptiRoute.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityByDefaultColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+            modelBuilder.Entity("CustomerRoute", b =>
+                {
+                    b.Property<int>("CustomersDbId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RoutesDbId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CustomersDbId", "RoutesDbId");
+
+                    b.HasIndex("RoutesDbId");
+
+                    b.ToTable("CustomerRoute");
+                });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
                 {
@@ -153,7 +168,7 @@ namespace OptiRoute.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("text");
@@ -177,7 +192,7 @@ namespace OptiRoute.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("text");
@@ -261,7 +276,7 @@ namespace OptiRoute.Infrastructure.Migrations
                     b.Property<int>("DbId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<double>("BestDistance")
                         .HasColumnType("double precision");
@@ -284,9 +299,12 @@ namespace OptiRoute.Infrastructure.Migrations
                     b.Property<int>("DbId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("BenchmarkInstanceDbId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("BestSolutionDbId")
                         .HasColumnType("integer");
 
                     b.Property<int>("SolutionDbId")
@@ -295,6 +313,9 @@ namespace OptiRoute.Infrastructure.Migrations
                     b.HasKey("DbId");
 
                     b.HasIndex("BenchmarkInstanceDbId")
+                        .IsUnique();
+
+                    b.HasIndex("BestSolutionDbId")
                         .IsUnique();
 
                     b.HasIndex("SolutionDbId")
@@ -308,7 +329,7 @@ namespace OptiRoute.Infrastructure.Migrations
                     b.Property<int>("DbId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("Demand")
                         .HasColumnType("integer");
@@ -322,9 +343,6 @@ namespace OptiRoute.Infrastructure.Migrations
                     b.Property<int>("ReadyTime")
                         .HasColumnType("integer");
 
-                    b.Property<int>("RouteDbId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("ServiceTime")
                         .HasColumnType("integer");
 
@@ -336,8 +354,6 @@ namespace OptiRoute.Infrastructure.Migrations
 
                     b.HasKey("DbId");
 
-                    b.HasIndex("RouteDbId");
-
                     b.ToTable("Customers");
                 });
 
@@ -346,7 +362,7 @@ namespace OptiRoute.Infrastructure.Migrations
                     b.Property<int>("DbId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("DueDate")
                         .HasColumnType("integer");
@@ -370,7 +386,7 @@ namespace OptiRoute.Infrastructure.Migrations
                     b.Property<int>("DbId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("DepotDbId")
                         .HasColumnType("integer");
@@ -395,7 +411,7 @@ namespace OptiRoute.Infrastructure.Migrations
                     b.Property<int>("DbId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("DepotDbId")
                         .HasColumnType("integer");
@@ -422,7 +438,7 @@ namespace OptiRoute.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp without time zone");
@@ -468,7 +484,7 @@ namespace OptiRoute.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp without time zone");
@@ -556,6 +572,21 @@ namespace OptiRoute.Infrastructure.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("CustomerRoute", b =>
+                {
+                    b.HasOne("OptiRoute.Domain.Entities.Customer", null)
+                        .WithMany()
+                        .HasForeignKey("CustomersDbId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OptiRoute.Domain.Entities.Route", null)
+                        .WithMany()
+                        .HasForeignKey("RoutesDbId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -615,6 +646,10 @@ namespace OptiRoute.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("OptiRoute.Domain.Entities.Solution", "BestSolution")
+                        .WithOne("BestBenchmarkResult")
+                        .HasForeignKey("OptiRoute.Domain.Entities.BenchmarkResult", "BestSolutionDbId");
+
                     b.HasOne("OptiRoute.Domain.Entities.Solution", "Solution")
                         .WithOne("BenchmarkResult")
                         .HasForeignKey("OptiRoute.Domain.Entities.BenchmarkResult", "SolutionDbId")
@@ -623,18 +658,9 @@ namespace OptiRoute.Infrastructure.Migrations
 
                     b.Navigation("BenchmarkInstance");
 
+                    b.Navigation("BestSolution");
+
                     b.Navigation("Solution");
-                });
-
-            modelBuilder.Entity("OptiRoute.Domain.Entities.Customer", b =>
-                {
-                    b.HasOne("OptiRoute.Domain.Entities.Route", "Route")
-                        .WithMany("Customers")
-                        .HasForeignKey("RouteDbId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Route");
                 });
 
             modelBuilder.Entity("OptiRoute.Domain.Entities.Route", b =>
@@ -685,7 +711,7 @@ namespace OptiRoute.Infrastructure.Migrations
                             b1.Property<int>("TodoListId")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("integer")
-                                .UseIdentityByDefaultColumn();
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                             b1.Property<string>("Code")
                                 .HasColumnType("text");
@@ -713,14 +739,11 @@ namespace OptiRoute.Infrastructure.Migrations
                     b.Navigation("Solution");
                 });
 
-            modelBuilder.Entity("OptiRoute.Domain.Entities.Route", b =>
-                {
-                    b.Navigation("Customers");
-                });
-
             modelBuilder.Entity("OptiRoute.Domain.Entities.Solution", b =>
                 {
                     b.Navigation("BenchmarkResult");
+
+                    b.Navigation("BestBenchmarkResult");
 
                     b.Navigation("Routes");
                 });

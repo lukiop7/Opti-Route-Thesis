@@ -11,10 +11,11 @@ namespace OptiRoute.Infrastructure.Persistence.Configurations
         {
             builder.HasKey(x => x.DbId);
 
-            builder.HasOne(x => x.Route)
-                .WithMany(x => x.Customers)
-                .HasForeignKey(x => x.RouteDbId)
-                .IsRequired();
+            builder.Property(x => x.DbId)
+           .ValueGeneratedOnAdd();
+
+            builder.HasMany(x => x.Routes)
+                .WithMany(x => x.Customers);
 
             builder.Ignore(x => x.DepotDistanceFrom);
 

@@ -15,6 +15,9 @@ namespace OptiRoute.Infrastructure.Persistence.Configurations
         {
             builder.HasKey(x => x.DbId);
 
+            builder.Property(x => x.DbId)
+           .ValueGeneratedOnAdd();
+
             builder.Property(x => x.BestDistance)
                 .IsRequired();
 

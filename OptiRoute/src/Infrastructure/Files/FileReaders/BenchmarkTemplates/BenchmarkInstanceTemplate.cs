@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OptiRoute.Infrastructure.Files.FileReaders.BenchmarkTemplate
 {
-    public static class BenchmarkTemplate
+    public static class BenchmarkInstanceTemplate
     {
         public static string FromBenchmarkTemplate(int line) => line switch
         {

@@ -10,6 +10,9 @@ namespace OptiRoute.Infrastructure.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Depot> builder)
         {
             builder.HasKey(x => x.DbId);
+
+            builder.Property(x => x.DbId)
+           .ValueGeneratedOnAdd();
         }
     }
 }

@@ -16,6 +16,8 @@ namespace OptiRoute.Domain.Entities
 
         public Solution Solution { get; set; }
 
+        public Solution BestSolution { get; set; }
+
         public BenchmarkInstance BenchmarkInstance {get;set;}
     }
 }

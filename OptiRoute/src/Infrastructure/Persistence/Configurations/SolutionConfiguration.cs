@@ -11,6 +11,9 @@ namespace OptiRoute.Infrastructure.Persistence.Configurations
         {
             builder.HasKey(x => x.DbId);
 
+            builder.Property(x => x.DbId)
+                .ValueGeneratedOnAdd();
+
             builder.HasOne(x => x.Depot)
                 .WithOne(x => x.Solution)
                 .HasForeignKey<Solution>(x => x.DepotDbId)

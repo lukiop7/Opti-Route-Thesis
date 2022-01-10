@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OptiRoute.Infrastructure.FileReaders.Services;
 using OptiRoute.Infrastructure.HostedService;
+using OptiRoute.Infrastructure.Files.FileReaders.Services;
 
 namespace OptiRoute.Infrastructure
 {
@@ -45,7 +46,8 @@ namespace OptiRoute.Infrastructure
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
-            services.AddTransient<IBenchmarkFileReader, BenchmarkFileReader>();
+            services.AddTransient<IBenchmarkInstanceFileReader, BenchmarkInstanceFileReader>();
+            services.AddTransient<IBenchmarkBestFileReader, BenchmarkBestFileReader>();
             services.AddTransient<IFileProviderService, SolomonInstancesFileProviderService>();
 
             services.AddAuthentication()

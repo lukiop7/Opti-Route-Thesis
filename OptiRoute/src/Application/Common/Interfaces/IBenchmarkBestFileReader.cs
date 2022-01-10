@@ -1,5 +1,4 @@
-﻿using OptiRoute.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace OptiRoute.Application.Common.Interfaces
 {
-    public interface IBenchmarkFileReader
+    public interface IBenchmarkBestFileReader
     {
-        Problem ReadBenchmarkFile(string content);
+        List<List<int>> ReadBenchmarkBestFile(string content);
     }
 }

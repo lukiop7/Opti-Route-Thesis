@@ -13,6 +13,7 @@ namespace OptiRoute.Domain.Entities
         public List<Route> Routes { get; set; } = new List<Route>();
 
         public BenchmarkResult BenchmarkResult { get; set; }
+        public BenchmarkResult BestBenchmarkResult { get; set; }
 
         public double Distance { get; set; }
 

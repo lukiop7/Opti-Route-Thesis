@@ -20,9 +20,9 @@ namespace OptiRoute.Application.Benchmarks.Commands
     {
         private readonly ISolver _solver;
         private readonly IMapper _mapper;
-        private readonly IBenchmarkFileReader _benchmarkFileReader;
+        private readonly IBenchmarkInstanceFileReader _benchmarkFileReader;
 
-        public SolveBenchmarkProblemCommandHandler(ISolver solver, IMapper mapper, IBenchmarkFileReader benchmarkFileReader)
+        public SolveBenchmarkProblemCommandHandler(ISolver solver, IMapper mapper, IBenchmarkInstanceFileReader benchmarkFileReader)
         {
             _solver = solver;
             _mapper = mapper;

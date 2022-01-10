@@ -10,12 +10,12 @@ using System.Text.RegularExpressions;
 
 namespace OptiRoute.Infrastructure.FileReaders.Services
 {
-    public class BenchmarkFileReader : IBenchmarkFileReader
+    public class BenchmarkInstanceFileReader : IBenchmarkInstanceFileReader
     {
         private string _errorTemplate = "Line: {0} Error: {1}";
         private Dictionary<int, Action<Problem, string>> _handlersDictionary;
 
-        public BenchmarkFileReader()
+        public BenchmarkInstanceFileReader()
         {
             _handlersDictionary = new Dictionary<int, Action<Problem, string>>()
             {
@@ -29,7 +29,7 @@ namespace OptiRoute.Infrastructure.FileReaders.Services
         {
             var dataLines = content.Split("\r\n").ToList();
 
-            if (dataLines.Count < BenchmarkTemplate.MinimumNumberOfLines)
+            if (dataLines.Count < BenchmarkInstanceTemplate.MinimumNumberOfLines)
             {
                 throw new ValidationException(new KeyValuePair<string, string[]>("File", new string[]
                 { "The number of lines in the file is less than specified in the documentation." }));
@@ -65,7 +65,7 @@ namespace OptiRoute.Infrastructure.FileReaders.Services
 
         private bool ValidateLine(int index, string line)
         {
-            return Regex.Match(line, BenchmarkTemplate.FromBenchmarkTemplate(index), RegexOptions.IgnoreCase).Success;
+            return Regex.Match(line, BenchmarkInstanceTemplate.FromBenchmarkTemplate(index), RegexOptions.IgnoreCase).Success;
         }
 
         private void ParseDepot(Problem problem, string data)

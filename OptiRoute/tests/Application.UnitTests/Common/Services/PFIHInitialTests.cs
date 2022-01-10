@@ -11,12 +11,12 @@ namespace OptiRoute.Application.UnitTests.Common.Services
 {   
     public class PFIHInitialTests
     {
-        IBenchmarkFileReader benchmarkReader;
+        IBenchmarkInstanceFileReader benchmarkReader;
         IMethod pfihMethod;
         [OneTimeSetUp]
         public void Init()
         {
-            benchmarkReader = new BenchmarkFileReader();
+            benchmarkReader = new BenchmarkInstanceFileReader();
             pfihMethod = new PFIHInitial();
         }
         [Test]
