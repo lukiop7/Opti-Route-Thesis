@@ -1,7 +1,7 @@
-﻿using OptiRoute.Application.Common.Models;
-using OptiRoute.Domain.Events;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using OptiRoute.Application.Common.Models;
+using OptiRoute.Domain.Events;
 using System.Threading;
 using System.Threading.Tasks;
 

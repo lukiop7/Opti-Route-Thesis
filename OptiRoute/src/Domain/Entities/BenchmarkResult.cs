@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OptiRoute.Domain.Entities
+﻿namespace OptiRoute.Domain.Entities
 {
     public class BenchmarkResult
     {
@@ -13,11 +7,12 @@ namespace OptiRoute.Domain.Entities
         public int SolutionDbId { get; set; }
 
         public int BenchmarkInstanceDbId { get; set; }
+        public int? BestSolutionDbId { get; set; }
 
         public Solution Solution { get; set; }
 
         public Solution BestSolution { get; set; }
 
-        public BenchmarkInstance BenchmarkInstance {get;set;}
+        public BenchmarkInstance BenchmarkInstance { get; set; }
     }
 }

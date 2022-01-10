@@ -1,5 +1,5 @@
-﻿using OptiRoute.Application.WeatherForecasts.Queries.GetWeatherForecasts;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using OptiRoute.Application.WeatherForecasts.Queries.GetWeatherForecasts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

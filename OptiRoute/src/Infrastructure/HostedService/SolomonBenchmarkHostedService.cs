@@ -1,20 +1,15 @@
 ﻿using AlgorithmCoreVRPTW.Solver.Interfaces;
-using AlgorithmCoreVRPTW.Solver.Services;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OptiRoute.Application.Common.Enums;
 using OptiRoute.Application.Common.Exceptions;
 using OptiRoute.Application.Common.Interfaces;
 using OptiRoute.Domain.Entities;
-using OptiRoute.Infrastructure.FileReaders.Services;
 using OptiRoute.Infrastructure.Persistence;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,7 +23,6 @@ namespace OptiRoute.Infrastructure.HostedService
         {
             _serviceProvider = serviceProvider;
         }
-
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
@@ -57,8 +51,6 @@ namespace OptiRoute.Infrastructure.HostedService
             if (benchmarkFiles == null || !benchmarkFiles.Any())
                 throw new ArgumentNullException();
 
-            var results = new List<(BenchmarkResult result, Solution bestSolution)>();
-
             foreach (var file in benchmarkFiles)
             {
                 var content = await File.ReadAllTextAsync(file.FullName);
@@ -69,22 +61,10 @@ namespace OptiRoute.Infrastructure.HostedService
 
                 var bestSolution = await GetBestSolution(benchmarkBestFileReader, fileProviderService, problem, file.Name);
 
-                context.Add(bestSolution);
-                await context.SaveChangesAsync();
-
-               var benchmark = AddBenchmarkToDb(context, file, solution, bestSolution);
-                await context.SaveChangesAsync();
-                results.Add((benchmark, bestSolution));
+                var benchmark = AddBenchmarkToDb(context, file, solution, bestSolution);
             }
 
             await context.SaveChangesAsync();
-
-            //foreach(var result in results)
-            //{
-            //    result.result.BestSolution = result.bestSolution;
-            //}
-
-            //await context.SaveChangesAsync();
         }
 
         private BenchmarkResult AddBenchmarkToDb(ApplicationDbContext context, FileInfo file, Solution solution, Solution bestSolution)
@@ -130,7 +110,7 @@ namespace OptiRoute.Infrastructure.HostedService
 
                 var solution = new Solution()
                 {
-                    Depot = problem.Depot,
+                    Depot = problem.Depot.Clone(),
                     Feasible = true,
                     Routes = routes
                 };
@@ -147,7 +127,7 @@ namespace OptiRoute.Infrastructure.HostedService
             }
         }
 
-        private Route CreateRoute(List<Customer> customers, Depot depot, List<int> order, int index)
+        private Route CreateRoute(List<Customer> customers, Domain.Entities.Depot depot, List<int> order, int index)
         {
             List<Customer> routeCustomers = new List<Customer>();
 

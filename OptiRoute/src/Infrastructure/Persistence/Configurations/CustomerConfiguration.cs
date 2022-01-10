@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OptiRoute.Domain.Entities;
 
-
 namespace OptiRoute.Infrastructure.Persistence.Configurations
 {
     public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
@@ -24,7 +23,6 @@ namespace OptiRoute.Infrastructure.Persistence.Configurations
             builder.Ignore(x => x.DepotTimeFrom);
 
             builder.Ignore(x => x.DepotTimeTo);
-                
         }
     }
 }

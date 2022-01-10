@@ -25,15 +25,13 @@ namespace OptiRoute.Application.CVRPTW.Validators
                .NotEmpty();
 
             RuleForEach(v => v.Customers)
-               .SetValidator( new CustomerDtoValidator());
+               .SetValidator(new CustomerDtoValidator());
 
             RuleFor(v => v.Distances)
                .NotEmpty();
 
             RuleFor(v => v.Durations)
                .NotEmpty();
-
-
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using OptiRoute.Application.Common.Exceptions;
+﻿using MediatR;
+using OptiRoute.Application.Common.Exceptions;
 using OptiRoute.Application.Common.Interfaces;
 using OptiRoute.Application.Common.Security;
-using MediatR;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -65,7 +65,7 @@ namespace OptiRoute.Application.Common.Behaviours
                 var authorizeAttributesWithPolicies = authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Policy));
                 if (authorizeAttributesWithPolicies.Any())
                 {
-                    foreach(var policy in authorizeAttributesWithPolicies.Select(a => a.Policy))
+                    foreach (var policy in authorizeAttributesWithPolicies.Select(a => a.Policy))
                     {
                         var authorized = await _identityService.AuthorizeAsync(_currentUserService.UserId, policy);
 

@@ -2,11 +2,8 @@
 using OptiRoute.Application.Common.Enums;
 using OptiRoute.Application.Common.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OptiRoute.Infrastructure.Files
 {
@@ -33,7 +30,6 @@ namespace OptiRoute.Infrastructure.Files
 
         public FileInfo[] GetFiles(SolomonFiles fileType)
         {
-
             DirectoryInfo directory = new DirectoryInfo(Path.Combine(
                 _environment.WebRootPath, GetPath(fileType)));
 
@@ -49,6 +45,6 @@ namespace OptiRoute.Infrastructure.Files
                 SolomonFiles.Instance => "solomonInstances",
                 SolomonFiles.Best => "solomonBests",
                 _ => throw new ArgumentException()
-            };      
+            };
     }
 }

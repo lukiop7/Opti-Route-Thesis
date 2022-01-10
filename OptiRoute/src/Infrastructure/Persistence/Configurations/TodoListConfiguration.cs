@@ -1,6 +1,6 @@
-﻿using OptiRoute.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using OptiRoute.Domain.Entities;
 
 namespace OptiRoute.Infrastructure.Persistence.Configurations
 {

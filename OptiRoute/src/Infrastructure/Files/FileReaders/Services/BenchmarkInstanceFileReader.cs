@@ -4,7 +4,6 @@ using OptiRoute.Domain.Entities;
 using OptiRoute.Infrastructure.Files.FileReaders.BenchmarkTemplate;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -62,7 +61,6 @@ namespace OptiRoute.Infrastructure.FileReaders.Services
             }
         }
 
-
         private bool ValidateLine(int index, string line)
         {
             return Regex.Match(line, BenchmarkInstanceTemplate.FromBenchmarkTemplate(index), RegexOptions.IgnoreCase).Success;
@@ -84,6 +82,7 @@ namespace OptiRoute.Infrastructure.FileReaders.Services
         {
             problem.Customers.Add(Customer.Parse(data));
         }
+
         private void CalculateDurationsAndDistances(Problem benchmarkProblem)
         {
             List<List<double>> distances = new List<List<double>>();

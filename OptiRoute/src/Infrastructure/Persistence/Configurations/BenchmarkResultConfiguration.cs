@@ -13,18 +13,17 @@ namespace OptiRoute.Infrastructure.Persistence.Configurations
             builder.Property(x => x.DbId)
                 .ValueGeneratedOnAdd();
 
-            builder.HasOne(x => x.BenchmarkInstance)
-                .WithOne(x => x.BenchmarkResult)
-                .HasForeignKey<BenchmarkResult>(x => x.BenchmarkInstanceDbId)
-                .IsRequired();
+            builder.HasOne(d => d.BenchmarkInstance)
+       .WithOne(p => p.BenchmarkResult)
+       .HasForeignKey<BenchmarkResult>(d => d.BenchmarkInstanceDbId);
 
-            builder.HasOne(x => x.Solution)
-               .WithOne(x => x.BenchmarkResult)
-               .HasForeignKey<BenchmarkResult>(x => x.SolutionDbId)
-               .IsRequired();
+            builder.HasOne(d => d.BestSolution)
+                .WithOne(p => p.BestBenchmarkResult)
+                .HasForeignKey<BenchmarkResult>(d => d.BestSolutionDbId);
 
-            builder.HasOne(x => x.BestSolution)
-             .WithOne(x => x.BestBenchmarkResult);
+            builder.HasOne(d => d.Solution)
+                .WithOne(p => p.BenchmarkResult)
+                .HasForeignKey<BenchmarkResult>(d => d.SolutionDbId);
         }
     }
 }

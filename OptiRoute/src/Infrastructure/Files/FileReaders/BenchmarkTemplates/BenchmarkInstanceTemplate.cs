@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OptiRoute.Infrastructure.Files.FileReaders.BenchmarkTemplate
 {
@@ -14,7 +10,7 @@ namespace OptiRoute.Infrastructure.Files.FileReaders.BenchmarkTemplate
             1 => @"^\s*$",
             2 => @"^\s*VEHICLE\s*$",
             3 => @"^\s*NUMBER\s+CAPACITY\s*$",
-            4=> @"^\s*\d+\s+\d+\s*$",
+            4 => @"^\s*\d+\s+\d+\s*$",
             5 => @"^\s*$",
             6 => @"^\s*CUSTOMER$\s*",
             7 => @"^\s*CUST\s+NO.\s+XCOORD.\s+YCOORD.\s+DEMAND\s+READY TIME\s+DUE\s+DATE\s+SERVICE\s+TIME\s*$",

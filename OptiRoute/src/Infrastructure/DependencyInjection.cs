@@ -1,16 +1,16 @@
-﻿using OptiRoute.Application.Common.Interfaces;
-using OptiRoute.Infrastructure.Files;
-using OptiRoute.Infrastructure.Identity;
-using OptiRoute.Infrastructure.Persistence;
-using OptiRoute.Infrastructure.Services;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OptiRoute.Application.Common.Interfaces;
 using OptiRoute.Infrastructure.FileReaders.Services;
-using OptiRoute.Infrastructure.HostedService;
+using OptiRoute.Infrastructure.Files;
 using OptiRoute.Infrastructure.Files.FileReaders.Services;
+using OptiRoute.Infrastructure.HostedService;
+using OptiRoute.Infrastructure.Identity;
+using OptiRoute.Infrastructure.Persistence;
+using OptiRoute.Infrastructure.Services;
 
 namespace OptiRoute.Infrastructure
 {

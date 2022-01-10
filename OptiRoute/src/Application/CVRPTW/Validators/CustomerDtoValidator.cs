@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
 using OptiRoute.Application.CVRPTW.Dtos;
-using OptiRoute.Application.CVRPTW.Queries;
-using System;
 
 namespace OptiRoute.Application.CVRPTW.Validators
 {

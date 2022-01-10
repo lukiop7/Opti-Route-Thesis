@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using OptiRoute.Application.Common.Interfaces;
-using OptiRoute.Application.Common.Security;
-using OptiRoute.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using OptiRoute.Application.Common.Interfaces;
+using OptiRoute.Domain.Enums;
 using System;
 using System.Linq;
 using System.Threading;

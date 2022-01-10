@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OptiRoute.Domain.Entities
+﻿namespace OptiRoute.Domain.Entities
 {
-   public class BenchmarkInstance
+    public class BenchmarkInstance
     {
         public int DbId { get; set; }
         public string Name { get; set; }

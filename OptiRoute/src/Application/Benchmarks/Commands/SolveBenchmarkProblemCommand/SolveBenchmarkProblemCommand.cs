@@ -34,7 +34,7 @@ namespace OptiRoute.Application.Benchmarks.Commands
             var content = await request.File.ReadAsStringAsync();
             Problem problemMapped = _benchmarkFileReader.ReadBenchmarkFile(content);
 
-             var solution = this._solver.Solve(problemMapped);
+            var solution = this._solver.Solve(problemMapped);
             return _mapper.Map<Solution, SolutionDto>(solution);
         }
     }

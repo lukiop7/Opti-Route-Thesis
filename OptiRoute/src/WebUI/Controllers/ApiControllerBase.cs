@@ -10,7 +10,7 @@ namespace OptiRoute.WebUI.Controllers
     [Route("api/[controller]")]
     public abstract class ApiControllerBase : ControllerBase
     {
-       protected ApiControllerBase()
+        protected ApiControllerBase()
         {
             CultureInfo newCulture = CultureInfo.CreateSpecificCulture("en-US");
             Thread.CurrentThread.CurrentUICulture = newCulture;

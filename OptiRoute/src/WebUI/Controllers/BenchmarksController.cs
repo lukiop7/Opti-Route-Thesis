@@ -1,19 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OptiRoute.Application.Benchmarks.Commands;
-using OptiRoute.Application.Benchmarks.Queries.GetBenchmarkResultByIdQuery;
 using OptiRoute.Application.Benchmarks.Queries.GetBenchmarkResultsQuery;
+using OptiRoute.Application.Benchmarks.Queries.GetBestSolutionByBenchmarkResultIdQuery;
+using OptiRoute.Application.Benchmarks.Queries.GetSolutionByBenchmarkResultIdQuery;
 using OptiRoute.Application.CVRPTW.Dtos;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OptiRoute.WebUI.Controllers
 {
-    public class BenchmarksController: ApiControllerBase
+    public class BenchmarksController : ApiControllerBase
     {
-
         [HttpPost]
         public async Task<ActionResult<SolutionDto>> GetSolution(IFormFile file)
         {
@@ -26,10 +24,16 @@ namespace OptiRoute.WebUI.Controllers
             return await Mediator.Send(new GetBenchmarkResultsQuery());
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<BenchmarkResultDetailsDto>> GetBenchmarkResults([FromRoute]int id)
+        [HttpGet("{benchmarkResultId}/Solution")]
+        public async Task<ActionResult<SolutionDto>> GetSolutionByBenchmarkResultId([FromRoute] int benchmarkResultId)
         {
-            return await Mediator.Send(new GetBenchmarkResultByIdQuery() { Id = id });
+            return await Mediator.Send(new GetSolutionByBenchmarkResultIdQuery() { BenchmarkResultId = benchmarkResultId });
+        }
+
+        [HttpGet("{benchmarkResultId}/BestSolution")]
+        public async Task<ActionResult<SolutionDto>> GetBestSolutionByBenchmarkResultId([FromRoute] int benchmarkResultId)
+        {
+            return await Mediator.Send(new GetBestSolutionByBenchmarkResultIdQuery() { BenchmarkResultId = benchmarkResultId });
         }
     }
 }

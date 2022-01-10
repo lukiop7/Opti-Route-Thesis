@@ -15,7 +15,7 @@ namespace OptiRoute.Application.Common.Behaviours
         private readonly IIdentityService _identityService;
 
         public PerformanceBehaviour(
-            ILogger<TRequest> logger, 
+            ILogger<TRequest> logger,
             ICurrentUserService currentUserService,
             IIdentityService identityService)
         {

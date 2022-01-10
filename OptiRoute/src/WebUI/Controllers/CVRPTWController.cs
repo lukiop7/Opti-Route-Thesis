@@ -1,11 +1,8 @@
 ﻿using AlgorithmCoreVRPTW.Solver.Interfaces;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OptiRoute.Application.CVRPTW.Dtos;
 using OptiRoute.Application.CVRPTW.Queries;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OptiRoute.WebUI.Controllers
@@ -24,7 +21,7 @@ namespace OptiRoute.WebUI.Controllers
         [HttpPost]
         public async Task<ActionResult<SolutionDto>> GetSolution(ProblemDto problem)
         {
-            return await Mediator.Send(new GetSolutionQuery() { Problem=problem});
+            return await Mediator.Send(new GetSolutionQuery() { Problem = problem });
         }
     }
 }

@@ -23,6 +23,7 @@ namespace OptiRoute.Domain.Entities
         public DateTime? Reminder { get; set; }
 
         private bool _done;
+
         public bool Done
         {
             get => _done;

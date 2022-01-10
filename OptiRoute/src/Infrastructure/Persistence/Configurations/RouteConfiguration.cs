@@ -2,10 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OptiRoute.Domain.Entities;
 
-
 namespace OptiRoute.Infrastructure.Persistence.Configurations
 {
-   public class RouteConfiguration : IEntityTypeConfiguration<Route>
+    public class RouteConfiguration : IEntityTypeConfiguration<Route>
     {
         public void Configure(EntityTypeBuilder<Route> builder)
         {
@@ -16,13 +15,11 @@ namespace OptiRoute.Infrastructure.Persistence.Configurations
 
             builder.HasOne(x => x.Depot)
                 .WithMany(x => x.Routes)
-                .HasForeignKey(x => x.DepotDbId)
-                .IsRequired();
+                .HasForeignKey(x => x.DepotDbId);
 
             builder.HasOne(x => x.Solution)
                .WithMany(x => x.Routes)
-               .HasForeignKey(x => x.SolutionDbId)
-               .IsRequired();
+               .HasForeignKey(x => x.SolutionDbId);
 
             builder.Ignore(x => x.TimeFromDepot);
 
@@ -39,7 +36,6 @@ namespace OptiRoute.Infrastructure.Persistence.Configurations
             builder.Ignore(x => x.Distances);
 
             builder.Ignore(x => x.Durations);
-
         }
     }
 }

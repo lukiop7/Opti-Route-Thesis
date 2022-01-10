@@ -1,8 +1,8 @@
-﻿using OptiRoute.Application.Common.Interfaces;
-using OptiRoute.Application.Common.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OptiRoute.Application.Common.Interfaces;
+using OptiRoute.Application.Common.Models;
 using System.Linq;
 using System.Threading.Tasks;
 

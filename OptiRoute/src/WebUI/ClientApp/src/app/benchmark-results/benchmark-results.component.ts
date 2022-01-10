@@ -3,7 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { BenchmarkResultDetailsDto, BenchmarkResultDto, BenchmarksClient } from 'app/web-api-client';
+import { BenchmarkResultDto, BenchmarksClient, SolutionDto } from 'app/web-api-client';
 import { VisualizerComponent } from 'shared/components/visualizer/visualizer.component';
 
 @Component({
@@ -14,7 +14,7 @@ import { VisualizerComponent } from 'shared/components/visualizer/visualizer.com
 export class BenchmarkResultsComponent implements OnInit, AfterViewInit {
   public displayedColumns = ["name", "distance", "vehicles", "bestDistance", "bestVehicles", "actions"];
   public dataSource = new MatTableDataSource<BenchmarkResultDto>();
-  selectedBenchmark: BenchmarkResultDetailsDto;
+  selectedSolution: SolutionDto;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -39,12 +39,21 @@ export class BenchmarkResultsComponent implements OnInit, AfterViewInit {
       })
   }
 
-  private getBenchmarkResultById(id: number) {
-   return this.client.getBenchmarkResults(id).toPromise();
+  private getBestSolutionByBenchmarkResultId(id: number) {
+   return this.client.getBestSolutionByBenchmarkResultId(id).toPromise();
   }
 
+  private getSolutionByBenchmarkResultId(id: number) {
+    return this.client.getSolutionByBenchmarkResultId(id).toPromise();
+   }
+
   async onVisualizeClicked(id: number) {
-    this.selectedBenchmark = await this.getBenchmarkResultById(id);
+    this.selectedSolution = await this.getSolutionByBenchmarkResultId(id);
+    this.visualizeDialogOpen();
+  }
+
+  async onVisualizeBestClicked(id: number) {
+    this.selectedSolution =  await this.getBestSolutionByBenchmarkResultId(id);
     this.visualizeDialogOpen();
   }
 
@@ -57,7 +66,7 @@ export class BenchmarkResultsComponent implements OnInit, AfterViewInit {
     dialogConfig.width = "80vw";
 
     dialogConfig.data = {
-      solution: this.selectedBenchmark.solutionDto
+      solution: this.selectedSolution
     }
 
     this.visualizeDialog.open(VisualizerComponent, dialogConfig);

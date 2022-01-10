@@ -1,12 +1,12 @@
-﻿using OptiRoute.Application.Common.Models;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using OptiRoute.Application.Common.Models;
 using OptiRoute.Application.TodoItems.Commands.CreateTodoItem;
 using OptiRoute.Application.TodoItems.Commands.DeleteTodoItem;
 using OptiRoute.Application.TodoItems.Commands.UpdateTodoItem;
 using OptiRoute.Application.TodoItems.Commands.UpdateTodoItemDetail;
 using OptiRoute.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 using OptiRoute.Application.TodoLists.Queries.GetTodos;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace OptiRoute.WebUI.Controllers

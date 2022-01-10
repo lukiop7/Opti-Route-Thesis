@@ -18,6 +18,7 @@ namespace OptiRoute.Domain.Entities
         public double DepotDistanceFrom { get; set; }
         public double DepotTimeFrom { get; set; }
         public List<Route> Routes { get; set; } = new List<Route>();
+
         public static Customer Parse(string input)
         {
             var parts = input.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

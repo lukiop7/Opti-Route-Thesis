@@ -1,7 +1,7 @@
-﻿using OptiRoute.Domain.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+using OptiRoute.Domain.Entities;
 using OptiRoute.Domain.ValueObjects;
 using OptiRoute.Infrastructure.Identity;
-using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -55,7 +55,6 @@ namespace OptiRoute.Infrastructure.Persistence
 
         public static async Task SeedBenchmarksDataAsync(ApplicationDbContext context)
         {
-
             if (!context.BenchmarkInstances.Any())
             {
                 BenchmarkInstance[] benchmarkInstances = new BenchmarkInstance[]

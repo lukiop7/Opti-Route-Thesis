@@ -1,7 +1,7 @@
-﻿using OptiRoute.Application.Common.Interfaces;
+﻿using MediatR;
+using OptiRoute.Application.Common.Interfaces;
 using OptiRoute.Domain.Entities;
 using OptiRoute.Domain.Events;
-using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
