@@ -24,13 +24,13 @@ import { ToastrService } from 'ngx-toastr';
 export class MapService {
   private _mapCustomers: MapCustomer[] = [];
   private _depot: MapCustomer;
-  private _markersSubject = new Subject<Marker[]>();
+  private _markersSubject = new ReplaySubject<Marker[]>(1);
   private _customersSubject = new ReplaySubject<Customer[]>(1);
-  private _depotMarkerSubject = new Subject<Marker>();
+  private _depotMarkerSubject = new ReplaySubject<Marker>(1);
   private _depotSubject = new ReplaySubject<Customer>(1);
   private _pathsSubject = new ReplaySubject<VrptwSolutionResponse>(1);
   private _viewSubject = new BehaviorSubject<number>(0);
-  private _selectedPathSubject = new Subject<number>();
+  private _selectedPathSubject = new ReplaySubject<number>(1);
 
   constructor(private _vrptwClient: CVRPTWClient, private _osrmService: OsrmService, private toastr: ToastrService) {
   }

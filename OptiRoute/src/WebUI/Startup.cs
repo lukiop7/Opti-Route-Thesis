@@ -12,7 +12,6 @@ using OptiRoute.Application.Common.Interfaces;
 using OptiRoute.Infrastructure;
 using OptiRoute.Infrastructure.Persistence;
 using OptiRoute.WebUI.Filters;
-using OptiRoute.WebUI.Services;
 using System.Linq;
 
 namespace OptiRoute.WebUI
@@ -33,8 +32,6 @@ namespace OptiRoute.WebUI
             services.AddInfrastructure(Configuration);
 
             services.AddDatabaseDeveloperPageExceptionFilter();
-
-            services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
             services.AddHttpContextAccessor();
 
@@ -67,15 +64,6 @@ namespace OptiRoute.WebUI
             services.AddOpenApiDocument(configure =>
             {
                 configure.Title = "OptiRoute API";
-                configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-                {
-                    Type = OpenApiSecuritySchemeType.ApiKey,
-                    Name = "Authorization",
-                    In = OpenApiSecurityApiKeyLocation.Header,
-                    Description = "Type into the textbox: Bearer {your JWT token}."
-                });
-
-                configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
         }
 
@@ -110,9 +98,6 @@ namespace OptiRoute.WebUI
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseIdentityServer();
-            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

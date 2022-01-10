@@ -1,4 +1,4 @@
-using OptiRoute.Infrastructure.Identity;
+
 using OptiRoute.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -30,12 +30,6 @@ namespace OptiRoute.WebUI
                     {
                         context.Database.Migrate();
                     }
-
-                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-
-                    await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager, roleManager);
-                    await ApplicationDbContextSeed.SeedSampleDataAsync(context);
                     await ApplicationDbContextSeed.SeedBenchmarksDataAsync(context);
                 }
                 catch (Exception ex)

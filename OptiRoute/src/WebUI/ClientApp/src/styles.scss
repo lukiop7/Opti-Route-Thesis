@@ -61,6 +61,10 @@ label{
 .hidden-scroll{
   overflow-y: scroll;
 }
+
+.hidden-scroll-x{
+  overflow-x: hidden;
+}
 // .hidden-scroll::-webkit-scrollbar{
 //   display:none;
 // }

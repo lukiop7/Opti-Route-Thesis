@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using OptiRoute.Application.Common.Mappings;
-using OptiRoute.Application.TodoLists.Queries.GetTodos;
 using OptiRoute.Domain.Entities;
 using NUnit.Framework;
 using System;
@@ -31,8 +30,6 @@ namespace OptiRoute.Application.UnitTests.Common.Mappings
         }
         
         [Test]
-        [TestCase(typeof(TodoList), typeof(TodoListDto))]
-        [TestCase(typeof(TodoItem), typeof(TodoItemDto))]
         [TestCase(typeof(DepotDto), typeof(Depot))]
         [TestCase(typeof(CustomerDto), typeof(Customer))]
         [TestCase(typeof(ProblemDto), typeof(Problem))]
