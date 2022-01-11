@@ -1,0 +1,88 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {british}{}\relax 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Abstract}{1}{chapter*.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{3}{section*.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{3}{section*.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.1}Objective and scope of the thesis}{4}{section.1.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.2}Content outline}{4}{section.1.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {2}Problem analysis}{7}{chapter.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.1}Vehicle Routing Problem}{7}{section.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{7}{section*.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{8}{section*.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{9}{section*.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.2}Vehicle Routing Problem with Time Windows}{9}{section.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{10}{section*.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.3}Solution approaches}{11}{section.2.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.3.1}Exact methods}{11}{subsection.2.3.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{11}{section*.9}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{11}{section*.10}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{12}{section*.11}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.3.2}Heuristics}{12}{subsection.2.3.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Construction heuristics}{12}{section*.12}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{12}{section*.13}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{13}{section*.14}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Improvement heuristics}{13}{section*.15}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{13}{section*.16}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{13}{section*.17}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{13}{section*.18}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{14}{section*.19}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.3.3}Push forward insertion heuristic}{14}{subsection.2.3.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{14}{section*.20}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.3.4}Local search with $\lambda $ interchange}{14}{subsection.2.3.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{16}{section*.21}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{}{16}{section*.22}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {3}Requirements and tools}{17}{chapter.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {4}External specification}{19}{chapter.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {5}Internal specification}{21}{chapter.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {6}Verification and validation}{23}{chapter.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {7}Conclusions}{25}{chapter.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Bibliography}{III}{table.7.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Index of abbreviations and symbols}{VII}{appendix*.24}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Listings}{IX}{appendix*.25}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{List of additional files in electronic submission (if applicable)}{XIII}{appendix*.26}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{List of figures}{XV}{appendix*.27}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{List of tables}{XVII}{appendix*.28}%

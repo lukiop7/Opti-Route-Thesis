@@ -1,0 +1,21 @@
+<div class="card card-body position-relative">
+<div class="route-hover-line"></div>
+<div class="d-flex flex-row flex-wrap route-wrapper" [ngClass]="{'expanded'  : isExpanded===true}">
+  <div class="route-details d-flex flex-column">
+    <b>Time:</b>
+    <span>{{route.totalTime | timeFormatted}}</span>
+    <b>Distance:</b>
+    <span>{{route.totalDistance | distanceFormatted}}</span>
+  </div>
+  <div class="route-customers d-flex flex-column"> 
+  <div class="route-customers-header">
+    <b>Order of Customers</b>
+  </div>
+  <div class="route-customers-container">
+    <div class="client" *ngFor="let client of route.customers; let i = index">
+      {{client.id}} 
+    </div>
+  </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,28 @@
+<div class="card h-100 w-100 border-0 shadowed">
+  <div class="card-header">
+    <h2 class="text-center">Customers</h2>
+  </div>
+  <div class="h-100 hidden-scroll">
+    <div [formGroup]="customersInfoForm">
+      <div formArrayName="customersInfo">
+        <div *ngFor="let customer of  customersInfo.controls; let i=index">
+          <div [formGroup]="customer">
+            <app-marker-details [group]="customer" [customer]="customers[i]" [id]="i+1"
+                                (closed)="removeCustomer($event)"></app-marker-details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer d-flex">
+    <button (click)="onBackClick()" class="btn btn-primary btn-left ">
+      Back
+    </button>
+    <button class="btn btn-right" (click)="onSolveClick()" [ngClass]="customersInfoForm.valid ? 'btn-primary' : 'btn-secondary'"
+            [disabled]="!customersInfoForm.valid">
+      Solve
+    </button>
+    </div>
+</div>
+
+

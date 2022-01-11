@@ -1,0 +1,28 @@
+<div class="card h-100 w-100 border-0 shadowed">
+  <div class="card-header">
+    <h2 class="text-center">Depot</h2>
+  </div>
+  <div [formGroup]="depotInfoForm" class="h-100 hidden-scroll p-2 d-flex flex-column">
+    <label>Start date</label>
+    <input type="datetime-local" formControlName="readyTime" [min]="this.minDate" [ngClass]="{'ng-invalid': depotInfoForm.errors?.dateValid }">   
+    <small *ngIf="!depotInfoForm.controls.readyTime.valid  && (depotInfoForm.controls.readyTime.touched ||depotInfoForm.controls.readyTime.dirty)">
+      Start date is required
+    </small>
+    <label>Due date</label>
+    <input type="datetime-local" formControlName="dueDate" [min]="this.minDate" [ngClass]="{'ng-invalid': depotInfoForm.errors?.dateValid }">
+    <small *ngIf="!depotInfoForm.controls.dueDate.valid  && (depotInfoForm.controls.dueDate.touched ||depotInfoForm.controls.dueDate.dirty)">
+      Due date is required
+    </small>
+    <small *ngIf="depotInfoForm.errors?.dateValid  && (depotInfoForm.touched ||depotInfoForm.dirty)">
+      Due date must be greater than Start Date
+    </small>
+  </div>
+  <div class="card-footer d-flex">
+    <button (click)="onBackClick()" class="btn btn-primary btn-left">
+      Back
+    </button>
+    <button class="btn btn-right" (click)="onClick()" [disabled]="!depotInfoForm.valid || !depot" [ngClass]="(depotInfoForm.valid && depot) ? 'btn-primary' : 'btn-secondary'">
+      Continue
+    </button>
+  </div>
+</div>

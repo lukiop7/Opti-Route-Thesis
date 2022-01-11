@@ -1,0 +1,16 @@
+<div class="h-100 w-100 sidebar">
+  <form #dataForm="ngForm" class="h-100 w-100" [formGroup]="vrptwForm" [ngSwitch]="viewCounter">
+    <div class="h-100 w-100" @fadeSlideInOut>
+      <app-map-sidebar-getting-started *ngSwitchCase="0"
+                                       (continueClicked)="viewShown()"></app-map-sidebar-getting-started>
+      <app-map-sidebar-problem-info [group]="vrptwForm.controls.problemInfo" *ngSwitchCase="1"
+                                    (continueClicked)="viewShown()" (backClicked)="previousView()"></app-map-sidebar-problem-info>
+      <app-map-sidebar-depot [group]="vrptwForm.controls.depotInfo" *ngSwitchCase="2"
+                             (continueClicked)="viewShown()" (backClicked)="previousView()"></app-map-sidebar-depot>
+      <app-map-sidebar-customers [group]="vrptwForm.controls.customersInfoForm"
+                                 *ngSwitchCase="3" (backClicked)="previousView()" (solveClicked)="solveClicked()"></app-map-sidebar-customers>
+      <app-map-sidebar-solution
+        *ngSwitchCase="4" (backClicked)="previousView()"></app-map-sidebar-solution>
+    </div>
+  </form>
+</div>
