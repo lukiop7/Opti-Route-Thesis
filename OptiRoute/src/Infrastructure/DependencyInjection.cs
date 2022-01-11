@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using OptiRoute.Application.Common.Interfaces;
 using OptiRoute.Infrastructure.FileReaders.Services;
 using OptiRoute.Infrastructure.Files;
+using OptiRoute.Infrastructure.Files.FileReaders.BenchmarkTemplate;
+using OptiRoute.Infrastructure.Files.FileReaders.BenchmarkTemplates;
 using OptiRoute.Infrastructure.Files.FileReaders.Services;
 using OptiRoute.Infrastructure.HostedService;
 using OptiRoute.Infrastructure.Persistence;
@@ -36,6 +38,9 @@ namespace OptiRoute.Infrastructure
             services.AddTransient<IBenchmarkInstanceFileReader, BenchmarkInstanceFileReader>();
             services.AddTransient<IBenchmarkBestFileReader, BenchmarkBestFileReader>();
             services.AddTransient<IFileProviderService, SolomonInstancesFileProviderService>();
+
+            services.AddSingleton<BenchmarkBestTemplate>();
+            services.AddSingleton<BenchmarkInstanceTemplate>();
 
             services.AddHostedService<SolomonBenchmarkHostedService>();
 

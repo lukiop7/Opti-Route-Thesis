@@ -108,7 +108,6 @@ export class MapService {
     await this._vrptwClient.getSolution(problem)
       .toPromise()
       .then(response => {
-        console.log(response);
         solution = response;
       })
       .catch(error => {
@@ -129,7 +128,6 @@ export class MapService {
         route.push(coordinated[0]);
         routes.push(route);
       }
-      console.log(routes);
       this._pathsSubject.next({ solution: solution, paths: routes });
       this.setView(this._viewSubject.value + 1);
     }
@@ -139,9 +137,7 @@ export class MapService {
   }
 
   private async prepareRequestData(data) {
-    console.log(data);
     const coordinated = [this._depot.marker.getLatLng(), ...this._mapCustomers.map(c => c.marker.getLatLng())];
-    console.log(coordinated);
     const distDur = await this._osrmService.getDistancesAndDurationsTable(coordinated).toPromise();
     const customers = this.prepareCustomers(coordinated, data);
     const problem = this.prepareProblem(data, coordinated, customers, distDur);
@@ -170,8 +166,7 @@ export class MapService {
     const today = new Date();
     today.setDate(today.getDate() - 1);
     today.setHours(0, 0, 0, 0);
-    console.log(data.customersInfoForm);
-
+    
     for (let i = 1; i < coordinated.length; i++) {
       customers.push(CustomerDto.fromJS({
         id: i,
@@ -183,7 +178,7 @@ export class MapService {
         serviceTime: (new Date(today.toDateString() + ' ' + data.customersInfoForm.customersInfo[i - 1].serviceTime).getTime() - today.getTime()) / 1000
       }));
     }
-    console.log(customers);
+
     return customers;
   }
 }

@@ -104,13 +104,12 @@ export class MapComponent implements OnInit, OnDestroy {
     if (this._selectedPolyLine != null) {
       this.map.removeControl(this._selectedPolyLine);
     }
-    console.log(`pane ${this.panes.length}`);
+    
     this.pathsLayer.forEach(path => {
       this.map.removeControl(path);
     });
     this.pathsLayer = [];
-    console.log(`paths ${this.pathsLayer}`);
-    //  this.pathsLayer.clearLayers();
+
     for (let i = 0; i < result.paths.length; i++) {
       if (i!= 0 && i % 10 === 0)
         await delay(4000);

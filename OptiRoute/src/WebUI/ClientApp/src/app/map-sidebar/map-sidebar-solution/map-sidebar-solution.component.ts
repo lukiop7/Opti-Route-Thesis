@@ -20,7 +20,6 @@ export class MapSidebarSolutionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._solutionSubscription = this._mapService.getPaths().subscribe((result: VrptwSolutionResponse) => {
-      console.log(result);
       this.solution = result;
     });
   }

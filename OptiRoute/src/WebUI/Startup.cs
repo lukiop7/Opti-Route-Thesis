@@ -83,7 +83,6 @@ namespace OptiRoute.WebUI
             }
 
             app.UseHealthChecks("/health");
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {

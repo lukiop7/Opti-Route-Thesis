@@ -2,9 +2,9 @@
 
 namespace OptiRoute.Infrastructure.Files.FileReaders.BenchmarkTemplate
 {
-    public static class BenchmarkInstanceTemplate
+    public class BenchmarkInstanceTemplate
     {
-        public static string FromBenchmarkTemplate(int line) => line switch
+        public string FromBenchmarkTemplate(int line) => line switch
         {
             0 => @"^\s*\S+\s*$",
             1 => @"^\s*$",
@@ -20,6 +20,11 @@ namespace OptiRoute.Infrastructure.Files.FileReaders.BenchmarkTemplate
             _ => throw new ArgumentException(message: "invalid enum value", paramName: nameof(line))
         };
 
-        public static int MinimumNumberOfLines = 11;
+        public int MinimumNumberOfLines;
+
+        public BenchmarkInstanceTemplate()
+        {
+            MinimumNumberOfLines = 11;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using OptiRoute.Application.Common.Exceptions;
+﻿using Microsoft.Extensions.Logging;
+using OptiRoute.Application.Common.Exceptions;
 using OptiRoute.Application.Common.Interfaces;
 using OptiRoute.Domain.Entities;
 using OptiRoute.Infrastructure.Files.FileReaders.BenchmarkTemplate;
@@ -13,8 +14,9 @@ namespace OptiRoute.Infrastructure.FileReaders.Services
     {
         private string _errorTemplate = "Line: {0} Error: {1}";
         private Dictionary<int, Action<Problem, string>> _handlersDictionary;
+        private BenchmarkInstanceTemplate _benchmarkInstanceTemplate;
 
-        public BenchmarkInstanceFileReader()
+        public BenchmarkInstanceFileReader(BenchmarkInstanceTemplate benchmarkInstanceTemplate)
         {
             _handlersDictionary = new Dictionary<int, Action<Problem, string>>()
             {
@@ -22,13 +24,14 @@ namespace OptiRoute.Infrastructure.FileReaders.Services
                 {9, ParseDepot},
                 {10, ParseCustomer},
             };
+            _benchmarkInstanceTemplate = benchmarkInstanceTemplate;
         }
 
         public Problem ReadBenchmarkFile(string content)
         {
-            var dataLines = content.Split("\r\n").ToList();
+            var dataLines = content.Split(Environment.NewLine).ToList();
 
-            if (dataLines.Count < BenchmarkInstanceTemplate.MinimumNumberOfLines)
+            if (dataLines.Count < _benchmarkInstanceTemplate.MinimumNumberOfLines)
             {
                 throw new ValidationException(new KeyValuePair<string, string[]>("File", new string[]
                 { "The number of lines in the file is less than specified in the documentation." }));
@@ -63,7 +66,7 @@ namespace OptiRoute.Infrastructure.FileReaders.Services
 
         private bool ValidateLine(int index, string line)
         {
-            return Regex.Match(line, BenchmarkInstanceTemplate.FromBenchmarkTemplate(index), RegexOptions.IgnoreCase).Success;
+            return Regex.Match(line, _benchmarkInstanceTemplate.FromBenchmarkTemplate(index), RegexOptions.IgnoreCase).Success;
         }
 
         private void ParseDepot(Problem problem, string data)

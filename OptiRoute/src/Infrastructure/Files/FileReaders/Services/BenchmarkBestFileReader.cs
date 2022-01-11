@@ -11,12 +11,18 @@ namespace OptiRoute.Infrastructure.Files.FileReaders.Services
     public class BenchmarkBestFileReader : IBenchmarkBestFileReader
     {
         private string _errorTemplate = "Line: {0} Error: {1}";
+        private BenchmarkBestTemplate _benchmarkBestTemplate;
+
+        public BenchmarkBestFileReader(BenchmarkBestTemplate benchmarkBestTemplate)
+        {
+            _benchmarkBestTemplate = benchmarkBestTemplate;
+        }
 
         public List<List<int>> ReadBenchmarkBestFile(string content)
         {
-            var dataLines = content.Split("\r\n").ToList();
+            var dataLines = content.Split(Environment.NewLine).ToList();
 
-            if (dataLines.Count < BenchmarkBestTemplate.MinimumNumberOfLines)
+            if (dataLines.Count < _benchmarkBestTemplate.MinimumNumberOfLines)
             {
                 throw new ValidationException(new KeyValuePair<string, string[]>("File", new string[]
                 { "The number of lines in the file is less than specified in the documentation." }));
