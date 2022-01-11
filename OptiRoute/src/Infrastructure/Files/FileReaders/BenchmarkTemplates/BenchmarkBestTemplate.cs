@@ -1,7 +1,11 @@
 ﻿namespace OptiRoute.Infrastructure.Files.FileReaders.BenchmarkTemplates
 {
-    public static class BenchmarkBestTemplate
+    public class BenchmarkBestTemplate
     {
-        public static int MinimumNumberOfLines = 6;
+        public BenchmarkBestTemplate()
+        {
+            MinimumNumberOfLines = 6;
+        }
+        public int MinimumNumberOfLines = 6;
     }
 }

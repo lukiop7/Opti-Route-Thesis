@@ -76,13 +76,10 @@ export class MapSidebarComponent implements OnInit, OnDestroy {
   }
 
   solveClicked(){
-    console.log("solve");
    this.submitted();
   }
 
   submitted() {
-    console.log("solve data");
     this._mapService.connectMarkers(this.vrptwForm.value);
-    console.log(this.vrptwForm.value);
   }
 }

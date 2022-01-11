@@ -31,10 +31,8 @@ this._depotSubscription.unsubscribe();
   ngOnInit(): void {
     this._depotSubscription = this._mapService.getDepot().subscribe(value => {
       this.depot = value;
-      console.log(this.depot );
     });
     if(!this.depotInfoForm.touched){
-      console.log("patch");
       this.depotInfoForm.patchValue({
         dueDate: (localIsoTime().slice(0, 16)),
         readyTime: (localIsoTime().slice(0, 16))
