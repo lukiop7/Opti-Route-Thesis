@@ -19,6 +19,7 @@ namespace OptiRoute.Application.Benchmarks.Queries.GetBenchmarkResultsQuery
         public double Vehicles { get; set; }
 
         public int SolutionDbId { get; set; }
+        public int? BestSolutionDbId { get; set; }
 
         public int BenchmarkInstanceDbId { get; set; }
 
