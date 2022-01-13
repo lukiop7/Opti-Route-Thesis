@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
@@ -15,7 +15,6 @@ import { MapComponent } from './map/map.component';
 import {SharedModule} from '../shared/shared.module';
 import { MapSidebarComponent } from './map-sidebar/map-sidebar.component';
 import { MapLayoutComponent } from './map-layout/map-layout.component';
-import {MapService} from './services/map.service';
 import {OsrmService} from './services/osrm.service';
 import { MapSidebarCustomersComponent } from './map-sidebar/map-sidebar-customers/map-sidebar-customers.component';
 import { MapSidebarDepotComponent } from './map-sidebar/map-sidebar-depot/map-sidebar-depot.component';
@@ -59,7 +58,6 @@ import { BenchmarkResultsComponent } from './benchmark-results/benchmark-results
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
     FontAwesomeModule,
     HttpClientModule,
-    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ModalModule.forRoot(),

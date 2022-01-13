@@ -1,9 +1,10 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {Customer} from '../../../shared/models/customer';
 import {MapService} from '../../services/map.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { dateValidator } from 'shared/utils/dateValidator';
+import { depotDateValidator } from 'shared/utils/depotDateValidator';
 
 @Component({
   selector: 'app-map-sidebar-customers',
@@ -12,6 +13,8 @@ import { dateValidator } from 'shared/utils/dateValidator';
 })
 export class MapSidebarCustomersComponent implements OnInit, OnDestroy {
   @Input('group')
+  public vrptwForm: FormGroup;
+
   public customersInfoForm: FormGroup;
 
   @Output() backClicked = new EventEmitter<void>();
@@ -21,12 +24,17 @@ export class MapSidebarCustomersComponent implements OnInit, OnDestroy {
   
   public customersInfo: FormArray;
   private _subscription: Subscription;
+  private _changeSubscription: Subscription;
+  private _change2Subscription: Subscription;
+
+
   customers: Customer[] = [];
 
   constructor(private changeDetector: ChangeDetectorRef, private _mapService: MapService, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
+    this.customersInfoForm = <FormGroup>this.vrptwForm.controls.customersInfoForm; 
     this.customersInfo = <FormArray>this.customersInfoForm.controls['customersInfo'];
     this._subscription = this._mapService.getCustomers().subscribe((customers: Customer[]) => {
       this.customers = customers;
@@ -35,10 +43,21 @@ export class MapSidebarCustomersComponent implements OnInit, OnDestroy {
       }
       this.changeDetector.detectChanges();
     });
+
+    this._changeSubscription = this.customersInfo.valueChanges.subscribe(changes=>{
+      this.changeDetector.detectChanges();
+    })
+
+    this._change2Subscription = this.customersInfoForm.valueChanges.subscribe(changes=>{
+      this.changeDetector.detectChanges();
+    })
   }
 
   ngOnDestroy(): void {
     this._subscription.unsubscribe();
+    this._changeSubscription.unsubscribe();
+    this._change2Subscription.unsubscribe();
+
   }
 
 
@@ -56,7 +75,7 @@ export class MapSidebarCustomersComponent implements OnInit, OnDestroy {
       dueDate: [null, Validators.required],
       serviceTime: [null, Validators.required],
     },
-    {validators: dateValidator});
+    {validators: [dateValidator, depotDateValidator]});
   }
 
   onSolveClick() {
