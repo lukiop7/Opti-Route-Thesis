@@ -11,7 +11,7 @@ export const depotDateValidator: ValidatorFn = (control: AbstractControl): Valid
     const endDepot = control.parent.parent.parent.get('depotInfo').get('dueDate');
 
     return start.value !== null && end.value && startDepot.value !== null && endDepot.value !== null
-    && start.value < end && startDepot.value < start.value && endDepot.value > start.value
-    && startDepot.value < end.value && endDepot.value > end.value
+    && start.value < end && startDepot.value <= start.value && endDepot.value > start.value
+    && startDepot.value < end.value && endDepot.value >= end.value
     ? null :{ depotDateValid:true };
       }

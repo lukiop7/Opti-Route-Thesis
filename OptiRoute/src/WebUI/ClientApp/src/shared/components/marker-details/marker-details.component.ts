@@ -43,7 +43,6 @@ export class MarkerDetailsComponent implements OnInit, OnDestroy  {
 
     this.changeSubscription = this.customerInfoForm.valueChanges.subscribe(changes=>{
        this._changeDetector.detectChanges();
-       console.log(changes);
       });
   }
   }
