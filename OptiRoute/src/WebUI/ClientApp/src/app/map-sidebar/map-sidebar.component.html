@@ -7,7 +7,7 @@
                                     (continueClicked)="viewShown()" (backClicked)="previousView()"></app-map-sidebar-problem-info>
       <app-map-sidebar-depot [group]="vrptwForm.controls.depotInfo" *ngSwitchCase="2"
                              (continueClicked)="viewShown()" (backClicked)="previousView()"></app-map-sidebar-depot>
-      <app-map-sidebar-customers [group]="vrptwForm.controls.customersInfoForm"
+      <app-map-sidebar-customers [group]="vrptwForm"
                                  *ngSwitchCase="3" (backClicked)="previousView()" (solveClicked)="solveClicked()"></app-map-sidebar-customers>
       <app-map-sidebar-solution
         *ngSwitchCase="4" (backClicked)="previousView()"></app-map-sidebar-solution>

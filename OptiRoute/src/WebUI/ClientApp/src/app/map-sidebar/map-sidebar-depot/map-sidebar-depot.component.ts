@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { localIsoTime } from '../../../shared/utils/localIsoTime';
 import { MapService } from '../../services/map.service';
@@ -21,7 +21,7 @@ export class MapSidebarDepotComponent implements OnInit, OnDestroy {
   public depot: Customer = null;
   private _depotSubscription: Subscription;
 
-  constructor(private _mapService: MapService) {
+  constructor(private _mapService: MapService, private _changeDetector: ChangeDetectorRef) {
     this.minDate = getMinDate();
   }
   ngOnDestroy(): void {
@@ -31,6 +31,7 @@ this._depotSubscription.unsubscribe();
   ngOnInit(): void {
     this._depotSubscription = this._mapService.getDepot().subscribe(value => {
       this.depot = value;
+      this._changeDetector.detectChanges();
     });
     if(!this.depotInfoForm.touched){
       this.depotInfoForm.patchValue({

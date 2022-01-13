@@ -544,6 +544,7 @@ export class BenchmarkResultDto implements IBenchmarkResultDto {
     distance?: number;
     vehicles?: number;
     solutionDbId?: number;
+    bestSolutionDbId?: number | undefined;
     benchmarkInstanceDbId?: number;
 
     constructor(data?: IBenchmarkResultDto) {
@@ -564,6 +565,7 @@ export class BenchmarkResultDto implements IBenchmarkResultDto {
             this.distance = _data["distance"];
             this.vehicles = _data["vehicles"];
             this.solutionDbId = _data["solutionDbId"];
+            this.bestSolutionDbId = _data["bestSolutionDbId"];
             this.benchmarkInstanceDbId = _data["benchmarkInstanceDbId"];
         }
     }
@@ -584,6 +586,7 @@ export class BenchmarkResultDto implements IBenchmarkResultDto {
         data["distance"] = this.distance;
         data["vehicles"] = this.vehicles;
         data["solutionDbId"] = this.solutionDbId;
+        data["bestSolutionDbId"] = this.bestSolutionDbId;
         data["benchmarkInstanceDbId"] = this.benchmarkInstanceDbId;
         return data; 
     }
@@ -597,6 +600,7 @@ export interface IBenchmarkResultDto {
     distance?: number;
     vehicles?: number;
     solutionDbId?: number;
+    bestSolutionDbId?: number | undefined;
     benchmarkInstanceDbId?: number;
 }
 
