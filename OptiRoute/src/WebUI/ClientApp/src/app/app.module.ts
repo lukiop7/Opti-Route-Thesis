@@ -85,7 +85,6 @@ import { BenchmarkResultsComponent } from './benchmark-results/benchmark-results
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     {provide: ErrorHandler, useClass: AppErrorHandler},
-    MapService,
     OsrmService,
     LoaderService
   ],

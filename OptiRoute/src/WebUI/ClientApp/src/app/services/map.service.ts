@@ -19,7 +19,7 @@ import { addHours } from '../../shared/utils/addHours';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
 export class MapService {
   private _mapCustomers: MapCustomer[] = [];
