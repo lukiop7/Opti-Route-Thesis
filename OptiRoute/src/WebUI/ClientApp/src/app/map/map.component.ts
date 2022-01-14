@@ -29,7 +29,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private _selectedPathIndex: number;
   private _selectedPolyLine: any;
   public showPath = false;
-  private index:number = 400;
+  private index: number = 400;
   customersLayer: L.LayerGroup;
   depotLayer: L.LayerGroup;
   pathsLayer: any[] = [];
@@ -75,6 +75,12 @@ export class MapComponent implements OnInit, OnDestroy {
     });
 
     this._selectedPathIndexSubscription = this._mapService.getSelectedPath().subscribe(value => {
+      if (this.pathsLayer.some((x) => {
+      return  x._selectedRoute == undefined;
+      })) {
+        return;
+      }
+
       this._selectedPathIndex = value;
       let max = 0;
       let index = 0;
@@ -104,22 +110,22 @@ export class MapComponent implements OnInit, OnDestroy {
     if (this._selectedPolyLine != null) {
       this.map.removeControl(this._selectedPolyLine);
     }
-    
+
     this.pathsLayer.forEach(path => {
       this.map.removeControl(path);
     });
     this.pathsLayer = [];
 
     for (let i = 0; i < result.paths.length; i++) {
-      if (i!= 0 && i % 10 === 0)
+      if (i != 0 && i % 10 === 0)
         await delay(4000);
 
       const paneName = `pane${i}`;
-      if(i >  this.panes.length - 1){
+      if (i > this.panes.length - 1) {
         const pane = this.map.createPane(paneName);
         pane.style.zIndex = this.index.toString();
         this.index += 1;
-      this.panes.push(pane);
+        this.panes.push(pane);
       }
       const routeControl = L.Routing.control({
         createMarker: function () {
