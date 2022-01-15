@@ -34,7 +34,6 @@ export class VisualizerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
   }
 
   @HostListener('window:resize', ['$event'])
