@@ -1,14 +1,73 @@
-.close-button{
-  position: absolute;
-  top:1%;
-  right:1%;
-}
+
 label{
   margin-top: 0px !important;
 }
-.id{
-  position: absolute;
-  top:1%;
-  left:1%;
+
+.card:hover{
+  .customer-header{
+    background: #e5e5e5;
+  }
+  .customer-details{
+    background: #ebebeb;
+  }
+}
+
+.customer-header{
+  flex: 1 0 20%;
+  border-bottom:1px solid rgba(0,0,0,.125);
+  padding: 0.25rem !important;
+  background: #f3f3f3;
+  align-items:center;
+  justify-content: space-between;
+}
+.customer-details{
+  flex: 1 0 80%;
   padding-left: 0.25rem;
+  background: rgb(247 247 247);
+  align-items: center;
+  padding:0.25rem;
+}
+
+.customer-times{
+  width:100%;
+  padding-top:0.5rem;
+  padding-left:0.5rem;
+  padding-right:0.5rem;
+  input{
+    width:100%;
+  }
+}
+
+.customer-service{
+  flex: 1 1 50%;
+  padding-bottom:0.5rem;
+  padding-left:0.5rem;
+  padding-right:0.5rem;
+  input{
+    width:100%;
+  }
+}
+
+
+.customer-demand{
+  flex: 1 1 50%;
+  padding-bottom:0.5rem;
+  padding-left:0.5rem;
+  padding-right:0.5rem;
+  input{
+    width:100%;
+  }
+}
+.id{
+  padding-left: 0.25rem;
+}
+
+.card-body{
+  padding: 0rem !important;
+}
+.card{
+  border-radius: 0%!important;
+  border-left: 0px!important;
+  border-right: 0px!important;
+  border-top:0px !important;
 }

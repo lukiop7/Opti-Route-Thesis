@@ -7,22 +7,24 @@
       <div formArrayName="customersInfo">
         <div *ngFor="let customer of  customersInfo.controls; let i=index">
           <div [formGroup]="customer">
-            <app-marker-details [group]="customer" [customer]="customers[i]" [id]="i+1" [depot]="vrptwForm.controls.depotInfo"
-                                (closed)="removeCustomer($event)"></app-marker-details>
+            <app-marker-details [group]="customer" [customer]="customers[i]" [id]="i+1"
+              [depot]="vrptwForm.controls.depotInfo" (closed)="removeCustomer($event)"></app-marker-details>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="card-footer d-flex">
-    <button (click)="onBackClick()" class="btn btn-primary btn-left ">
-      Back
-    </button>
-    <button class="btn btn-right" (click)="onSolveClick()" [ngClass]="customersInfoForm.valid ? 'btn-primary' : 'btn-secondary'"
-            [disabled]="!customersInfoForm.valid">
-      Solve
-    </button>
+  <div class="card-footer d-flex  flex-row  flex-wrap">
+    <div class="btn-left">
+      <button (click)="onBackClick()" class="btn btn-primary">
+        Back
+      </button>
     </div>
+    <div class="btn-right">
+      <button class="btn" (click)="onSolveClick()"
+        [ngClass]="customersInfoForm.valid ? 'btn-primary' : 'btn-secondary'" [disabled]="!customersInfoForm.valid">
+        Solve
+      </button>
+    </div>
+  </div>
 </div>
-
-

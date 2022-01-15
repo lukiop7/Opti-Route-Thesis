@@ -171,7 +171,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   addMarker(latlng: L.LatLng) {
-    if (this.depotLayer.getLayers().length > 0 && this._viewCounter === 3) {
+    if (this.depotLayer.getLayers().length > 0 && this._viewCounter === 2) {
       const newMarker = L.marker(
         [latlng.lat, latlng.lng],
         {
@@ -190,7 +190,7 @@ export class MapComponent implements OnInit, OnDestroy {
         }
       );
       this._mapService.addMarker(newMarker);
-    } else if (this._viewCounter === 2) {
+    } else if (this._viewCounter === 1) {
       const newMarker = L.marker(
         [latlng.lat, latlng.lng],
         {
