@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -20,15 +20,16 @@ export class BenchmarkResultsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
 
-  constructor(private client: BenchmarksClient, private visualizeDialog: MatDialog) {
+  constructor(private client: BenchmarksClient, private visualizeDialog: MatDialog, private _changeDetector: ChangeDetectorRef) {
 
   }
 
   ngOnInit() {
-    this.getBenchmarkResults();
   }
 
   ngAfterViewInit() {
+    this.getBenchmarkResults();
+    this._changeDetector.detectChanges();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
