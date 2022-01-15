@@ -7,7 +7,6 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AppRoutingModule } from './app-routing.module';
@@ -42,7 +41,6 @@ import { BenchmarkResultsComponent } from './benchmark-results/benchmark-results
   declarations: [		
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
     MapComponent,
     MapSidebarComponent,
     MapLayoutComponent,
