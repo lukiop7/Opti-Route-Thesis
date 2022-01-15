@@ -1,0 +1,31 @@
+.depot-wrapper{
+    background: rgb(247 247 247);
+    border-bottom:1px solid rgba(0,0,0,.125);
+  }
+
+  
+.depot-times{
+    width:100%;
+    padding-left:0.5rem;
+    padding-right:0.5rem;
+    input{
+      width:100%;
+    }
+  }
+  
+  .capacity{
+    flex: 1 1 50%;
+    padding:0.5rem;
+    input{
+      width:100%;
+    }
+  }
+  
+  
+  .vehicles{
+    flex: 1 1 50%;
+    padding:0.5rem;
+    input{
+      width:100%;
+    }
+  }
