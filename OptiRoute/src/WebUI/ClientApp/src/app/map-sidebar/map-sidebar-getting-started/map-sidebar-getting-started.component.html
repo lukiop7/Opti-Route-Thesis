@@ -2,9 +2,54 @@
   <div class="card-header">
     <h2 class="text-center">Getting started</h2>
   </div>
-  <div class="h-100 hidden-scroll p-2">
-    Lorem ipsum dolor sit amet
-    Mauris sit amet posuere tellus, quis pellentesque eros. Vestibulum libero est, sodales quis feugiat ac, ullamcorper non tortor. Etiam ullamcorper eget justo at bibendum. Mauris hendrerit lectus eu orci vehicula dictum. Praesent sit amet faucibus velit. Aenean lobortis turpis quis est aliquet commodo. Nam eget augue euismod, pretium quam vitae, fermentum ipsum. Nulla facilisi. Quisque vehicula volutpat nulla volutpat consectetur. Duis a varius enim.
+  <div class="h-100 hidden-scroll p-2 d-flex flex-column align-items-center content">
+    <div class="content-wrapper shadowed">
+      <h3 class="text-center opti-header"><b>OptiRoute</b> <br>
+        <sub>Find the optimal way to deliver goods to your customers!</sub>
+      </h3>
+      <div class="">OptiRoute allows you to solve vehicle routing problems with time windows.
+      </div>
+    </div>
+    <div class="content-wrapper shadowed">
+      <h3 class="text-center"><b>Depot</b>
+      </h3>
+      <div class="">In this step, specify problem details and set the depot location.
+      </div>
+      <img class="shadowed" src="/assets/depot.png" alt="image">
+      <ul class="">
+        <li><b>Start date</b> - when delivery should start</li>
+        <li><b>Due date</b> - the final time at which the vehicles should arrive</li>
+        <li><b>Vehicles</b> - number of vehicles used for delivery</li>
+        <li><b>Capacity</b> - capacity of each vehicle</li>
+      </ul>
+      <img class="shadowed" src="/assets/depot-marker.png" alt="image">
+      <div class="">Remember to place the depot marker on the map, without this step you will not be able to continue.
+      </div>
+    </div>
+    <div class="content-wrapper shadowed">
+      <h3 class="text-center"><b>Customers</b></h3>
+      <div class="">In this step you need to set the location and specify the details of your customers.
+      </div>
+      <img class="shadowed" src="/assets/customers-marker.png" alt="image">
+      <div class="">Place the client marker on the map and the client details section will appear in the sidebar.
+      </div>
+      <img class="shadowed"  src="/assets/customers.png" alt="image">
+      <ul class="">
+        <li><b>Ready time</b> - the earliest date on which the customer can take delivery</li>
+        <li><b>Due date</b> - final date on which the customer may take delivery</li>
+        <li><b>Service time</b> - time taken to accept delivery</li>
+        <li><b>Demand</b> - quantity of goods in delivery</li>
+      </ul>
+    </div>
+    <div class="content-wrapper shadowed">
+      <h3 class="text-center"><b>Solution</b></h3>
+      <div class="">If the problem is feasible, it will be visualized on the map.
+      </div>
+      <img class="shadowed" src="/assets/solution-markers.png" alt="image">
+      <div class="">The sidebar provides details of each route in the solution.
+      </div>
+      <img class="shadowed" src="/assets/solution.png" alt="image">
+    </div>
   </div>
   <div class="card-footer">
     <button class="btn btn-primary w-100" (click)="onClick()">
