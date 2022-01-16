@@ -2,11 +2,11 @@
   <div class="card-header">
     <h2 class="text-center">Customers</h2>
   </div>
-  <div class="h-100 hidden-scroll">
+  <div class="h-100 hidden-scroll p-2">
     <div [formGroup]="customersInfoForm">
       <div formArrayName="customersInfo">
         <div *ngFor="let customer of  customersInfo.controls; let i=index">
-          <div [formGroup]="customer">
+          <div [formGroup]="customer" class="margined shadowed">
             <app-marker-details [group]="customer" [customer]="customers[i]" [id]="i+1"
               [depot]="vrptwForm.controls.depotInfo" (closed)="removeCustomer($event)"></app-marker-details>
           </div>
