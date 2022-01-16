@@ -59,13 +59,11 @@ export class MapSidebarComponent implements OnInit, OnDestroy {
 
   initializeForm() {
     this.vrptwForm = this.fb.group({
-      problemInfo: this.fb.group({
-        vehicles: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-        capacity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      }),
       depotInfo: this.fb.group({
         readyTime: [null, Validators.required],
-        dueDate: [null, Validators.required]
+        dueDate: [null, Validators.required],
+        vehicles: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+        capacity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       },
       {validators: dateValidator}),
       customersInfoForm: this.fb.group({
