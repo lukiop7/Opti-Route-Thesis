@@ -146,8 +146,8 @@ export class MapService {
 
   private prepareProblem(data, coordinated: LatLng[], customers: CustomerDto[], distDur: IDistDur) {
     return ProblemDto.fromJS({
-      vehicles: data.problemInfo.vehicles,
-      capacity: data.problemInfo.capacity,
+      vehicles: data.depotInfo.vehicles,
+      capacity: data.depotInfo.capacity,
       depot: DepotDto.fromJS({
         id: 0,
         x: Math.floor(coordinated[0].lng),

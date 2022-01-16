@@ -71,12 +71,15 @@ export class MapComponent implements OnInit, OnDestroy {
     });
 
     this._viewSubscription = this._mapService.getView().subscribe(value => {
+      if (this._viewCounter === 3)
+        this.clearMap();
+
       this._viewCounter = value;
     });
 
     this._selectedPathIndexSubscription = this._mapService.getSelectedPath().subscribe(value => {
       if (this.pathsLayer.some((x) => {
-      return  x._selectedRoute == undefined;
+        return x._selectedRoute == undefined;
       })) {
         return;
       }
@@ -106,7 +109,7 @@ export class MapComponent implements OnInit, OnDestroy {
     });
   }
 
-  private async handlePaths(result: VrptwSolutionResponse) {
+  private clearMap() {
     if (this._selectedPolyLine != null) {
       this.map.removeControl(this._selectedPolyLine);
     }
@@ -115,6 +118,10 @@ export class MapComponent implements OnInit, OnDestroy {
       this.map.removeControl(path);
     });
     this.pathsLayer = [];
+  }
+
+  private async handlePaths(result: VrptwSolutionResponse) {
+    this.clearMap();
 
     for (let i = 0; i < result.paths.length; i++) {
       if (i != 0 && i % 10 === 0)
@@ -171,7 +178,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   addMarker(latlng: L.LatLng) {
-    if (this.depotLayer.getLayers().length > 0 && this._viewCounter === 3) {
+    if (this.depotLayer.getLayers().length > 0 && this._viewCounter === 2) {
       const newMarker = L.marker(
         [latlng.lat, latlng.lng],
         {
@@ -190,7 +197,7 @@ export class MapComponent implements OnInit, OnDestroy {
         }
       );
       this._mapService.addMarker(newMarker);
-    } else if (this._viewCounter === 2) {
+    } else if (this._viewCounter === 1) {
       const newMarker = L.marker(
         [latlng.lat, latlng.lng],
         {

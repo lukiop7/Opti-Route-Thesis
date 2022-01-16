@@ -20,13 +20,19 @@ code {
 }
 
 .btn-left{
-  margin-right: 3px;
-  flex:0 0 50%;
+  padding-right: 3px;
+  flex: 1 1 50%;
+  button{
+    width:100%;
+  }
 }
 
 .btn-right{
-  margin-left: 3px;
-  flex:0 0 50%;
+  padding-left: 3px;
+  flex: 1 1 50%;
+  button{
+    width:100%;
+  }
 }
 
 small{
