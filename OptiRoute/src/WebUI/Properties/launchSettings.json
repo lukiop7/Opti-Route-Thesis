@@ -21,19 +21,18 @@
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+      "applicationUrl": "http://localhost:5000"
     },
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "environmentVariables": {
-        "UseInMemoryDatabase": "true",
         "ASPNETCORE_HTTPS_PORT": "5001",
-        "ASPNETCORE_URLS": "https://+:5001;http://+:5000"
+        "ASPNETCORE_URLS": "http://+:5000"
       },
       "httpPort": 5000,
-      "useSSL": true,
+      "useSSL": false,
       "sslPort": 5001
     }
   }
