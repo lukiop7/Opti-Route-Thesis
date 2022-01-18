@@ -48,11 +48,6 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\solomonBests\" />
-    <Folder Include="wwwroot\solomonInstances\" />
-  </ItemGroup>
-
   <Target Name="NSwag" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
     <Copy SourceFiles="@(Reference)" DestinationFolder="$(OutDir)References" />
     <Exec Command="$(NSwagExe_Net50) run /variables:Configuration=$(Configuration)" />
@@ -86,5 +81,7 @@
       </ResolvedFileToPublish>
     </ItemGroup>
   </Target>
+
+  <ProjectExtensions><VisualStudio><UserProperties nswag_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>
