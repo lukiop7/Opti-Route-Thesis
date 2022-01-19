@@ -24,7 +24,9 @@ services:
       - POSTGRES_PASSWORD=optiroutedb123!
       - POSTGRES_DB=optiroute-local
     volumes:
-      - ./volumes/data/db:/var/lib/postgresql/data
+      - ./postgres-data:/var/lib/postgresql/data
+      - ./sql/init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
     image: postgres:latest
+    
     
     
