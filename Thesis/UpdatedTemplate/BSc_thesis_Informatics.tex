@@ -20,6 +20,7 @@
 %\usepackage{tikz}
 %\usepackage{pgfplots}
 \usepackage{mathtools}
+\usepackage{float}
 \usepackage{geometry}
 \usepackage[page]{appendix} 
 \usepackage[
@@ -159,6 +160,7 @@ escapeinside={@*}{*@},%
 \newcommand{\Polsl}{Silesian University of Technology}
 \newcommand{\Faculty}{Faculty of Automatic Control, Electronics and Computer Science}
 \newcommand{\Programme}{Programme: Informatics}
+
 
 
 \begin{document} 
@@ -433,6 +435,28 @@ The algorithm can be summarised as follows: After generating a starting solution
 \chapter{Requirements and tools}
 
 \begin{itemize}
+\section{Functional requirements}
+\section{Non-functional requirements}
+
+\section{Tools and technologies}
+\subsection{.NET}
+\subsection{C\#}
+\subsection{Angular}
+\subsection{Typescript}
+\subsection{Visual Studio 2019}
+\subsection{Visual Studio Code}
+\subsection{git}
+\subsection{Docker}
+\subsection{PostgreSQL}
+
+
+
+
+
+
+
+
+
 \item functional and nonfunctional requirements
 \item use cases (UML diagrams)
 \item description of tools
@@ -441,23 +465,336 @@ The algorithm can be summarised as follows: After generating a starting solution
 
 
 \chapter{External specification}
+\section{Hardware and software requirements}
+To run and use the application a computer with Windows, Linux or MacOS operating system is needed. There is a possibility to use the application on mobile web browsers, but it can be unstable and some functionalities may not work as intended. Therefore the desktop device is preferred. The application requires an internet connection and can be used with Firefox, Edge, Safari, Chrome, Opera (or other Chromium-based web browser) browsers.
+\paragraph{}
+The application is containerised to not force the user to download and install dependent software and to make it easy to use. Docker is the only software that is needed to run and host the application.
+\section{Installation and activation}
+Due to containerisation, the installation procedure is very simple and requires no other software or dependencies than Docker. An internet connection is also required during installation. The information about required frameworks and dependencies is encapsulated within the Docker image. During initialisation, Docker downloads the necessary frameworks and dependencies, builds the web application, creates the database, its structure and inserts the necessary data.
+
+\subsubsection{Prerequisite}
+Docker installed and running.
+
+\subsubsection{Installation}
+To start the application the following command must be run from the main directory of the application (docker-compose.yml file location):
+
+\paragraph{}
+
+\framebox[\textwidth]{
+docker-compose up}
+\paragraph{}
+
+The initialization of the application can be longer for the first time.
+On first start-up, the application may take a few minutes to initialise and may restart several times (waiting for the database to initialise).
+\paragraph{}
+Once the application has been successfully initialised, it should be available at http://localhost:5000.
+\section{User manual}
+\subsection{Navigation bar}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/navbar.PNG}
+\caption{Navigation bar}
+\label{fig:navbar}
+\end{figure}
+
+The navigation bar (Fig. \ref{fig:navbar}) is visible at the top of every page in the application, it contains 3 buttons:
 \begin{itemize}
-\item hardware and software requirements
-\item installation procedure
-\item activation procedure
-\item types of users
-\item user manual
-\item system administration
-\item security issues
-\item example of usage
-\item working scenarios (with screenshots or output files)
+\item Home - redirects to the home page.
+\item Benchmark - redirects to a page where the user can upload the benchmark file and solve the problem found in the file.
+\item Solomon Benchmarks - redirects to a page with a table comparing OptiRoute solutions and the best known solutions for Solomon benchmark instances.
 \end{itemize}
 
-\begin{figure}
+\subsection{Home Page}
+\begin{figure}[H]
 \centering
-\includegraphics[width=2cm]{logo_eng.jpg}
-\caption{Figure caption (below the figure).}
-\label{fig:2}
+\includegraphics[scale=0.3]{images/home.jpg}
+\caption{Home page}
+\label{fig:home}
+\end{figure}
+
+The home page (Fig. \ref{fig:home}) consist of map and the sidebar. The user can zoom in, zoom out, move freely around the map and add markers with a mouse click (Fig. \ref{fig:markers}). The sidebar consists of required inputs for data or details depending on the current step of the problem definition process.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/markers.jpg}
+\caption{Markers placed on the map}
+\label{fig:markers}
+\end{figure}
+
+\subsection{Sidebar}
+The sidebar is where the user can define the details of the problem as well as see the details of the solution. The whole process is divided into individual steps, so the content of the sidebar depends on which stage the user is currently at.
+\subsubsection{Getting started}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/gettingStarted.jpg}
+\caption{Getting started step in the sidebar}
+\label{fig:gettingStarted}
+\end{figure}
+The "Getting Started" step in the sidebar (Fig. \ref{fig:gettingStarted}) provides a short user guide, explaining step-by-step how to use the application. Screenshots and short descriptions of the steps to follow make it easier for first-time users to use the app. After clicking the "Continue" button at the bottom of the sidebar, the contents of the sidebar will change to the "Depot" step.
+
+\subsubsection{Depot}
+In the "Depot" step, the user must place the depot marker by clicking on the desired location on the map and then specify the details in the input fields in the sidebar (Fig. \ref{fig:depot}).
+
+\paragraph{}
+
+At the bottom of the sidebar (Fig. \ref{fig:depot}) are two buttons, "Back" and "Continue", which allow the user to move on to the next step or return to the previous step.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/depot.jpg}
+\caption{Depot step}
+\label{fig:depot}
+\end{figure}
+
+The "Depot" form (Fig. \ref{fig:depot}) contains input fields:
+\begin{itemize}
+    \item Start date - time when the delivery should start.
+    \item Due date - the final time at which the vehicles should arrive at the depot.
+    \item Vehicles - number of vehicles used for delivery.
+    \item Capacity - the capacity of each vehicle.
+\end{itemize}
+
+\paragraph{}
+
+The validation rules applied to the input data:
+\begin{itemize}
+    \item Start date - is required and cannot be greater than or equal to the Due date.
+    \item Due date - is required and cannot be less than or equal to the Start date.
+    \item Vehicles - is required and must be an integer.
+    \item Capacity - is required and must be an integer.
+\end{itemize}
+When the input data is invalid it will display appropriate message and disable the "Continue" button, preventing the user from proceeding to the next step (Fig. \ref{fig:invalidDepot}). The "Continue" button will also be inactive if the depot marker is not placed on the map.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/invalidDepot.jpg}
+\caption{Depot form with invalid data}
+\label{fig:invalidDepot}
+\end{figure}
+
+\paragraph{}
+
+\subsubsection{Customers}
+
+The 'Customers' section allows the user to place customer markers on the map and specify the details of each customer. Customer markers are placed in the same way as depot markers. When a location is selected, a separate section for that customer will appear in the sidebar, marked with the customer number in the left corner (Fig. \ref{fig:customers}). 
+
+\paragraph{}
+
+At the bottom of the sidebar (Fig. \ref{fig:customers}) there are two buttons, "Back" and "Solve", which allow the user to solve the problem and go to the presentation of the results or return to the "Depot" step.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/customers.jpg}
+\caption{Customers step}
+\label{fig:customers}
+\end{figure}
+
+Each customer form (Fig. \ref{fig:customers}) contains input fields:
+\begin{itemize}
+    \item Ready time - the earliest date on which the customer can take delivery.
+    \item Due date - final date on which the customer may take delivery.
+    \item Service time - time taken to accept delivery.
+    \item Demand - quantity of goods in delivery.
+\end{itemize}
+
+\paragraph{}
+
+The validation rules applied to the input data:
+\begin{itemize}
+    \item Ready time - is required, cannot be greater than or equal to the Due date and must be within the depot time window.
+    \item Due date - is required, cannot be less than or equal to the Ready time and must be within the depot time window.
+    \item Service time - is required.
+    \item Demand - is required and must greater than 0.
+\end{itemize}
+
+As with the "Depot" form, when the data entered is invalid, it will display appropriate message and disable the "Solve" button, preventing the user from solving the problem (Fig. \ref{fig:invalidCustomers}). The "Solve" button will also be inactive if there are no customers.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/invalidCustomers.jpg}
+\caption{Customers forms with invalid data}
+\label{fig:invalidCustomers}
+\end{figure}
+
+\subsubsection{Solution}
+When the problem is feasible the solution (routes) is drawn on the map, and the details of the entire solution and each route are shown in the sidebar (Fig \ref{fig:solution}).
+
+\paragraph{}
+
+At the bottom of the sidebar (Fig. \ref{fig:solution}) there is "Back" button which allows the user to clear the routes from the map and come back to the previous step.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/solution.jpg}
+\caption{Solution}
+\label{fig:solution}
+\end{figure}
+
+The user can highlight one of the routes on the map by hovering the mouse over the route details in the sidebar (Fig. \ref{fig:solutionHover}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/solutionHover.jpg}
+\caption{Highlighted route}
+\label{fig:solutionHover}
+\end{figure}
+
+\subsection{Benchmark}
+
+The "Benchmark" page (Fig. \ref{fig:benchmark}) allows the user to solve a problem contained in a benchmark file. This file must be in .txt format and must match the Solomon Benchmark instance file structure. The "solve" button sends the problem to the backend server. If the format of the selected file is invalid, a message is displayed informing the user about the problem(Fig. \ref{fig:benchmarkInvalidFormat}). If the loaded text file does not match the Solomon Benchmark structure, a message is returned indicating the line where the validation error occurred (Fig. \ref{fig:benchmarkInvalidFile}).  When the file is successfully solved, the solution details are displayed along with a button to visualise the solution on the image (Fig. \ref{fig:benchmarkSolved}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/benchmark.jpg}
+\caption{Benchmark page}
+\label{fig:benchmark}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/benchmarkInvalidFormat.jpg}
+\caption{Invalid benchmark file format}
+\label{fig:benchmarkInvalidFormat}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/benchmarkInvalidFile.jpg}
+\caption{Benchmark file validation error}
+\label{fig:benchmarkInvalidFile}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/benchmarkSolved.jpg}
+\caption{Details of the benchmark solution}
+\label{fig:benchmarkSolved}
+\end{figure}
+
+\subsection{Solomon Benchmarks}
+
+The "Solomon Benchmarks" page contains a table with the best known solutions and the solutions generated by the application for the Solomon benchmark problem instances (Fig. \ref{fig:solomonBenchmark}). The user can compare the "OptiRoute" solutions for each instance with the best solution. The table can be sorted and contains 6 pages with 10 records on each page (56 in total). Each row has two buttons "OptiRoute" and "Best", which allow the user to visualise the solutions of the current row on the image.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/solomonBenchmark.jpg}
+\caption{Solomon Benchmarks page}
+\label{fig:solomonBenchmark}
+\end{figure}
+
+\subsection{Visualization}
+
+The "Visualisation" dialog, as mentioned earlier, can be displayed on the "Benchmark" and "Solomon Benchmarks" pages by clicking the appropriate button. 
+\paragraph{}
+It contains a simple visualisation of the solution to the selected problem. Each customer is represented by a dot, customers belonging to the same route are connected by lines and have the same colour (Fig. \ref{fig:visualization}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/visualization.jpg}
+\caption{Visualization dialog}
+\label{fig:visualization}
+\end{figure}
+
+\subsection{Error}
+
+If an unexpected error occurs, a corresponding message is displayed in the top right corner of the page (Fig. \ref{fig:error}). After a short time, the entire page reloads and is ready to be used again.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.7]{images/error.jpg}
+\caption{Error message}
+\label{fig:error}
+\end{figure}
+
+
+\section{Security issues}
+The application is intended to be accessible to any user, so no authentication or authorisation functions have been implemented in it. Therefore, no user security issues were encountered during the development of the application. The application is safe from SQL Injection attacks, this vulnerability is protected by Entity Framework Core library.
+\paragraph{}
+Validation in the application takes place on both the server and client side. Proper multi-level validation prevents unwanted data from being sent to the server.
+
+\section{Usage and working scenarios}
+The software can be used by different types of users, such as a company that wants to streamline its logistics and plan the delivery of goods to customers or an individual who needs to pick up and transport multiple people from different locations to the same destination. In addition, the application can be used by someone who wants to test the algorithm on own benchmark instances.
+\paragraph{}
+Working scenarios can be differentiated according to the functionality that will be used:
+
+\begin{itemize}
+    \item Main functionality with map (Home page)
+    \item Benchmark functionality (Benchmark page)
+\end{itemize}
+
+\subsection{Main Functionality}
+The procedure for using the main functionality is always the same, the user must define the problem in the "Depot" (Figs. \ref{fig:depotScenario1} and \ref{fig:depotScenario2}) and "Customers" (Figs. \ref{fig:customersScenario1} and \ref{fig:customersScenario2}) steps. The problem is then sent to the backend server and processed by the algorithm. When the problem is feasible, an appropriate message is displayed and the solution is visualised on a map and described in detail in the sidebar (Fig. \ref{fig:solutionSuccess}). Otherwise the user is informed that the defined problem cannot be solved by an appropriate message appearing on the screen (Fig. \ref{fig:solutionFailed}). 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/depotScenario1.jpg}
+\caption{Usage example 1.1}
+\label{fig:depotScenario1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/depotScenario2.jpg}
+\caption{Usage example 2.1}
+\label{fig:depotScenario2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/customersScenario1.jpg}
+\caption{Usage example 1.2}
+\label{fig:customersScenario1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/customersScenario2.jpg}
+\caption{Usage example 2.2}
+\label{fig:customersScenario2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/solutionSuccess.jpg}
+\caption{Usage example 1.3}
+\label{fig:solutionSuccess}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/solutionFailed.jpg}
+\caption{Usage example 2.3}
+\label{fig:solutionFailed}
+\end{figure}
+
+\subsection{Benchmark functionality}
+User uploads the benchmark file (Figs. \ref{fig:benchmarkFile1} and \ref{fig:benchmarkFile2}) and clicks the "Solve" button. The file is then sent to the backend server and processed by the algorithm. If the problem is solvable a corresponding message appears, details of the solution are displayed and a button to visualize the result (Fig. \ref{fig:benchmarkSuccess}). If the problem cannot be solved an appropriate message is displayed (Fig. \ref{fig:benchmarkFailed}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.7]{images/benchmarkFile1.jpg}
+\caption{Usage example 3.1}
+\label{fig:benchmarkFile1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.7]{images/benchmarkFile2.jpg}
+\caption{Usage example 4.1}
+\label{fig:benchmarkFile2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/benchmarkSuccess.jpg}
+\caption{Usage example 3.2}
+\label{fig:benchmarkSuccess}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{images/benchmarkFailed.jpg}
+\caption{Usage example 4.2}
+\label{fig:benchmarkFailed}
 \end{figure}
 
 
