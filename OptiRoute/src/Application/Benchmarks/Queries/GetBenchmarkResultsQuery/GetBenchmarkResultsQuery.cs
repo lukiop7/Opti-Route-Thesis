@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using OptiRoute.Application.Common.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,9 +30,21 @@ namespace OptiRoute.Application.Benchmarks.Queries.GetBenchmarkResultsQuery
             var results = await _context.BenchmarkResults
                  .Include(x => x.Solution)
                  .ThenInclude(x => x.Routes)
+                 .Include(x => x.BestSolution)
+                 .ThenInclude(x => x.Routes)
                 .Include(x => x.BenchmarkInstance)
                 .OrderBy(x => x.BenchmarkInstance.Name)
                 .ToListAsync();
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var result in results)
+            {
+                sb.AppendLine(string.Format(" {0} & {1} & {2} & {3} & {4} \\\\ ", result.BenchmarkInstance.Name, result.Solution.Distance, result.Solution.Routes.Count,
+                    result.BestSolution?.Distance.ToString() ?? "N/A", result.BestSolution?.Routes.Count.ToString() ?? "N/A"));
+            }
+
+            var finished = sb.ToString();
+
             return _mapper.Map<List<BenchmarkResultDto>>(results);
         }
     }

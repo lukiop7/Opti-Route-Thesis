@@ -256,10 +256,10 @@ Abstract - the abstract text should be copied into the respective field in the A
 \chapter{Introduction}
 
  Transportation is one of the most critical activities in the supply chain. Its importance comes from the fact that the transportation costs can reach up to almost 40\% of the total logistics costs of a manufacturing company \cite{bib:article:sukiennik}. For that reason, the companies need to transport the goods or persons efficiently. That goal can be achieved by either minimizing the distance traveled by the vehicles or reducing the number of routes required to visit all destinations. The Vehicle Routing Problem (VRP) describes the problem of assigning loads to the vehicles and sequencing the customers assigned to each vehicle to obtain optimal routes.
-\paragraph{}
+
 VRP is one of the most studied combinatorial optimization problems. Its popularity is due to the fact that VRP can be used in many real-life scenarios in the fields of distribution, collection, and logistics.
 In a VRP the fleet of vehicles has to visit a set of customers starting from a given depot and deliver commodities to them, taking into consideration all given constraints. There are various constraints that could be introduced to the problem, for example,the time windows for the customers or the capacity of vehicles.
-\paragraph{}
+
 Depending on the problem variant, VRP is a combination of two or more NP-hard problems, which makes VRP also NP-hard. The fact that the problem is NP-hard makes the process of finding an exact solution very time-consuming. Therefore it is necessary to use a heuristic approach to get good solutions in an acceptable time.
 \section{Objective and scope of the thesis}
 In this thesis a web application solving Capacitated Vehicle Routing Problem with Time Windows (CVRPTW) is considered. The user defines the problem by picking waypoints on the map and determining the capacity and time window constraints. Application, if feasible, solves the problem and presents the results in a user-friendly way by visualizing all routes on the map.
@@ -283,10 +283,10 @@ The problem concerns a set of customers to whom products need to be delivered in
 	\item Customer must receive all goods at one time delivered by one vehicle.
 	\item The vehicle may not carry more goods than its capacity allows.	
 \end{enumerate}
-\paragraph{}
+
 The VRP can be formally defined as a directed graph $\textit{G = (V,A)}$, where $\textit{V = $\lbrace$0,\ldots,n$\rbrace$}$ is the set of vertices representing customers and the depot, and \textit{A} is the set of arcs \textit{(i,j)} connecting these vertices. The set of vehicles is denoted by \textit{W}. The depot is marked as vertex 0. The number of vehicles is denoted by \textit{m}, and each vehicle has a capacity of \textit{Q}. The cost of travel between vertices \textit{i} and \textit{j} is denoted by \textit{$c_{ij}$}. The cost is the distance, duration or other costs that may occur during the travel between nodes. The demand of customer \textit{i} is represented as \textit{$q_{i}$}.
 The customer subset \textit{S $\subseteq$ V$\setminus$ $\lbrace$0$\rbrace$} can be served by a minimum of \textit{r(S)} vehicles. This number can be obtained by solving the Bin Packing Problem (BPP) with bin set \textit{S} with capacities \textit{Q}, but because BPP is an NP-hard problem, it can be approximated by its lower bound: $\lceil$ $\sum$\textsubscript{i$\in$S} $q_{i}$/Q $\rceil$ \cite{bib:article:CordeauVehicleRouting}.
-\paragraph{}
+
 The Integer Linear Programming formulation of the problem is as follows:\cite{bib:book:TothAndVigo}
 \begin{equation}
 Minimize \sum_{i,j \in V} c_{ij}x_{ij}
@@ -321,14 +321,14 @@ x_{ij} \in \lbrace 0,1 \rbrace \qquad \forall i,j \in V
 In this formula, $x_{ij}$  is a binary variable whose value indicates whether the arc between vertices i and j is traversed in the solution.  
 If the connection between these vertices belongs to the solution, then the variable $x_{ij}$ is equal to 1, otherwise it is equal to 0. \textit{Indegree} Eq. 2.2 and \textit{outdegree} Eq. 2.3 constraints guarantee that every customer is visited only once. Constraints 2.4 and 2.5 ensure that the solution has \textit{m} routes, one for each vehicle (the number of routes does not exceed the number of vehicles).
 Constraints 2.6 are called \textit{capacity-cut constraints} and refer to the minimum number of vehicles needed to serve a set of customers whose total demand is $\sum$\textsubscript{i$\in$S} $q_{i}$. These constraints ensure the connectivity of the solution and that there are no paths whose load would exceed the capacity of the vehicle. The last constraint 2.7 ensures the binarity of the variable $x_{ij}$. If $x_{0j}$ is equal to 1 it means that \textit{j} belongs to this route. Any route from the solution can be reconstructed in this way: the next customer in the route is customer \textit{i}, for whom $x_{ij}$ is equal to 1. The last customer is customer i for whom $x_{i0}$ is equal to 1 \cite{bib:book:TothAndVigo}.
-\paragraph{}
+
 The problem of vehicle routing was first introduced by Dantzig and Ramser in 1959 as "The truck dispatching problem" \cite{bib:article:TruckDispatching}. In the following years it became very popular, resulting in many studies, books and scientific publications exploring the topic. The problem is one of the most studied combinatorial optimisation problems, since it offers many benefits for logistics and transport companies. Different implementations can save as much as 5\% to 30\% of transport-related costs \cite{bib:book:GeometricModellingCostSavings}.
 
 \section{Vehicle Routing Problem with Time Windows}
 
 The Vehicle Routing Problem with Time Windows (VRPTW) is a variant of VRP in which a constraint due to time windows is added. In this variant of the problem, each customer \textit{i} has a time window [$a_{i}$,$b_{i}$] in which it must be served. A customer cannot be served earlier than $a_{i}$ and later than $b_{i}$. In case the vehicle arrives earlier than $a_{i}$ it must wait until the window opens. Moreover, to each arc(i,j) the time \textit{$t_{ij}$} is assigned. For each vertex \textit{i} and vehicle \textit{k} a decision variable \textit{$s_{ik}$} is defined. This variable represents the time at which the vehicle \textit{k} starts to serve the customer \textit{i} \cite{bib:chapter:VRPTW}.
 This variant of VRP is also an NP-hard problem \cite{bib:article:Savelsbergh}.
-\paragraph{}
+
 The VRPTW can be stated mathematically as multicommodity network flow formulation with time windows and capacity constraints:\cite{bib:chapter:VRPTW} 
 
 \begin{equation}
@@ -377,34 +377,34 @@ There are two approaches to solving VRPs. The first is to solve using exact meth
 
 \subsection{Exact methods}
 The exact methods were divided by Laporte and Norbert's into three families: Direct Tree Search methods, Dynamic Programming and Integer Linear Programming \cite{bib:chapter:ExactMethods}.
-\paragraph{}
+
 The Direct Tree Search family includes branch and bound algorithms. The solution using this algorithm was first proposed by Christofides and Eilon in 1969 \cite{bib:article:Eilon}. However, the algorithm was only able to solve problems up to 13 clients, due to time complexity. Over the years, the methods in this family have been improved, allowing solutions for problems with up to 25 \cite{bib:article:LowerBound} clients and even, in later years, 250 \cite{bib:article:Laporte}.
-\paragraph{}
+
 The Dynamic Programming solutions were, at first, able to solve problems up to 25 customers. Later, significant improvements were made that allowed to solve problems up to 50 customers.
-\paragraph{}
+
 The Integer Linear Programming methods produced some of the best exact solutions. This has been achieved by extending the set partitioning algorithm using the column generation method \cite{bib:article:ILP}. 
 
 \subsection{Heuristics}
 Heuristics do not guarantee the best solution, their aim is to obtain a solution close to the best, in a relatively short time. They make it possible to solve larger and more complex problems that would not be possible to solve with exact methods. For VRP, we can distinguish between two types of herustics: construction and improvement. The process of solving a VRP usually can be divided into two steps: an initial solution is created using the construction heuristic, and then the improvement heuristics improves the solution. 
 \subsubsection{Construction heuristics}
 One of the best known construction heuristics is Clarke and Wright's savings algorithm. In the first step, separate routes are created for each customer, even if the number of vehicles is insufficient. Then, the  savings for all connections between edges (\textit{i,j}) are calculated using the formula \textit{$s_{ij}$ = $c_{i0}$ + $c_{0j}$ - $c_{ij}$}. After that, the savings are sorted in the descending order and algorithm tries to merge two routes that will reduce the total costs of travel. Routes are merged by connecting the customer from one route to the customer from the second route. A merge between \textit{i} and \textit{j} is only possible if they are the first or last vertices of their routes and the vehicle capacity constraint is not violated. The algorithm stops when there are no more possible connections.
-\paragraph{}
+
 Another type of Construction herustics is insertion heuristics. The Push forward insertion heuristics used in this thesis will be discussed in detail later in the chapter.
-\paragraph{}
+
 The last type of design heuristics are two-phase heuristics. They divide the problem into two sub-problems and then solve each of them. One such method is cluster first, route second. In this approach, customers are clustered into a base set of routes. Each cluster is treated as a separate TSP instance. There are various methods of clustering customers, one of which is the sweep algorithm. The sweep algorithm builds routes by sweeping a ray, centered at the depot, clockwise adding each customer lying on the line of the circle to the cluster.
 \subsubsection{Improvement heuristics}
 Once an initial solution is found using the construction heuristics, it is improved using the improvement heuristics. One type of such heuristics is the local search heuristic, in which the best solution is selected from the neighbourhood until a stopping criterion is reached. Neighbourhood solutions are created from the current one by applying operators that modify the original solution. 
-\paragraph{}
+
 Local search with $\lambda$ interchange heuristic will be discussed later in the chapter. This improvement heuristic method was used in the project.
-\paragraph{}
+
 Simulated annealing is another example. This method replicates the process of heating up a material and then slowly lowering the temperature to reduce defects. The main assumption of the algorithm is to infrequently accept worse solutions in order to avoid a local optimum. The solution is accepted with a probability calculated by means of a function depending on the difference in quality between the new and the current solution, and a parameter called the current temperature.
-\paragraph{}
+
 Another method is Tabu search. Based on the initial solution, neighbouring solutions are determined and the best of these solutions is selected as the new best solution. The previous solutions are stored in a tabu list, it has a predefined length, and when it is full, adding another solution removes the oldest one from the list. Such a mechanism avoids a local optimum and a return to previous solutions. 
-\paragraph{}
+
 VRP can be solved using many other heuristics, including: Large Neighbourhood Searches, Genetic Algorithms or Ant Colonies.
 \subsection{Push forward insertion heuristic}
 In this thesis, the initial solution is created using Push Forward Insertion Heuristic. It was introduced by Solomon \cite{bib:article:solomon} in 1987 and it is an efficient method to insert customers into routes. The algorithm creates a new route by selecting the starting customer furthest from the depot and then inserts each unassigned customer into the route until the capacity or time constraints are met. Then new route is created and the process repeats until all customers are routed. The feasibility check ensures that all constraints are not violated. This method generates a good starting solution for later improvements, in a short time.
-\paragraph{}
+
 For the pseudocode for PFIH algorithm for VPRTW see figure \ref{fig:PFIH} \cite{bib:chapter:PFIH}.
 \begin{figure}
 \centering
@@ -428,46 +428,96 @@ Return the current solution
 \end{figure}
 \subsection{Local search with $\lambda$ interchange}
 The $\lambda$ interchange neighbourhood generation method was introduced by Osman and Christofides \cite{bib:article:osman}. Local Search is performed by interchanging clients between routes. The interchanges are performed through operators whose number depends on the $\lambda$ parameter. In this work, this parameter is set to 2, which means that the maximum number of interchanged clients between routes will be 2. For this parameter value, we can distinguish 8 interchange operators: (0,1), (1,0), (1,1), (0,2), (2,0), (2,1), (1,2), (2,2). Operator (1,1) means that one customer will be transferred from route $R_{i}$ to $R_{j}$ and also one customer will be transferred from route $R_{j}$ to $R_{i}$. Operator 2,1 means that two customers will be moved from route $R_{i}$ to $R_{j}$ and only one customer will be moved from route $R_{j}$ to $R_{i}$. The other operators work on the same principle. If the solution has improved after the interchange of customers between routes, it is then accepted, otherwise such a solution is rejected \cite{bib:article:LocalSearchLambda}. 
-\paragraph{}
+
 To select between the candidate solutions a global-best strategy was chosen. The global-best strategy searches all solutions in the neighbourhood of the current solution for all operators and selects the one that gives the greatest cost reduction. The local search is stopped after a fixed number of iterations or other specified stopping criterion \cite{bib:article:LocalSearchLambda}. 
-\paragraph{}
+
 The algorithm can be summarised as follows: After generating a starting solution its entire neighbourhood (generated using the operators) is searched for a candidate solution. The candidate becomes the new current solution and its neighbourhood is searched to find a better solution. In case there are no more solutions in the neighbourhood that improve our current solution the algorithm is stopped.
+
+
 \chapter{Requirements and tools}
 
-\begin{itemize}
 \section{Functional requirements}
+\begin{enumerate}
+    \item The application should be accessible to any user without having to create an account.
+    \item The user should be able to define the problem using the world map.
+    \item There should be a simple user guide on how to use the main functionality.
+    \item The user should not be able to send incomplete or invalid data to the backend server.
+    \item The user should be able to freely modify data at any stage of the problem definition process.
+    \item The user should be able to go back and modify the problem, even if it has been resolved.
+    \item The solution should be visualized on the map.
+    \item Details of each route in the solution should be displayed in a user-friendly way.
+    \item The user should be able to upload and solve his own benchmark file.
+    \item Every uploaded benchmark file must be a ".txt" file with data in a correct format.
+    \item The user should be able to see the solutions calculated by the algorithm for each instance of Solomon Benchmark.
+    \item The user should be able to compare solutions from the algorithm with the best known Solomon Benchmarks solutions.
+    \item The algorithm should return the information if the problem is feasible or not.
+    \item The application should contain a navigation bar allowing the user to redirect between pages.
+    \item The application should display validation errors below HTML inputs.  
+    \item The application should display notifications in a toast pop-ups.
+    \item The system should be integrated with the OSRM API to solve problems using real routes.
+\end{enumerate}
+
 \section{Non-functional requirements}
+\begin{enumerate}
+    \item The application should be compatible with any of today's most popular web browsers (Firefox, Edge, Safari, Chrome, Opera (or other Chromium-based browser)).
+    \item The application should work correctly on any desktop operating system.
+    \item The system should be able to solve large problems in a reasonable time.
+    \item System functionalities should be easy to understand and use
+    \item The application should be time zone independent.
+\end{enumerate}
 
 \section{Tools and technologies}
+
 \subsection{.NET}
+.NET is an open source software platform. It was created by Microsoft and allows developers to create many different types of applications. Applications developed using .NET are modern, flexible and cross-platform. The ASP.NET Framework, which is part of the .NET platform, offers a set of tools to help build web applications and APIs.
+
+The backend project used the then latest version of the .NET 5 platform. The .NET platform contains all the necessary tools needed to develop web applications, which made the development process easier.
+
 \subsection{C\#}
+C\# is an open source, modern object-oriented programming language developed by Microsoft. The range of possibilities it offers is wide, and versatility is one of C\#'s strongest points. Many different types of applications can be created using this language, such as web, mobile, desktop and cloud applications. The C\# community is very large, which is why it is the 8th most popular programming language among professional programmers \cite{bib:stackSurvey}. Of all the languages available on the .NET platform, C\# is the most commonly selected one \cite{bib:netSurvey}.
+
+The backend project uses version 9 of the C\# language, which was the latest version of the language at the time. The cross-platform aspect of the language was also very important, as the application was not to be designed for just one operating system. 
+
+\subsection{NuGet}
+NuGet is the open source package manager for .NET plaftorm created by Microsoft. Contains almost 300 000 unique packages which can extend the standard .NET features \cite{bib:nuget}. It allows the developers to share and consume useful code easily.
+
 \subsection{Angular}
+Angular is an open-source JavaScript framework maintained by Google. As of 2021, Angular was the third most popular web framework among professional developers \cite{bib:stackSurvey}. Angular provides a set of powerful features for efficient single-page application development. It allows developers to build web, mobile and even desktop applications.
+
+Angular was chosen as the framework for the front-end application because of the possibilities it offers. An important aspect for this project was the support for maintaining data through services, which facilitates the sharing of data between components \cite{bib:angularServices}.
+
 \subsection{Typescript}
-\subsection{Visual Studio 2019}
-\subsection{Visual Studio Code}
+Typescript is a strongly typed and object-oriented language that is a super set of JavaScript. It was introduced by Microsoft and extends JavaScript with e.g. types and interfaces \cite{bib:typescript}.
+
+The frontend client is powered by TypeScript as the primary language for Angular.
+
+\subsection{Node.js}
+Node.js was created by Google as a open-source backend javascript runtime environment. Node.js uses chrome v8 engine to convert javascript code to machine code \cite{bib:nodeJs}.
+
+For this project, Node.js was one of the dependencies required by Angular.
+
+\subsection{npm}
+The Node package manager (npm for short) is the package manager for the Node JavaScript platform. Npm is responsible for installing and managing the dependencies used by Node.js.
+
+Angular applications depend on npm packages, which is why it was used in the project.
+
 \subsection{git}
+Every software project needs a version control system to improve workflow and make it easier to manage multiple versions of source files. Git, created by Linus Torvalds, is the most popular of the version control systems, which is why it was chosen for use on the project \cite{bib:stackSurvey}. With the ability to store functionality in separate branches and control previous versions of each file, the entire software development process becomes more efficient.
+
 \subsection{Docker}
+Docker is a virtualization software which simplifies the process of building and running applications. It separates the software from the host infrastructure by placing the application in an isolated environment (container). Inside the environment, the same version of each dependency needed by the application will be provided each time \cite{bib:dockerOverview}. As a result, only the installation of Docker on the host system is required to run the application.
+
 \subsection{PostgreSQL}
+PostgreSQL is an open source object-relational database system. This database offers a huge variety of features and capabilities. PostgreSQL is becoming more popular every year, according to the latest 2021 report PostgreSQL is the second most popular database management system \cite{bib:stackSurvey}.
 
+This database system was chosen because of the capabilities it offers.
 
-
-
-
-
-
-
-
-\item functional and nonfunctional requirements
-\item use cases (UML diagrams)
-\item description of tools
-\item methodology of design and implementation
-\end{itemize} 
 
 
 \chapter{External specification}
 \section{Hardware and software requirements}
 To run and use the application a computer with Windows, Linux or MacOS operating system is needed. There is a possibility to use the application on mobile web browsers, but it can be unstable and some functionalities may not work as intended. Therefore the desktop device is preferred. The application requires an internet connection and can be used with Firefox, Edge, Safari, Chrome, Opera (or other Chromium-based web browser) browsers.
-\paragraph{}
+
 The application is containerised to not force the user to download and install dependent software and to make it easy to use. Docker is the only software that is needed to run and host the application.
 \section{Installation and activation}
 Due to containerisation, the installation procedure is very simple and requires no other software or dependencies than Docker. An internet connection is also required during installation. The information about required frameworks and dependencies is encapsulated within the Docker image. During initialisation, Docker downloads the necessary frameworks and dependencies, builds the web application, creates the database, its structure and inserts the necessary data.
@@ -478,21 +528,21 @@ Docker installed and running.
 \subsubsection{Installation}
 To start the application the following command must be run from the main directory of the application (docker-compose.yml file location):
 
-\paragraph{}
+
 
 \framebox[\textwidth]{
 docker-compose up}
-\paragraph{}
+
 
 The initialization of the application can be longer for the first time.
 On first start-up, the application may take a few minutes to initialise and may restart several times (waiting for the database to initialise).
-\paragraph{}
+
 Once the application has been successfully initialised, it should be available at http://localhost:5000.
 \section{User manual}
 \subsection{Navigation bar}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/navbar.PNG}
+\includegraphics[width=\textwidth]{images/navbar.PNG}
 \caption{Navigation bar}
 \label{fig:navbar}
 \end{figure}
@@ -507,7 +557,7 @@ The navigation bar (Fig. \ref{fig:navbar}) is visible at the top of every page i
 \subsection{Home Page}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/home.jpg}
+\includegraphics[width=\textwidth]{images/home.jpg}
 \caption{Home page}
 \label{fig:home}
 \end{figure}
@@ -526,7 +576,7 @@ The sidebar is where the user can define the details of the problem as well as s
 \subsubsection{Getting started}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/gettingStarted.jpg}
+\includegraphics[width=\textwidth]{images/gettingStarted.jpg}
 \caption{Getting started step in the sidebar}
 \label{fig:gettingStarted}
 \end{figure}
@@ -535,13 +585,13 @@ The "Getting Started" step in the sidebar (Fig. \ref{fig:gettingStarted}) provid
 \subsubsection{Depot}
 In the "Depot" step, the user must place the depot marker by clicking on the desired location on the map and then specify the details in the input fields in the sidebar (Fig. \ref{fig:depot}).
 
-\paragraph{}
+
 
 At the bottom of the sidebar (Fig. \ref{fig:depot}) are two buttons, "Back" and "Continue", which allow the user to move on to the next step or return to the previous step.
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/depot.jpg}
+\includegraphics[width=\textwidth]{images/depot.jpg}
 \caption{Depot step}
 \label{fig:depot}
 \end{figure}
@@ -554,7 +604,7 @@ The "Depot" form (Fig. \ref{fig:depot}) contains input fields:
     \item Capacity - the capacity of each vehicle.
 \end{itemize}
 
-\paragraph{}
+
 
 The validation rules applied to the input data:
 \begin{itemize}
@@ -566,24 +616,24 @@ The validation rules applied to the input data:
 When the input data is invalid it will display appropriate message and disable the "Continue" button, preventing the user from proceeding to the next step (Fig. \ref{fig:invalidDepot}). The "Continue" button will also be inactive if the depot marker is not placed on the map.
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/invalidDepot.jpg}
+\includegraphics[width=\textwidth]{images/invalidDepot.jpg}
 \caption{Depot form with invalid data}
 \label{fig:invalidDepot}
 \end{figure}
 
-\paragraph{}
+
 
 \subsubsection{Customers}
 
 The 'Customers' section allows the user to place customer markers on the map and specify the details of each customer. Customer markers are placed in the same way as depot markers. When a location is selected, a separate section for that customer will appear in the sidebar, marked with the customer number in the left corner (Fig. \ref{fig:customers}). 
 
-\paragraph{}
+
 
 At the bottom of the sidebar (Fig. \ref{fig:customers}) there are two buttons, "Back" and "Solve", which allow the user to solve the problem and go to the presentation of the results or return to the "Depot" step.
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/customers.jpg}
+\includegraphics[width=\textwidth]{images/customers.jpg}
 \caption{Customers step}
 \label{fig:customers}
 \end{figure}
@@ -596,7 +646,7 @@ Each customer form (Fig. \ref{fig:customers}) contains input fields:
     \item Demand - quantity of goods in delivery.
 \end{itemize}
 
-\paragraph{}
+
 
 The validation rules applied to the input data:
 \begin{itemize}
@@ -610,7 +660,7 @@ As with the "Depot" form, when the data entered is invalid, it will display appr
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/invalidCustomers.jpg}
+\includegraphics[width=\textwidth]{images/invalidCustomers.jpg}
 \caption{Customers forms with invalid data}
 \label{fig:invalidCustomers}
 \end{figure}
@@ -618,13 +668,13 @@ As with the "Depot" form, when the data entered is invalid, it will display appr
 \subsubsection{Solution}
 When the problem is feasible the solution (routes) is drawn on the map, and the details of the entire solution and each route are shown in the sidebar (Fig \ref{fig:solution}).
 
-\paragraph{}
+
 
 At the bottom of the sidebar (Fig. \ref{fig:solution}) there is "Back" button which allows the user to clear the routes from the map and come back to the previous step.
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/solution.jpg}
+\includegraphics[width=\textwidth]{images/solution.jpg}
 \caption{Solution}
 \label{fig:solution}
 \end{figure}
@@ -633,39 +683,39 @@ The user can highlight one of the routes on the map by hovering the mouse over t
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/solutionHover.jpg}
+\includegraphics[width=\textwidth]{images/solutionHover.jpg}
 \caption{Highlighted route}
 \label{fig:solutionHover}
 \end{figure}
 
 \subsection{Benchmark}
 
-The "Benchmark" page (Fig. \ref{fig:benchmark}) allows the user to solve a problem contained in a benchmark file. This file must be in .txt format and must match the Solomon Benchmark instance file structure. The "solve" button sends the problem to the backend server. If the format of the selected file is invalid, a message is displayed informing the user about the problem(Fig. \ref{fig:benchmarkInvalidFormat}). If the loaded text file does not match the Solomon Benchmark structure, a message is returned indicating the line where the validation error occurred (Fig. \ref{fig:benchmarkInvalidFile}).  When the file is successfully solved, the solution details are displayed along with a button to visualise the solution on the image (Fig. \ref{fig:benchmarkSolved}).
+The "Benchmark" page (Fig. \ref{fig:benchmark}) allows the user to solve a problem contained in a benchmark file. This file must be in .txt format and must match the Solomon Benchmark instance file structure \cite{bib:sintefDocumentation}. The "solve" button sends the problem to the backend server. If the format of the selected file is invalid, a message is displayed informing the user about the problem(Fig. \ref{fig:benchmarkInvalidFormat}). If the loaded text file does not match the Solomon Benchmark structure, a message is returned indicating the line where the validation error occurred (Fig. \ref{fig:benchmarkInvalidFile}).  When the file is successfully solved, the solution details are displayed along with a button to visualise the solution on the image (Fig. \ref{fig:benchmarkSolved}).
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/benchmark.jpg}
+\includegraphics[width=\textwidth]{images/benchmark.jpg}
 \caption{Benchmark page}
 \label{fig:benchmark}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/benchmarkInvalidFormat.jpg}
+\includegraphics[width=\textwidth]{images/benchmarkInvalidFormat.jpg}
 \caption{Invalid benchmark file format}
 \label{fig:benchmarkInvalidFormat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/benchmarkInvalidFile.jpg}
+\includegraphics[width=\textwidth]{images/benchmarkInvalidFile.jpg}
 \caption{Benchmark file validation error}
 \label{fig:benchmarkInvalidFile}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/benchmarkSolved.jpg}
+\includegraphics[width=\textwidth]{images/benchmarkSolved.jpg}
 \caption{Details of the benchmark solution}
 \label{fig:benchmarkSolved}
 \end{figure}
@@ -676,7 +726,7 @@ The "Solomon Benchmarks" page contains a table with the best known solutions and
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/solomonBenchmark.jpg}
+\includegraphics[width=\textwidth]{images/solomonBenchmark.jpg}
 \caption{Solomon Benchmarks page}
 \label{fig:solomonBenchmark}
 \end{figure}
@@ -684,12 +734,12 @@ The "Solomon Benchmarks" page contains a table with the best known solutions and
 \subsection{Visualization}
 
 The "Visualisation" dialog, as mentioned earlier, can be displayed on the "Benchmark" and "Solomon Benchmarks" pages by clicking the appropriate button. 
-\paragraph{}
+
 It contains a simple visualisation of the solution to the selected problem. Each customer is represented by a dot, customers belonging to the same route are connected by lines and have the same colour (Fig. \ref{fig:visualization}).
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/visualization.jpg}
+\includegraphics[width=\textwidth]{images/visualization.jpg}
 \caption{Visualization dialog}
 \label{fig:visualization}
 \end{figure}
@@ -708,12 +758,12 @@ If an unexpected error occurs, a corresponding message is displayed in the top r
 
 \section{Security issues}
 The application is intended to be accessible to any user, so no authentication or authorisation functions have been implemented in it. Therefore, no user security issues were encountered during the development of the application. The application is safe from SQL Injection attacks, this vulnerability is protected by Entity Framework Core library.
-\paragraph{}
+
 Validation in the application takes place on both the server and client side. Proper multi-level validation prevents unwanted data from being sent to the server.
 
 \section{Usage and working scenarios}
 The software can be used by different types of users, such as a company that wants to streamline its logistics and plan the delivery of goods to customers or an individual who needs to pick up and transport multiple people from different locations to the same destination. In addition, the application can be used by someone who wants to test the algorithm on own benchmark instances.
-\paragraph{}
+
 Working scenarios can be differentiated according to the functionality that will be used:
 
 \begin{itemize}
@@ -726,42 +776,42 @@ The procedure for using the main functionality is always the same, the user must
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/depotScenario1.jpg}
+\includegraphics[width=\textwidth]{images/depotScenario1.jpg}
 \caption{Usage example 1.1}
 \label{fig:depotScenario1}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/depotScenario2.jpg}
+\includegraphics[width=\textwidth]{images/depotScenario2.jpg}
 \caption{Usage example 2.1}
 \label{fig:depotScenario2}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/customersScenario1.jpg}
+\includegraphics[width=\textwidth]{images/customersScenario1.jpg}
 \caption{Usage example 1.2}
 \label{fig:customersScenario1}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/customersScenario2.jpg}
+\includegraphics[width=\textwidth]{images/customersScenario2.jpg}
 \caption{Usage example 2.2}
 \label{fig:customersScenario2}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/solutionSuccess.jpg}
+\includegraphics[width=\textwidth]{images/solutionSuccess.jpg}
 \caption{Usage example 1.3}
 \label{fig:solutionSuccess}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/solutionFailed.jpg}
+\includegraphics[width=\textwidth]{images/solutionFailed.jpg}
 \caption{Usage example 2.3}
 \label{fig:solutionFailed}
 \end{figure}
@@ -785,14 +835,14 @@ User uploads the benchmark file (Figs. \ref{fig:benchmarkFile1} and \ref{fig:ben
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/benchmarkSuccess.jpg}
+\includegraphics[width=\textwidth]{images/benchmarkSuccess.jpg}
 \caption{Usage example 3.2}
 \label{fig:benchmarkSuccess}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{images/benchmarkFailed.jpg}
+\includegraphics[width=\textwidth]{images/benchmarkFailed.jpg}
 \caption{Usage example 4.2}
 \label{fig:benchmarkFailed}
 \end{figure}
@@ -845,50 +895,211 @@ class descriptor_gaussian : virtual public descriptor
 
 
 \chapter{Verification and validation}
-\begin{itemize}
-\item testing paradigm (eg V model)
-\item test cases, testing scope (full / partial)
-\item detected and fixed bugs
-\item results of experiments (optional)
-\end{itemize}
+\section{Testing and validation}
+During the development process, different parts of the application were tested in different ways. The most difficult task was to test the algorithm and make sure that it gave correct solutions to the given problems. 
+\subsection{Algorithm and backend}
+The correctness of the solutions was achieved by combining several testing and validation techniques.
 
- 
- 
+\subsubsection{Visualization tool}
+At the beginning of the application development process, when only the algorithmic part was under development, a simple visualisation tool was created. The purpose of this tool was to visually check that the resulting solutions were created in a meaningful and in some sense optimal way. The visualisation tool was necessary in the early stages of the application development because of the interpretability of the results generated by the algorithm. Detecting irregularities in the operation of the algorithm by reading the produced routes in text form is, for larger problems, an almost impossible task. The person validating the solution would have to remember, for example, the coordinates of 50 clients and the time windows of each of them and check the routes considering each constraint of the problem. Thanks to the visualisation tool, the process of initial validation at that stage of development was significantly facilitated.
 
-\chapter{Conclusions}
-\begin{itemize}
-\item achieved results with regard to objectives of the thesis and requirements
-\item path of further development (eg functional extension …)
-\item encountered difficulties and problems
-\end{itemize}
+The tool was also useful after the heuristic part of the algorithm was completed. It was easy to observe the improvement in the solutions (Fig. \ref{fig:visualizationTestExample}).
 
- 
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{images/visualizationTestExample.png}
+\caption{Initial and improved solutions visualized by the tool}
+\label{fig:visualizationTestExample}
+\end{figure}
+
+\subsubsection{Solomon Benchmarks}
+Solomon benchmark instances were used not only to evaluate the performance of the algorithm, but also to test and validate its operation. This was achieved by comparing the routes produced by the algorithm with the ones from the best known solutions. After comparison, it was observed that in most cases the routes were similar and differed by only a few customers. The difference in customers was reflected in the total distance and number of vehicles used in the solutions developed by the algorithm.
+
+\subsubsection{Unit tests}
+Unit tests played a key role in eliminating errors in the algorithmic part of the application. Each domain object has corresponding unit tests, and every functionality within each object is fully covered by unit tests. Unit tests have facilitated the software development process by allowing to check that all functionality works correctly after each change. Furthermore, during the development of the unit tests, it was discovered that the algorithm calculated the total time of each route without taking into account the waiting time before the time window. The error was quickly fixed, which would have been much more difficult and time-consuming without the help of unit tests.
+
+An exemplary part of unit tests class for the Route object is shown in Fig. \ref{fig:routeUnitTests}.
+An exemplary run of domain unit tests is visible in Fig \ref{fig:unitTestsRun}.
+
+\begin{figure}
+\centering
+\begin{lstlisting}
+   public class RouteTests
+{
+                [Test]
+        [TestCaseSource(typeof(EntityHelper), nameof(EntityHelper.PrepareCustomerCases))]
+        public void ShouldChangeLoadOfTheVehicle(List<Customer> customers)
+        {
+            Route route = EntityHelper.GetRouteCase(0, 5, 100);
+
+
+            foreach (var customer in customers)
+            {
+                customer.CalculateDepotTimesAndDistances(route.Distances, route.Durations);
+                route.AddCustomer(customer);
+            }
+
+            route.Vehicle.CurrentLoad.Should().Be(customers.Sum(x => x.Demand));
+        }
+
+        [Test]
+        [TestCaseSource(typeof(EntityHelper), nameof(EntityHelper.PrepareCustomerCases))]
+        public void ShouldNotChangeLoadOfTheVehicle(List<Customer> customers)
+        {
+            Route route = EntityHelper.GetRouteCase(0, 5, 100);
+
+
+            foreach (var customer in customers)
+            {
+                customer.CalculateDepotTimesAndDistances(route.Distances, route.Durations);
+                route.AddCustomer(customer);
+                route.DeleteCustomer(customer);
+            }
+
+            route.Vehicle.CurrentLoad.Should().Be(0);
+        }
+}
+
+\end{lstlisting}
+\caption{Part of the \lstinline|RouteTests| class.}
+\label{fig:routeUnitTests}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{images/domainTests.jpg}
+\caption{Domain unit tests}
+\label{fig:unitTestsRun}
+\end{figure}
+
+\subsubsection{Manual tests}
+The algorithm and the entire backend part of the application were also tested manually. The API was tested using the Swagger UI (Fig. \ref{fig:swagger}). During development, each endpoint was tested by sending various valid and invalid requests, by observing the responses it was possible to determine if the functionality was working correctly or not. 
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{images/swagger.jpg}
+\caption{Swagger UI}
+\label{fig:swagger}
+\end{figure}
+
+
+In a further stage of development, the algorithm was tested manually using a frontend client application. Using the frontend client, a number of problems were defined and solved, including a group of relatively small problems of low complexity, which made manual verification easier (small number of clients, vehicles and distances between points). This process made it possible to find and fix small errors and to prove the correctness of the algorithm. The summary times and distances for each route obtained by the algorithm were as expected. 
+In addition, each API endpoint used in the frontend client was also manually tested along with the request data validation mechanisms. 
+
+\subsection{Client}
+The specifics of creating a front-end application allows the developer to test functionality at every stage of its development, from the visual side to the logic of individual components. The client application was tested on different screen resolutions in order to achieve responsiveness. The request data is also validated on the client side of the application, so it was checked whether the information about the incorrect data is displayed correctly. In addition, toast pop-ups were tested to check the readability of messages and the correct implementation of the error handling mechanism. 
+
+\section{Solomon benchmark results}
+In order to evaluate the performance of the algorithm, it was tested on all Solomon benchmark instances. A comparison of the best known solutions with the solutions obtained by the algorithm is shown in the tables \ref{tab:solomonPart1} and \ref{tab:solomonPart2} \cite{bib:solomonSintef}.
+
+
 \begin{table}
 \centering
-\caption{A caption of a table is \textbf{above} it.}
-\label{id:tab:wyniki}
-\begin{tabular}{rrrrrrrr}
+\caption{Solomon benchmark instances C101 - R111}
+\label{tab:solomonPart1}
+\begin{tabular}{rrrrr}
 \toprule
-	         &                                     \multicolumn{7}{c}{method}                                      \\
-	         \cmidrule{2-8}
-	         &         &         &        \multicolumn{3}{c}{alg. 3}        & \multicolumn{2}{c}{alg. 4, $\gamma = 2$} \\
-	         \cmidrule(r){4-6}\cmidrule(r){7-8}
-	$\zeta$ &     alg. 1 &   alg. 2 & $\alpha= 1.5$ & $\alpha= 2$ & $\alpha= 3$ &   $\beta = 0.1$  &   $\beta = -0.1$ \\
+	         &\multicolumn{2}{c}{Thesis} & \multicolumn{2}{c}{Best} \\
+	         \cmidrule(r){2-3}\cmidrule(r){4-5}
+	Instance &     Distance &  Vehicles & Distance & Vehicles \\
 \midrule
-	       0 &  8.3250 & 1.45305 &       7.5791 &    14.8517 &    20.0028 & 1.16396 &                       1.1365 \\
-	       5 &  0.6111 & 2.27126 &       6.9952 &    13.8560 &    18.6064 & 1.18659 &                       1.1630 \\
-	      10 & 11.6126 & 2.69218 &       6.2520 &    12.5202 &    16.8278 & 1.23180 &                       1.2045 \\
-	      15 &  0.5665 & 2.95046 &       5.7753 &    11.4588 &    15.4837 & 1.25131 &                       1.2614 \\
-	      20 & 15.8728 & 3.07225 &       5.3071 &    10.3935 &    13.8738 & 1.25307 &                       1.2217 \\
-	      25 &  0.9791 & 3.19034 &       5.4575 &     9.9533 &    13.0721 & 1.27104 &                       1.2640 \\
-	      30 &  2.0228 & 3.27474 &       5.7461 &     9.7164 &    12.2637 & 1.33404 &                       1.3209 \\
-	      35 & 13.4210 & 3.36086 &       6.6735 &    10.0442 &    12.0270 & 1.35385 &                       1.3059 \\
-	      40 & 13.2226 & 3.36420 &       7.7248 &    10.4495 &    12.0379 & 1.34919 &                       1.2768 \\
-	      45 & 12.8445 & 3.47436 &       8.5539 &    10.8552 &    12.2773 & 1.42303 &                       1.4362 \\
-	      50 & 12.9245 & 3.58228 &       9.2702 &    11.2183 &    12.3990 & 1.40922 &                       1.3724 \\
+ C101 & 878.36 & 10 & 828.94 & 10 \\ 
+ C102 & 1326.54 & 11 & 828.94 & 10 \\ 
+ C103 & 1617.72 & 11 & 828.06 & 10 \\ 
+ C104 & 1219.16 & 11 & 824.78 & 10 \\ 
+ C105 & 953.79 & 10 & 828.94 & 10 \\ 
+ C106 & 1103.6 & 10 & 828.94 & 10 \\ 
+ C107 & 1127.49 & 10 & 828.94 & 10 \\ 
+ C108 & 1191.96 & 10 & 828.94 & 10 \\ 
+ C109 & 1380.5 & 10 & 828.94 & 10 \\ 
+ C201 & 635.21 & 3 & 591.56 & 3 \\ 
+ C202 & 1553.27 & 4 & 591.56 & 3 \\ 
+ C203 & 1798.73 & 4 & 591.17 & 3 \\ 
+ C204 & 1408.45 & 4 & 590.6 & 3 \\ 
+ C205 & 903.72 & 4 & 588.88 & 3 \\ 
+ C206 & 972.93 & 4 & 588.49 & 3 \\ 
+ C207 & 1095.88 & 4 & 588.29 & 3 \\ 
+ C208 & 974.34 & 3 & 588.32 & 3 \\ 
+ R101 & 2181.6 & 22 & 1650.8 & 19 \\ 
+ R102 & 2105.3 & 19 & 1486.12 & 17 \\ 
+ R103 & 1851.02 & 17 & 1292.68 & 13 \\ 
+ R104 & 1613.99 & 14 & 1007.31 & 9 \\ 
+ R105 & 1931.59 & 17 & 1377.11 & 14 \\ 
+ R106 & 1710.02 & 15 & 1252.03 & 12 \\ 
+ R107 & 1825.93 & 16 & 1104.66 & 10 \\ 
+ R108 & 1696.73 & 13 & 960.88 & 9 \\ 
+ R109 & 1823.1 & 15 & 1194.73 & 11 \\ 
+ R110 & 1864.64 & 14 & 1118.84 & 10 \\ 
+ R111 & 1791.79 & 14 & 1096.72 & 10 \\ 
+
 \bottomrule
 \end{tabular}
 \end{table}  
+
+\begin{table}
+\centering
+\caption{Solomon benchmark instances R112 - RC208}
+\label{tab:solomonPart2}
+\begin{tabular}{rrrrr}
+\toprule
+	         &\multicolumn{2}{c}{Thesis} & \multicolumn{2}{c}{Best} \\
+	         \cmidrule(r){2-3}\cmidrule(r){4-5}
+	Instance &     Distance &  Vehicles & Distance & Vehicles \\
+\midrule
+ R112 & 1515.72 & 12 & N/A & N/A \\ 
+ R201 & 2137.77 & 5 & 1252.37 & 4 \\ 
+ R202 & 1950.89 & 5 & 1191.7 & 3 \\ 
+ R203 & 1781.85 & 4 & N/A & N/A \\ 
+ R204 & 1627.31 & 4 & 825.52 & 2 \\ 
+ R205 & 2037.2 & 4 & 994.43 & 3 \\ 
+ R206 & 1867.63 & 4 & 906.14 & 3 \\ 
+ R207 & 1915.13 & 3 & N/A & N/A \\ 
+ R208 & 1529.16 & 3 & 726.82 & 2 \\ 
+ R209 & 1960.98 & 4 & 909.16 & 3 \\ 
+ R210 & 1947.06 & 4 & 939.37 & 3 \\ 
+ R211 & 1614.42 & 3 & N/A & N/A \\ 
+ RC101 & 2192.4 & 17 & 1696.95 & 14 \\ 
+ RC102 & 2281.54 & 17 & 1554.75 & 12 \\ 
+ RC103 & 1975.79 & 15 & 1261.67 & 11 \\ 
+ RC104 & 1772.02 & 13 & 1135.48 & 10 \\ 
+ RC105 & 2210.6 & 18 & 1629.44 & 13 \\ 
+ RC106 & 1969.33 & 15 & 1424.73 & 11 \\ 
+ RC107 & 1828.77 & 14 & N/A & N/A \\ 
+ RC108 & 1969.33 & 13 & 1139.82 & 10 \\ 
+ RC201 & 2639.03 & 5 & 1406.94 & 4 \\ 
+ RC202 & 2382.9 & 4 & N/A & N/A \\ 
+ RC203 & 2098.92 & 4 & N/A & N/A \\ 
+ RC204 & 1743.92 & 4 & 798.46 & 3 \\ 
+ RC205 & 2395.17 & 5 & 1297.65 & 4 \\ 
+ RC206 & 1886.68 & 4 & 1146.32 & 3 \\ 
+ RC207 & 1942.84 & 4 & 1061.14 & 3 \\ 
+ RC208 & 1772.11 & 3 & 828.14 & 3 \\ 
+\bottomrule
+\end{tabular}
+\end{table}  
+
+ 
+
+\chapter{Conclusions}
+\section{Achieved results}
+
+
+\section{Further development}
+Although the application has met the requirements and expectations, there is room for improvement. One of the biggest areas with possibilities to extend the system is the VRP itself, there are many variations of the problem that take into account more constraints. In addition, the algorithmic part of the application could be extended to implement other heuristic and meta-heuristic methods that could potentially improve the performance of the algorithm.
+
+The application could also be extended to include users and their management. Users would be able to save a problem, view the history of their previous problems and solutions, or upload their own benchmark files and share them with other users.
+
+A mobile version of the application could also be a significant improvement. A portable version of the application would increase its usability.
+
+There are still opportunities for further enhancements in the testing part of the application. Integration tests or end-to-end tests could be implemented to make the application more reliable and the development process even easier.
+The prospects for future development are broad and, thanks to the way the application has been designed, would not require rebuilding the existing code base and the system could be easily extended without much effort.
+
+\section{Encountered difficulties and problems}
+The most difficult problem encountered during the development process was adapting the LeafletJS and Leaflet Routing Machine libraries to the needs of the project. There is not much information on the internet about redrawing multiple routes on the map or removing them. In the end, the desired effect was achieved and there was no need to change any of the libraries. 
+
+The process of containerising the application was very time consuming and required extensive research. The most difficult task was to create a correct docker file and to integrate the process of building both the server and client parts of the application.
+
+The algorithmic part of the application was completed without any major problems, but the most difficult part of this stage of development was the correct calculation of time and distance when a client was added or removed from the route. However, thanks to unit testing, this functionality was completed in a reasonably short time.
 
  
 
