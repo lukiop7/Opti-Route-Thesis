@@ -135,33 +135,6 @@ namespace OptiRoute.Domain.Entities
             };
         }
 
-        public bool ValidateDistance()
-        {
-            double dist = 0;
-            for (int i = 0; i < Customers.Count - 1; i++)
-            {
-                dist += Customers[i].CalculateDistanceBetween(this.Distances, Customers[i + 1]);
-            }
-            return System.Math.Round(dist - CustomersDistance, 13) <= 0;
-        }
-
-        public bool ValidateTime()
-        {
-            double arrivalTime = 0;
-            Customer previousCustomer = null;
-            foreach (Customer customer in Customers)
-            {
-                if (previousCustomer != null)
-                {
-                    arrivalTime += previousCustomer.ServiceTime;
-                    arrivalTime += previousCustomer.CalculateTimeBetween(Durations, customer);
-                }
-                previousCustomer = customer;
-            }
-            arrivalTime += Customers.LastOrDefault().ServiceTime;
-            return System.Math.Round(arrivalTime - this.CustomersTime, 13) <= 0;
-        }
-
         public void AddCustomer(Customer customer)
         {
             if (Customers.Count > 0)

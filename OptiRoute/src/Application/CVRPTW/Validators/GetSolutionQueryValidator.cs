@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using OptiRoute.Application.CVRPTW.Queries;
+using OptiRoute.Application.CVRPTW.Commands;
 
 namespace OptiRoute.Application.CVRPTW.Validators
 {
-    public class GetSolutionQueryValidator : AbstractValidator<GetSolutionQuery>
+    public class GetSolutionQueryValidator : AbstractValidator<GetSolutionCommand>
     {
         public GetSolutionQueryValidator()
         {

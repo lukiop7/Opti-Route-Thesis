@@ -252,7 +252,7 @@ Abstract - the abstract text should be copied into the respective field in the A
 
 %%%%%%%%%%%%%% body of the thesis %%%%%%%%%%%%%%%%%
 
-
+\normalfont
 \chapter{Introduction}
 
  Transportation is one of the most critical activities in the supply chain. Its importance comes from the fact that the transportation costs can reach up to almost 40\% of the total logistics costs of a manufacturing company \cite{bib:article:sukiennik}. For that reason, the companies need to transport the goods or persons efficiently. That goal can be achieved by either minimizing the distance traveled by the vehicles or reducing the number of routes required to visit all destinations. The Vehicle Routing Problem (VRP) describes the problem of assigning loads to the vehicles and sequencing the customers assigned to each vehicle to obtain optimal routes.
@@ -850,6 +850,311 @@ User uploads the benchmark file (Figs. \ref{fig:benchmarkFile1} and \ref{fig:ben
 
 \chapter{Internal specification}
 
+\section{System architecture}
+The application implements a client-server architecture with containerized components. The overview of the architecture is presented in Fig. \ref{fig:architectureOverview}. Each component of the system is described in detail later in this chapter.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{images/Architecture.drawio.png}
+\caption{Architecture overview}
+\label{fig:architectureOverview}
+\end{figure}
+
+\subsection{Design patterns}
+The system was implemented with the use of the three main design patterns: the clean architecture, the command and query responsibility segregation (CQRS) and the mediator pattern. All patterns were used in the backend part of the application.
+
+\subsubsection{Clean architecture}
+The backend server is designed according to the clean architecture pattern. The main goal of this architecture is to make the application logic and domain independent from any framework. This approach allows to change any external dependencies e.g. database, web framework or UI while keeping the code of the project core intact. Thanks to the possibility of exchanging external dependencies, the application core can be easily reused in other systems. Moreover, such a system is easily testable, business rules can be tested without any external dependencies.  
+The main benefits of this architecture can be outlined as follows \cite{bib:cleanArchitecture}:
+\begin{itemize}
+\item The system is independent of frameworks - the system can use libraries and frameworks as tools, rather than relying on them and adapting fully to them.
+\item Testable - the core of the application can be tested without the external dependencies.
+\item Independent of UI - the system may use, for example, a web-based or console UI, but any change to this can be made easily without changing the rest of the system code
+\item Independent of database - any database management system can be used, and changing such a system does not affect the core of the application
+\end{itemize}
+This architecture was chosen to design a system that is modern, scalable and easily expandable.
+The structure of the architecture is visible in Fig. \ref{fig:cleanArchitecture}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=1]{images/cleanArchitecture.drawio.png}
+\caption{Clean architecture}
+\label{fig:cleanArchitecture}
+\end{figure}
+
+\subsubsection{CQRS}
+The command and query responsibility segregation pattern focuses mainly on the separation of data read and write operations. This pattern separates how data is read and written into two models:  
+\begin{itemize}
+\item Queries - responsible for reading data.
+\item Commands - responsible for writing (updating) the data.
+\end{itemize}
+
+Furthermore, the pattern abstracts communication between layers and, using the mediator pattern, allows command/query parameters to be separated from their handlers. This approach simplifies the code as a result of reducing the amount of boilerplate code, but most importantly it creates an execution pipeline that allows error handling, logging or validation functionality to be injected \cite{bib:CQRS}. 
+\paragraph{}
+The benefits of using CQRS pattern
+\cite{bib:CQRS}: 
+\begin{itemize}
+\item Scalability - read operations can be scaled independently of write operations
+\item Performance - separate reads and writes can be optimised independently of each other
+\item Security - separation ensures that the right class will perform the task
+\item Easy to maintain - when the number of available operations is large, each operation is stored in its own source file and is easy to find
+\end{itemize}
+
+\subsubsection{Mediator}
+A mediator defines an object that encapsulates how a set of objects interact. Instead of communicating directly with each other, objects communicate through a special object called a mediator. The mediator centralises communication between objects, making them dependent only on the mediator, rather than on each object they wish to communicate with \cite{bib:mediator}.
+
+The main benefits of using the mediator design pattern: 
+\begin{itemize}
+\item Reduces the number of connections between classes
+\item Allows easier reuse of individual components
+\item The code is easier to maintain
+\end{itemize}
+
+The mediator pattern in combination with CQRS provides a set of powerful features and was therefore used in the project \cite{bib:mediatorCQRS}.
+
+\section{Backend server}
+
+\subsection{Used libraries}
+
+\subsubsection{Entity Framework}
+Entity Framework is an open-source object-relational mapping (ORM) framework supported by Microsoft. It allows the developer to work with POCO (Plain Old CLR Object) entities without focusing on the underlying database. Entity Framework takes care of creating database connections and executing commands. It also automatically parses the results of queries to the application entities. Another feature of this framework is the ability to track changes to an object and persist those changes to the database. 
+
+Entity Framework introduces the \lstinline|Context| class, which implements the Unit Of Work and Repository patterns. The context class represents a database session and allows various operations to be performed on it. The context class contains \lstinline|DbSet| properties for each of the tables mapped to the application entities. \lstinline|DbSet| is an implementation of the repository pattern. 
+
+Part of the \lstinline|ApplicationDbContext| class used in the project is shown in Fig. \ref{fig:context}.
+     
+\begin{figure}
+\centering
+\begin{lstlisting}
+        public class ApplicationDbContext : DbContext, IApplicationDbContext
+    {
+        private readonly IDateTime _dateTime;
+
+        public ApplicationDbContext(
+            DbContextOptions options,
+            IDateTime dateTime) : base(options)
+        {
+            _dateTime = dateTime;
+        }
+        public DbSet<BenchmarkResult> BenchmarkResults { get; set; }
+        public DbSet<BenchmarkInstance> BenchmarkInstances { get; set; }
+        public DbSet<Route> Routes { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Depot> Depots { get; set; }
+        public DbSet<Solution> Solutions { get; set; }
+\end{lstlisting}
+\caption{Part of the \lstinline|ApplicationDbContext| class.}
+\label{fig:context}
+\end{figure}
+
+\subsubsection{MediatR}
+MediatR is an open-source library that is a simple implementation of the mediator pattern. The library allows in-process messaging without any dependencies. It separates requests from handlers, allowing the principle of single responsibility to be maintained in the code.
+MediatR also offers other functionality, such as sending notifications or injecting middlewares for requests called pipeline behaviours.
+The main benefits from using the MediatR library: 
+\begin{itemize}
+\item Less coupled code.
+\item Cleaner code because of the requests and handlers separation.
+\item Pipeline behaviours that allow data to be processed (e.g. logging) before or after a request is handled.
+\end{itemize}
+
+Exemplary request and handler classes used in the project are shown in Fig \ref{fig:mediatR}.
+
+\begin{figure}
+\centering
+\begin{lstlisting}
+    public class GetBestSolutionByBenchmarkResultIdQuery : IRequest<SolutionDto>
+    {
+        public int BenchmarkResultId { get; set; }
+    }
+
+    public class GetBestSolutionByBenchmarkResultIdQueryHandler : IRequestHandler<GetBestSolutionByBenchmarkResultIdQuery, SolutionDto>
+    {
+        private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
+
+        public GetBestSolutionByBenchmarkResultIdQueryHandler(IApplicationDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
+
+        public async Task<SolutionDto> Handle(GetBestSolutionByBenchmarkResultIdQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _context.Solutions
+                .Include(x => x.Depot)
+                .Include(x => x.Routes)
+                .ThenInclude(x => x.Customers)
+                .Include(x => x.BestBenchmarkResult)
+                .FirstOrDefaultAsync(x => x.BestBenchmarkResult.DbId == request.BenchmarkResultId);
+
+            return _mapper.Map<SolutionDto>(result);
+        }
+    }
+\end{lstlisting}
+\caption{Exemplary request and handler classes.}
+\label{fig:mediatR}
+\end{figure}
+
+
+\subsubsection{FluentValidation}
+FluentValidation is a library for building strongly typed validation rules. One of the most important features of fluent validation is the separation of validation logic from model and business logic. Each model that should be validated must have its own validator class with validation rules defined inside it. 
+
+The main advantages of using FluentValidation:
+\begin{itemize}
+\item Easy to work with.
+\item Separation of validation rules and models.
+\item Clear syntax for validation rules.
+\item Speed of execution, allows you to increase the efficiency of the application.
+\item Easy to unit test.
+\end{itemize}
+
+Sample validator class is shown in Fig. \ref{fig:validator}
+
+\begin{figure}
+\centering
+\begin{lstlisting}
+ public class DepotDtoValidator : AbstractValidator<DepotDto>
+    {
+        public DepotDtoValidator()
+        {
+            CascadeMode = CascadeMode.StopOnFirstFailure;
+
+            RuleFor(v => v.Id)
+                .NotNull()
+                .GreaterThanOrEqualTo(0);
+
+            RuleFor(v => v.X)
+               .NotNull()
+               .GreaterThanOrEqualTo(0);
+
+            RuleFor(v => v.Y)
+               .NotNull()
+               .GreaterThanOrEqualTo(0);
+
+            RuleFor(v => v.DueDate)
+                .NotEmpty();
+        }
+    }
+\end{lstlisting}
+\caption{Validator class for \lstinline|DepotDto| type.}
+\label{fig:validator}
+\end{figure}
+
+\subsubsection{AutoMapper}
+AutoMapper is an object-to-object mapping library. The mapping is performed by transforming an input object of one type to an output object of another type. Mappings between types are fully configurable and allow the programmer to perform complex transformations between types. 
+The library simplifies the object mapping process and separates the mapping configurations from the objects, which helps to maintain clean code. Furthermore, another advantage of the library is that it is fully testable.
+An example of type mapping configuration is shown in Fig. \ref{fig:autoMapper}.
+
+\begin{figure}
+\centering
+\begin{lstlisting}
+profile.CreateMap<Route, RouteDto>()
+                .ForMember(dest => dest.TotalTime, opt => opt.MapFrom(src => src.Vehicle.CurrentTime))
+                .ForMember(dest => dest.TotalLoad, opt => opt.MapFrom(src => src.Vehicle.CurrentLoad))
+                .ForMember(dest => dest.TotalDistance, opt => opt.MapFrom(src => src.TotalDistance));
+\end{lstlisting}
+\caption{Configuration of mapping from \lstinline|Route| type to \lstinline|RouteDto| type.}
+\label{fig:autoMapper}
+\end{figure}
+
+\subsubsection{NSwag}
+NSwag provides tools to generate OpenAPI specifications from within ASP.NET Web API controllers. Furthermore, NSwag can generate the typescript API client, reducing the amount of work required to integrate a frontend application with a backend server. The Swagger UI visual documentation (Fig. \ref{fig:swaggerEndpoint}) is also generated by NSwag allowing the developer to test and interact with the API without manually writing implementation logic.  
+
+NSwag was used in the project to speed up the process of integrating the client application with the server and to provide a visual tool to interact and test the API in a convenient way.
+
+\begin{figure} [H]
+\centering
+\includegraphics[width=\textwidth]{images/swaggerUI.jpg}
+\caption{Swagger UI endpoint.}
+\label{fig:swaggerEndpoint}
+\end{figure}
+
+\subsubsection{NUnit}
+NUnit is an open-source unit testing framework for the .NET platform. The framework is easy to work with and provides various tools to create good and reliable unit tests for applications.
+
+\subsection{Domain}
+
+The project domain layer contains all the entities and their logic specific to the domain layer. The business domain of the application is modelled inside this layer. The term domain layer comes from the Domain Driven Design (DDD) approach to structuring software. 
+
+There are two main approaches when it comes to implementing domain entities:
+\begin{itemize}
+    \item Anemic model - separates the logic from models. The logic is placed in separated classes (services, helpers etc.).
+    \item Rich model - each model has its own behavioural logic encapsulated inside an entity.  For example, the \lstinline|Cart| entity will contain an \lstinline|AddProductToCart| method inside the class.
+\end{itemize}
+
+The rich domain model approach was chosen for the project because it preserves one of the most important aspects of object-oriented programming (OOP), which is encapsulation. With a rich domain model, the code is cleaner and more secure (because sensitive data is only stored and modified inside the model) than with an anemic model. Furthermore, the domain is easier to maintain, and a rich model prevents the application from creating invalid domain objects. The rich domain entities can be easily unit tested without the need to call any external services to apply business logic to them.
+
+The domain project contains all the entities that are used in the application: 
+\begin{itemize}
+    \item \lstinline|BenchmarkInstance| - contains information about the instance of the Solomon benchmark problem.
+    \item \lstinline|BenchmarkResult| - stores the \lstinline|BenchmarkInstance| and the \lstinline|Solution| generated by the application and the best known \lstinline|Solution|.
+    \item \lstinline|Customer| - represents the customer in the CVRPTW. Includes methods for calculating the distance and duration of a travel to another \lstinline|Customer| or \lstinline|Depot|.
+    \item \lstinline|Depot| - represents the depot.
+    \item \lstinline|Problem| - defines the CVRPTW. It contains the details of the problem, the \lstinline|Depot|, the \lstinline|Customer| list and tables of distances and travel times between each location in the problem.
+    \item \lstinline|Route| -  represents a route. It contains methods for i.a. adding or removing a \lstinline|Customer| from the route, validating time and capacity limits (Fig. \ref{fig:routeMethod}).
+    \item \lstinline|Solution| - the solution produced by the algorithm.
+    \item \lstinline|Vehicle| -  represents the vehicle in the CVRPTW.   
+\end{itemize}
+
+The project domain layer does not depend on any external library and can be reused in other projects as the core of the system.
+
+\begin{figure}
+\centering
+\begin{lstlisting}
+public class Route
+    {
+            public void AddCustomer(Customer customer)
+        {
+            if (Customers.Count > 0)
+            {
+                CustomersDistance += this.Customers.Last().CalculateDistanceBetween(this.Distances, customer);
+                CustomersTime += this.Customers.Last().CalculateTimeBetween(this.Durations, customer);
+            }
+            this.Customers.Add(customer);
+
+            if (TimeFromDepot + CustomersTime + WaitingTime < customer.ReadyTime)
+            {
+                double waitingTime = customer.ReadyTime - (TimeFromDepot + CustomersTime + WaitingTime);
+                this._waitingTime += waitingTime;
+                this._waitingTimeDictionary.Add(customer.Id, waitingTime);
+            }
+
+            CustomersTime += customer.ServiceTime;
+
+            this.Vehicle.CurrentLoad += customer.Demand;
+            this.Vehicle.CurrentTime = this.TotalTime;
+        }
+                public bool IsFeasible()
+        {
+            if (CheckCapacityConstraints())
+                return CheckTimeConstraints();
+
+            return false;
+        }
+\end{lstlisting}
+\caption{Part of the Route entity class.}
+\label{fig:routeMethod}
+\end{figure}
+
+
+
+
+\subsection{Application}
+
+\subsection{Infrastructure}
+
+\subsection{Presentation}
+
+\section{Frontend client}
+
+\subsection{Used libraries}
+
+\subsection{App module}
+
+\subsection{Shared module}
+
+\subsection{API client}
+
 \begin{itemize}
 \item concept of the system
 \item system architecture
@@ -865,33 +1170,33 @@ User uploads the benchmark file (Figs. \ref{fig:benchmarkFile1} and \ref{fig:ben
 Use special environment for inline code, eg \lstinline|descriptor| or \lstinline|descriptor_gaussian|. 
 Longer parts of code put in the figure environment, eg. code in Fig. \ref{fig:pseudokod}. Very long listings–move to an appendix.
 
-\begin{figure}
-\centering
-\begin{lstlisting}
-class descriptor_gaussian : virtual public descriptor
-{
-   protected:
-      /** core of the gaussian fuzzy set */
-      double _mean;
-      /** fuzzyfication of the gaussian fuzzy set */
-      double _stddev;
+% \begin{figure}
+% \centering
+% \begin{lstlisting}
+% class descriptor_gaussian : virtual public descriptor
+% {
+%   protected:
+%       /** core of the gaussian fuzzy set */
+%       double _mean;
+%       /** fuzzyfication of the gaussian fuzzy set */
+%       double _stddev;
       
-   public:
-      /** @param mean core of the set
-          @param stddev standard deviation */
-      descriptor_gaussian (double mean, double stddev);
-      descriptor_gaussian (const descriptor_gaussian & w);
-      virtual ~descriptor_gaussian();
-      virtual descriptor * clone () const;
+%   public:
+%       /** @param mean core of the set
+%           @param stddev standard deviation */
+%       descriptor_gaussian (double mean, double stddev);
+%       descriptor_gaussian (const descriptor_gaussian & w);
+%       virtual ~descriptor_gaussian();
+%       virtual descriptor * clone () const;
       
-      /** The method elaborates membership to the gaussian fuzzy set. */
-      virtual double getMembership (double x) const;
+%       /** The method elaborates membership to the gaussian fuzzy set. */
+%       virtual double getMembership (double x) const;
      
-};
-\end{lstlisting}
-\caption{The \lstinline|descriptor_gaussian| class.}
-\label{fig:pseudokod}
-\end{figure}
+% };
+% \end{lstlisting}
+% \caption{The \lstinline|descriptor_gaussian| class.}
+% \label{fig:pseudokod}
+% \end{figure}
 
 
 \chapter{Verification and validation}
@@ -918,7 +1223,7 @@ Solomon benchmark instances were used not only to evaluate the performance of th
 \subsubsection{Unit tests}
 Unit tests played a key role in eliminating errors in the algorithmic part of the application. Each domain object has corresponding unit tests, and every functionality within each object is fully covered by unit tests. Unit tests have facilitated the software development process by allowing to check that all functionality works correctly after each change. Furthermore, during the development of the unit tests, it was discovered that the algorithm calculated the total time of each route without taking into account the waiting time before the time window. The error was quickly fixed, which would have been much more difficult and time-consuming without the help of unit tests.
 
-An exemplary part of unit tests class for the Route object is shown in Fig. \ref{fig:routeUnitTests}.
+An exemplary part of unit tests class for the \lstinline|Route| object is shown in Fig. \ref{fig:routeUnitTests}.
 An exemplary run of domain unit tests is visible in Fig \ref{fig:unitTestsRun}.
 
 \begin{figure}
@@ -1082,7 +1387,7 @@ In order to evaluate the performance of the algorithm, it was tested on all Solo
 
 \chapter{Conclusions}
 \section{Achieved results}
-
+The primary objective of the work was to design and implement a tool that would simplify the process of defining and solving CVRPTW for the end user. This objective was successfully achieved and a modern and user-friendly web application was implemented. All functional and non-functional requirements that were identified in the early stages of development have been met. The implemented algorithm solves the VRP in a fast way and the results obtained can be considered satisfactory. The containerisation of the project makes it easy to run and deploy, which increases the usability of the application.
 
 \section{Further development}
 Although the application has met the requirements and expectations, there is room for improvement. One of the biggest areas with possibilities to extend the system is the VRP itself, there are many variations of the problem that take into account more constraints. In addition, the algorithmic part of the application could be extended to implement other heuristic and meta-heuristic methods that could potentially improve the performance of the algorithm.
