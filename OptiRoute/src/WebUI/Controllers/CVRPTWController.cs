@@ -9,15 +9,6 @@ namespace OptiRoute.WebUI.Controllers
 {
     public class CVRPTWController : ApiControllerBase
     {
-        private readonly ISolver solver;
-        private readonly IMapper mapper;
-
-        public CVRPTWController(ISolver _solver, IMapper mapper)
-        {
-            this.solver = _solver;
-            this.mapper = mapper;
-        }
-
         [HttpPost]
         public async Task<ActionResult<SolutionDto>> GetSolution(ProblemDto problem)
         {

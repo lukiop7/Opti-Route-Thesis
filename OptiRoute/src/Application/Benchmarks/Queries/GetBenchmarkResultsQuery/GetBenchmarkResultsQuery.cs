@@ -36,15 +36,6 @@ namespace OptiRoute.Application.Benchmarks.Queries.GetBenchmarkResultsQuery
                 .OrderBy(x => x.BenchmarkInstance.Name)
                 .ToListAsync();
 
-            StringBuilder sb = new StringBuilder();
-            foreach (var result in results)
-            {
-                sb.AppendLine(string.Format(" {0} & {1} & {2} & {3} & {4} \\\\ ", result.BenchmarkInstance.Name, result.Solution.Distance, result.Solution.Routes.Count,
-                    result.BestSolution?.Distance.ToString() ?? "N/A", result.BestSolution?.Routes.Count.ToString() ?? "N/A"));
-            }
-
-            var finished = sb.ToString();
-
             return _mapper.Map<List<BenchmarkResultDto>>(results);
         }
     }

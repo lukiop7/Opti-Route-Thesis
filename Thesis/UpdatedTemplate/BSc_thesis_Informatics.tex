@@ -484,7 +484,7 @@ NuGet is the open source package manager for .NET plaftorm created by Microsoft.
 \subsection{Angular}
 Angular is an open-source JavaScript framework maintained by Google. As of 2021, Angular was the third most popular web framework among professional developers \cite{bib:stackSurvey}. Angular provides a set of powerful features for efficient single-page application development. It allows developers to build web, mobile and even desktop applications.
 
-Angular was chosen as the framework for the front-end application because of the possibilities it offers. An important aspect for this project was the support for maintaining data through services, which facilitates the sharing of data between components \cite{bib:angularServices}.
+Angular was chosen as the framework for the front-end application because of the possibilities it offers. An important aspect for this project was the support for maintaining data through services, which facilitates the sharing of data between components \cite{bib:angular}.
 
 \subsection{Typescript}
 Typescript is a strongly typed and object-oriented language that is a super set of JavaScript. It was introduced by Microsoft and extends JavaScript with e.g. types and interfaces \cite{bib:typescript}.
@@ -1141,9 +1141,271 @@ public class Route
 
 \subsection{Application}
 
+The application layer in the project depends only on the domain layer. It is responsible for the implementation of business rules for the application, in the case of this thesis it contains the algorithmic part of the system. Furthermore, besides the implementation of business rules, the application layer has a second responsibility, which is the abstraction of application concerns. This layer only contains the interfaces of external concerns, such as database or file system access, and the implementations of these interfaces are injected from the infrastructure layer. 
+
+Decoupling is one of the main advantages of a clean architecture. For example, when querying data, the application does not need to know where the data comes from, it can be a database or even a flat text file. This approach allows to focus only on business rules and provides the flexibility to easily change the data source. Furthermore, the application layer is testable and can be reused together with the domain layer in other projects.
+
+The application project is structured as follows: 
+
+
+\begin{itemize}
+    \item \textbf{Benchmarks} - contains commands and queries connected with benchmarks. Each query and command folder contains request, handler, DTO and validator classes.
+    \begin{itemize}
+    \item \textbf{Commands}
+        \begin{itemize}
+        \item \textbf{SolveBenchmarkProblemCommand} - responsible for solving the problem from the given benchmark file. 
+        \end{itemize}
+    \item \textbf{Queries}
+        \begin{itemize}
+        \item \textbf{GetBenchmarkResultsQuery} - responsible for fetching the data from the \lstinline{BenchmarkResult} table.
+        \item \textbf{GetBestSolutionByBenchmarkResultIdQuery} - returns the \lstinline{Solution} object with the best known solution from the \lstinline{BenchmarkResult} with the given identifier.
+        \item \textbf{GetSolutionByBenchmarkResultIdQuery} - returns the \lstinline{Solution} object with the thesis solution from the \lstinline{BenchmarkResult} with the given identifier.
+        \end{itemize}
+    \end{itemize}
+\item \textbf{Common} - collection of classes, methods and interfaces used across the application layer.
+    \begin{itemize}
+        \item \textbf{Behaviours} - contains custom MediatR \lstinline{PipelineBehaviours} used for triggering validators or exception handling.
+        \item \textbf{Enums} - enumerators used across the system.
+        \item \textbf{Exceptions} - custom exception classes: \lstinline{NotFoundException} and \lstinline{ValidationException}.
+        \item \textbf{Extensions} - extension methods used to extend the functionality of a type.
+        \item \textbf{Interfaces} - interfaces used across the application layer.
+        \item \textbf{Mappings} - AutoMapper extensions and mapping configurations.
+        \item \textbf{Services} - algorithmic part of the application. It contains services responsible for solving the CVRPTW.
+    \end{itemize}
+\item \textbf{CVRPTW} - contains the command responsible for solving the CVRPTW.
+    \begin{itemize}
+        \item \textbf{Commands}
+        \begin{itemize}
+        \item \textbf{GetSolutionCommand} - contains request, handler, DTO and validator classes. Solves the CVRPTW defined in request.
+    \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{CVRPTW algorithm}
+The application defines 3 interfaces for the CVRPTW algorithm:
+\begin{itemize}
+    \item \lstinline{ISolver} (Fig. \ref{fig:iSolver}) - solves the CVRPTW by calling methods from the objects \lstinline{IMethod} and \lstinline{IImprovement}.
+    \item \lstinline{IMethod} (Fig. \ref{fig:iMethod}) - responsible for generating the initial solution.
+    \item \lstinline{IImprovement} (Fig. \ref{fig:iImprovement}) - improves the initial solution.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{lstlisting}
+  public interface ISolver
+    {
+        IMethod Initial { get; set; }
+        IImprovement Improvement { get; set; }
+
+        Solution Solve(Problem problem);
+
+        Solution Create(Problem problem);
+
+        Solution Improve(Solution solution);
+    }
+\end{lstlisting}
+\caption{\lstinline{ISolver} interface.}
+\label{fig:iSolver}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{lstlisting}
+ public interface IMethod
+    {
+        Solution Solve(Problem problem);
+    }
+\end{lstlisting}
+\caption{\lstinline{IMethod} interface.}
+\label{fig:iMethod}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{lstlisting}
+ public interface IImprovement
+    {
+        Solution Improve(Solution currentSolution);
+    }
+\end{lstlisting}
+\caption{\lstinline{IImprovement} interface.}
+\label{fig:iImprovement}
+\end{figure}
+
+The interfaces are implemented by the \lstinline{VRPTWSolver} (\lstinline{ISolver}), \lstinline{PFIHInitial} (\lstinline{IMethod}) and \lstinline{LocalSearchLambda} (\lstinline{IImprovement}) classes.
+
+The \lstinline{VRPTWSolver} class implements only the methods from the interface. Inside each method the corresponding functions from \lstinline{IMethod} or \lstinline{IImprovement} objects are called.
+
+\lstinline{PFIHInitial} is an implementation of the Push Forward Insertion Heuristic algorithm. In addition to the methods implemented from the \lstinline{IMethod} interface, this class introduces a set of private methods for constructing the solution according to the algorithm. The main PFIH \lstinline{Construct} method is shown in Fig. \ref{fig:construct}.
+
+\begin{figure}
+\centering
+\begin{lstlisting}
+        private void Construct(Problem problem, List<Customer> unroutedCustomers, List<Route> routes)
+        {
+            int counter = 0;
+            while (unroutedCustomers.Count > 0)
+            {
+                Route currentRouteCustomerList = new Route()
+                {
+                    Id = counter,
+                    Vehicle = new Vehicle(counter, problem.Capacity, 0, 0),
+                    Depot = problem.Depot,
+                    Distances = problem.Distances,
+                    Durations = problem.Durations
+                };
+                Customer seedCustomer = FindSeedCustomer(unroutedCustomers);
+                currentRouteCustomerList.AddCustomer(seedCustomer);
+                unroutedCustomers.Remove(seedCustomer);
+
+                InsertCustomers(unroutedCustomers, currentRouteCustomerList);
+                routes.Add(currentRouteCustomerList);
+
+                counter++;
+            }
+        }
+\end{lstlisting}
+\caption{\lstinline{Construct} method.}
+\label{fig:construct}
+\end{figure}
+
+
+\lstinline{LocalSearchLambda} is an implementation of local search with the $\lambda$ interchange heuristic. It improves the initial solution by swapping customers between routes. Like \lstinline{PFIHInitial}, this class also provides a set of private methods to improve the initial solution. The main \lstinline{LocalSearch} function is presented in Fig. \ref{fig:localSearch}.
+
+\begin{figure}
+\centering
+\begin{lstlisting}
+        private double LocalSearch(List<Route> routeList)
+        {
+            double globalMaxDif = 0;
+            int globalFirstRouteIndex = 0;
+            int globalSecondRouteIndex = 0;
+            Route globalMinCostFirstRoute = null;
+            Route globalMinCostSecondRoute = null;
+
+            for (int i = 0; i < routeList.Count; i++)
+            {
+                Route firstRoute = routeList[i];
+                for (int j = i + 1; j < routeList.Count; j++)
+                {
+                    Route secondRoute = routeList[j];
+                    Route localMinCostFirstRoute = null;
+                    Route localMinCostSecondRoute = null;
+                    double oldDistance = firstRoute.TotalDistance + secondRoute.TotalDistance;
+                    double newDistance = Interchange(oldDistance, firstRoute, secondRoute, ref localMinCostFirstRoute, ref localMinCostSecondRoute, Lambda);
+
+                    CheckNewDistance(ref globalMaxDif, ref globalFirstRouteIndex, ref globalSecondRouteIndex, ref globalMinCostFirstRoute, ref globalMinCostSecondRoute, i, j, localMinCostFirstRoute, localMinCostSecondRoute, oldDistance, newDistance);
+                }
+            }
+            ChangeRoutes(routeList, globalMaxDif, globalFirstRouteIndex, globalSecondRouteIndex, globalMinCostFirstRoute, globalMinCostSecondRoute);
+
+            return Math.Round(routeList.Sum(x => x.TotalDistance), 2);
+        }
+\end{lstlisting}
+\caption{\lstinline{LocalSearch} method.}
+\label{fig:localSearch}
+\end{figure}
+
+
+
 \subsection{Infrastructure}
 
+The infrastructure layer implements the interfaces defined in the application layer. The infrastructure depends on external resources and libraries, e.g. Entity Framework is used to connect to the database. By separating the infrastructure implementation from the application layer, any of the external dependencies can be easily changed without changing the code in the application layer. 
+
+The infrastructure project contains implementations of file readers and file providers:
+\begin{itemize}
+    \item \lstinline{BenchmarkBestFileReader} - reads and processes the contents of the files with the best known solutions for Solomon benchmarks.
+    \item \lstinline{BenchmarkInstanceFileReader} -  reads and parses the contents of the benchmark file into the \lstinline{Problem} class.
+    \item \lstinline{SolomonInstancesFileProviderService} - used to access the file system to obtain Solomon benchmark files.
+\end{itemize}
+
+\subsubsection{Database}
+
+The infrastructure layer uses Entity Framework to connect to and operate on the database. Infrastructure provides an implementation of \lstinline{ApplicationDbContext}, separate classes for configuring Entity Framework and database tables, and a migrations folder containing SQL migration files generated by Entity Framework. Migrations, if required, are applied when a database connection is initiated, they ensure that the database schema is identical to that outlined in the code. 
+
+
+The schema of the database is presented in Fig. \ref{fig:erdDb}.
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{images/dbERD.png}
+\caption{Database entity relationship diagram.}
+\label{fig:erdDb}
+\end{figure}
+
 \subsection{Presentation}
+
+The presentation layer (WebUI) presents the data to the outside world. In the case of the thesis, this layer contains API controllers that are used to interact with the application layer of the system. The presentation project interprets the data entered by the user and calls the appropriate functionality in the application layer. 
+
+The API endpoints exposed in the presentation layer:
+\begin{itemize}
+    \item \textbf{POST api/Benchmarks}
+     \begin{itemize}
+     \item sends \lstinline{SolveBenchmarkProblemCommand}
+     \end{itemize}
+    \item \textbf{GET api/Benchmarks}
+    \begin{itemize}
+     \item sends \lstinline{GetBenchmarkResultsQuery}
+     \end{itemize}
+    \item \textbf{GET api/Benchmarks/{benchmarkResultId}/Solution}
+      \begin{itemize}
+     \item sends \lstinline{GetSolutionByBenchmarkResultIdQuery} 
+     \end{itemize} 
+    \item \textbf{GET api/Benchmarks/{benchmarkResultId}/BestSolution}
+    \begin{itemize}
+     \item sends \lstinline{GetBestSolutionByBenchmarkResultIdQuery} 
+     \end{itemize}  
+    \item \textbf{POST api/CVRPTW}
+        \begin{itemize}
+     \item sends \lstinline{GetSolutionCommand} 
+     \end{itemize} 
+\end{itemize}
+
+Each controller class is derived from the abstract class\lstinline{ApiControllerBase} (Fig. \ref{fig:apiBase}), which contains an instance of the MediatR object \lstinline{ISender}. In the controller, the HTTP request is converted into an appropriate command or query and sent via the \lstinline{ISender} object to the application layer (Fig. \ref{fig:controller}).
+
+\begin{figure}[H]
+\centering
+\begin{lstlisting}
+    [ApiController]
+    [Route("api/[controller]")]
+    public abstract class ApiControllerBase : ControllerBase
+    {
+        protected ApiControllerBase()
+        {
+            CultureInfo newCulture = CultureInfo.CreateSpecificCulture("en-US");
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            Thread.CurrentThread.CurrentCulture = newCulture;
+        }
+
+        private ISender _mediator;
+
+        protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetService<ISender>();
+    }
+\end{lstlisting}
+\caption{The base controller.}
+\label{fig:apiBase}
+\end{figure}
+
+\begin{figure} [H]
+\centering
+\begin{lstlisting}
+    public class CVRPTWController : ApiControllerBase
+    {
+        [HttpPost]
+        public async Task<ActionResult<SolutionDto>> GetSolution(ProblemDto problem)
+        {
+            return await Mediator.Send(new GetSolutionCommand() { Problem = problem });
+        }
+    }
+\end{lstlisting}
+\caption{The \lstinline{CVRPTWController}.}
+\label{fig:controller}
+\end{figure}
+
+The presentation layer also contains the ASP.NET classes \lstinline{Program} and \lstinline{Startup} for configuring and launching the application. The {Startup} class is responsible for injecting dependencies into the project. Dependencies are configured and injected by calling the appropriate methods in the \lstinline{Startup} class. The application and infrastructure layers contain their own extension methods for configuring dependencies created and injected inside these layers, and these methods are called in the \lstinline{Startup} class as part of the dependency injection configuration.
+
+Inside the WebUI project are the source files of the frontend client application, so the backend server can serve static html, js and css files that result from compiling the frontend application, eliminating the need to host the frontend application on a separate server.
+
+When any exception is thrown during request processing, the custom API filter \lstinline{ApiExceptionFilterAttribute} class filters and handles exceptions. The filter handles exceptions by catching them and checking their types. When the exception comes from the application layer (e.g. \lstinline{ValidationException}) it returns the corresponding HTTP response with the corresponding status code and an error message. Otherwise, a response with an internal server error (status code 500) is returned. 
 
 \section{Frontend client}
 
@@ -1155,48 +1417,9 @@ public class Route
 
 \subsection{API client}
 
-\begin{itemize}
-\item concept of the system
-\item system architecture
-\item description of data structures (and data bases)
-\item components, modules, libraries, resume of important classes (if used)
-\item resume of important algorithms (if used)
-\item details of implementation of selected parts
-\item applied design patterns
-\item UML diagrams
-\end{itemize}
+\subsection{OSRM API}
 
-
-Use special environment for inline code, eg \lstinline|descriptor| or \lstinline|descriptor_gaussian|. 
-Longer parts of code put in the figure environment, eg. code in Fig. \ref{fig:pseudokod}. Very long listings–move to an appendix.
-
-% \begin{figure}
-% \centering
-% \begin{lstlisting}
-% class descriptor_gaussian : virtual public descriptor
-% {
-%   protected:
-%       /** core of the gaussian fuzzy set */
-%       double _mean;
-%       /** fuzzyfication of the gaussian fuzzy set */
-%       double _stddev;
-      
-%   public:
-%       /** @param mean core of the set
-%           @param stddev standard deviation */
-%       descriptor_gaussian (double mean, double stddev);
-%       descriptor_gaussian (const descriptor_gaussian & w);
-%       virtual ~descriptor_gaussian();
-%       virtual descriptor * clone () const;
-      
-%       /** The method elaborates membership to the gaussian fuzzy set. */
-%       virtual double getMembership (double x) const;
-     
-% };
-% \end{lstlisting}
-% \caption{The \lstinline|descriptor_gaussian| class.}
-% \label{fig:pseudokod}
-% \end{figure}
+\section{Application workflow}
 
 
 \chapter{Verification and validation}

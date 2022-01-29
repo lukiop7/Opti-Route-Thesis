@@ -65,16 +65,16 @@ namespace AlgorithmCoreVRPTW.Solver.Services
                                             secondRoute.TotalDistance;
                     double newDistance = Interchange(oldDistance, firstRoute, secondRoute, ref localMinCostFirstRoute, ref localMinCostSecondRoute, Lambda);
 
-                    if (oldDistance - newDistance > globalMaxDif)
-                    {
-                        globalMaxDif = oldDistance - newDistance;
-                        globalFirstRouteIndex = i;
-                        globalSecondRouteIndex = j;
-                        globalMinCostFirstRoute = localMinCostFirstRoute;
-                        globalMinCostSecondRoute = localMinCostSecondRoute;
-                    }
+                    CheckNewDistance(ref globalMaxDif, ref globalFirstRouteIndex, ref globalSecondRouteIndex, ref globalMinCostFirstRoute, ref globalMinCostSecondRoute, i, j, localMinCostFirstRoute, localMinCostSecondRoute, oldDistance, newDistance);
                 }
             }
+            ChangeRoutes(routeList, globalMaxDif, globalFirstRouteIndex, globalSecondRouteIndex, globalMinCostFirstRoute, globalMinCostSecondRoute);
+
+            return Math.Round(routeList.Sum(x => x.TotalDistance), 2);
+        }
+
+        private void ChangeRoutes(List<Route> routeList, double globalMaxDif, int globalFirstRouteIndex, int globalSecondRouteIndex, Route globalMinCostFirstRoute, Route globalMinCostSecondRoute)
+        {
             if (globalMaxDif != 0)
             {
                 routeList.RemoveAt(globalFirstRouteIndex);
@@ -84,12 +84,23 @@ namespace AlgorithmCoreVRPTW.Solver.Services
                 if (globalMinCostSecondRoute.Customers.Count != 0)
                     routeList.Insert(globalSecondRouteIndex, globalMinCostSecondRoute);
             }
-            return Math.Round(routeList.Sum(x => x.TotalDistance), 2);
+        }
+
+        private void CheckNewDistance(ref double globalMaxDif, ref int globalFirstRouteIndex, ref int globalSecondRouteIndex, ref Route globalMinCostFirstRoute, ref Route globalMinCostSecondRoute, int i, int j, Route localMinCostFirstRoute, Route localMinCostSecondRoute, double oldDistance, double newDistance)
+        {
+            if (oldDistance - newDistance > globalMaxDif)
+            {
+                globalMaxDif = oldDistance - newDistance;
+                globalFirstRouteIndex = i;
+                globalSecondRouteIndex = j;
+                globalMinCostFirstRoute = localMinCostFirstRoute;
+                globalMinCostSecondRoute = localMinCostSecondRoute;
+            }
         }
 
         //interchanging customer between 2 given routes using all operators (0,1) (1,0) (2,0) (0,2) (1,2) (2,1) (1,1) (2,2)
         //accepting only mincost solution across all operators
-        public double Interchange(double oldDistance, Route firstRoute, Route secondRoute, ref Route minCostFirstRoute, ref Route minCostSecondRoute, int lamda)
+        private double Interchange(double oldDistance, Route firstRoute, Route secondRoute, ref Route minCostFirstRoute, ref Route minCostSecondRoute, int lamda)
         {
             double minDistance = oldDistance;
             minCostFirstRoute = firstRoute.Clone();
@@ -120,7 +131,7 @@ namespace AlgorithmCoreVRPTW.Solver.Services
         }
 
         //performing interchange between 2 given routers using given operator
-        public bool PerformInterchange(Route firstRoute, Route secondRoute, int operator1, int operator2)
+        private bool PerformInterchange(Route firstRoute, Route secondRoute, int operator1, int operator2)
         {
             double minDistance = firstRoute.TotalDistance +
                                   secondRoute.TotalDistance;
