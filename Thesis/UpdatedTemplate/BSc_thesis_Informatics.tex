@@ -239,9 +239,9 @@ escapeinside={@*}{*@},%
 
 \chapter*{Abstract}
 
-Abstract - the abstract text should be copied into the respective field in the APD system. Abstract with keywords should not exceed one page.
+Transport is one of the most critical activities in the supply chain.  A good solution to the problem of vehicle routing is very important for improving logistics and its costs. The objective of this thesis is to design and implement a web application for solving the vehicle routing problem with time windows. The paper presents the process of creating a tool that allows the end user to easily define and solve the vehicle routing problem with time windows.
 
-\bf{Keywords:} 2-5 keywords, separated by commas
+\bf{Keywords:} vehicle routing problem, vehicle routing problem with time windows, web application development
 
 \addcontentsline{toc}{chapter}{Abstract}
 
@@ -917,9 +917,9 @@ The mediator pattern in combination with CQRS provides a set of powerful feature
 \subsection{Used libraries}
 
 \subsubsection{Entity Framework}
-Entity Framework is an open-source object-relational mapping (ORM) framework supported by Microsoft. It allows the developer to work with POCO (Plain Old CLR Object) entities without focusing on the underlying database. Entity Framework takes care of creating database connections and executing commands. It also automatically parses the results of queries to the application entities. Another feature of this framework is the ability to track changes to an object and persist those changes to the database. 
+Entity Framework is an open-source object-relational mapping (ORM) framework supported by Microsoft. It allows the developer to work with POCO (Plain Old CLR Object) entities without focusing on the underlying database. Entity Framework takes care of creating database connections and executing commands. It also automatically parses the results of queries to the application entities. Another feature of this framework is the ability to track changes to an object and persist those changes to the database \cite{bib:ef}. 
 
-Entity Framework introduces the \lstinline|Context| class, which implements the Unit Of Work and Repository patterns. The context class represents a database session and allows various operations to be performed on it. The context class contains \lstinline|DbSet| properties for each of the tables mapped to the application entities. \lstinline|DbSet| is an implementation of the repository pattern. 
+Entity Framework introduces the \lstinline|Context| class, which implements the Unit Of Work and Repository patterns. The context class represents a database session and allows various operations to be performed on it. The context class contains \lstinline|DbSet| properties for each of the tables mapped to the application entities. \lstinline|DbSet| is an implementation of the repository pattern\cite{bib:efRepository}.  
 
 Part of the \lstinline|ApplicationDbContext| class used in the project is shown in Fig. \ref{fig:context}.
      
@@ -949,7 +949,7 @@ Part of the \lstinline|ApplicationDbContext| class used in the project is shown 
 
 \subsubsection{MediatR}
 MediatR is an open-source library that is a simple implementation of the mediator pattern. The library allows in-process messaging without any dependencies. It separates requests from handlers, allowing the principle of single responsibility to be maintained in the code.
-MediatR also offers other functionality, such as sending notifications or injecting middlewares for requests called pipeline behaviours.
+MediatR also offers other functionality, such as sending notifications or injecting middlewares for requests called pipeline behaviours \cite{bib:mediatR}.
 The main benefits from using the MediatR library: 
 \begin{itemize}
 \item Less coupled code.
@@ -997,7 +997,7 @@ Exemplary request and handler classes used in the project are shown in Fig \ref{
 
 
 \subsubsection{FluentValidation}
-FluentValidation is a library for building strongly typed validation rules. One of the most important features of fluent validation is the separation of validation logic from model and business logic. Each model that should be validated must have its own validator class with validation rules defined inside it. 
+FluentValidation is a library for building strongly typed validation rules. One of the most important features of fluent validation is the separation of validation logic from model and business logic. Each model that should be validated must have its own validator class with validation rules defined inside it \cite{bib:fluentValidation}. 
 
 The main advantages of using FluentValidation:
 \begin{itemize}
@@ -1042,7 +1042,7 @@ Sample validator class is shown in Fig. \ref{fig:validator}
 
 \subsubsection{AutoMapper}
 AutoMapper is an object-to-object mapping library. The mapping is performed by transforming an input object of one type to an output object of another type. Mappings between types are fully configurable and allow the programmer to perform complex transformations between types. 
-The library simplifies the object mapping process and separates the mapping configurations from the objects, which helps to maintain clean code. Furthermore, another advantage of the library is that it is fully testable.
+The library simplifies the object mapping process and separates the mapping configurations from the objects, which helps to maintain clean code. Furthermore, another advantage of the library is that it is fully testable \cite{bib:AutoMapper}.
 An example of type mapping configuration is shown in Fig. \ref{fig:autoMapper}.
 
 \begin{figure}
@@ -1058,7 +1058,7 @@ profile.CreateMap<Route, RouteDto>()
 \end{figure}
 
 \subsubsection{NSwag}
-NSwag provides tools to generate OpenAPI specifications from within ASP.NET Web API controllers. Furthermore, NSwag can generate the typescript API client, reducing the amount of work required to integrate a frontend application with a backend server. The Swagger UI visual documentation (Fig. \ref{fig:swaggerEndpoint}) is also generated by NSwag allowing the developer to test and interact with the API without manually writing implementation logic.  
+NSwag provides tools to generate OpenAPI specifications from within ASP.NET Web API controllers. Furthermore, NSwag can generate the typescript API client, reducing the amount of work required to integrate a frontend application with a backend server. The Swagger UI visual documentation (Fig. \ref{fig:swaggerEndpoint}) is also generated by NSwag allowing the developer to test and interact with the API without manually writing implementation logic \cite{bib:NSwag}.  
 
 NSwag was used in the project to speed up the process of integrating the client application with the server and to provide a visual tool to interact and test the API in a convenient way.
 
@@ -1070,11 +1070,11 @@ NSwag was used in the project to speed up the process of integrating the client 
 \end{figure}
 
 \subsubsection{NUnit}
-NUnit is an open-source unit testing framework for the .NET platform. The framework is easy to work with and provides various tools to create good and reliable unit tests for applications.
+NUnit is an open-source unit testing framework for the .NET platform. The framework is easy to work with and provides various tools to create good and reliable unit tests for applications \cite{bib:NUnit}.
 
 \subsection{Domain}
 
-The project domain layer contains all the entities and their logic specific to the domain layer. The business domain of the application is modelled inside this layer. The term domain layer comes from the Domain Driven Design (DDD) approach to structuring software. 
+The project domain layer contains all the entities and their logic specific to the domain layer. The business domain of the application is modelled inside this layer. The term domain layer comes from the Domain Driven Design (DDD) approach to structuring software \cite{bib:cleanArchitectureImpl}. 
 
 There are two main approaches when it comes to implementing domain entities:
 \begin{itemize}
@@ -1082,7 +1082,7 @@ There are two main approaches when it comes to implementing domain entities:
     \item Rich model - each model has its own behavioural logic encapsulated inside an entity.  For example, the \lstinline|Cart| entity will contain an \lstinline|AddProductToCart| method inside the class.
 \end{itemize}
 
-The rich domain model approach was chosen for the project because it preserves one of the most important aspects of object-oriented programming (OOP), which is encapsulation. With a rich domain model, the code is cleaner and more secure (because sensitive data is only stored and modified inside the model) than with an anemic model. Furthermore, the domain is easier to maintain, and a rich model prevents the application from creating invalid domain objects. The rich domain entities can be easily unit tested without the need to call any external services to apply business logic to them.
+The rich domain model approach was chosen for the project because it preserves one of the most important aspects of object-oriented programming (OOP), which is encapsulation. With a rich domain model, the code is cleaner and more secure (because sensitive data is only stored and modified inside the model) than with an anemic model. Furthermore, the domain is easier to maintain, and a rich model prevents the application from creating invalid domain objects. The rich domain entities can be easily unit tested without the need to call any external services to apply business logic to them \cite{bib:richAnemic}.
 
 The domain project contains all the entities that are used in the application: 
 \begin{itemize}
@@ -1143,7 +1143,7 @@ public class Route
 
 The application layer in the project depends only on the domain layer. It is responsible for the implementation of business rules for the application, in the case of this thesis it contains the algorithmic part of the system. Furthermore, besides the implementation of business rules, the application layer has a second responsibility, which is the abstraction of application concerns. This layer only contains the interfaces of external concerns, such as database or file system access, and the implementations of these interfaces are injected from the infrastructure layer. 
 
-Decoupling is one of the main advantages of a clean architecture. For example, when querying data, the application does not need to know where the data comes from, it can be a database or even a flat text file. This approach allows to focus only on business rules and provides the flexibility to easily change the data source. Furthermore, the application layer is testable and can be reused together with the domain layer in other projects.
+Decoupling is one of the main advantages of a clean architecture. For example, when querying data, the application does not need to know where the data comes from, it can be a database or even a flat text file. This approach allows to focus only on business rules and provides the flexibility to easily change the data source. Furthermore, the application layer is testable and can be reused together with the domain layer in other projects \cite{bib:cleanArchitectureApp}.
 
 The application project is structured as follows: 
 
@@ -1411,15 +1411,178 @@ When any exception is thrown during request processing, the custom API filter \l
 
 \subsection{Used libraries}
 
+\subsubsection{Angular Material}
+
+Angular Material is a UI component library for Angular. The library contains a set of useful and reusable components for building responsive websites.
+
+\subsubsection{Bootstrap}
+
+Bootstrap is a free and open-source frontend development framework for creating responsive websites. Bootstrap contains a collection of CSS styles, UI components, layouts and JavaScript plugins. 
+
+\subsubsection{Toastr}
+
+Toastr is a lightweight JavaScript library for displaying toast notifications. It allows to create simple and extendable pop-up notifications.
+
+\subsubsection{LeafletJS}
+
+LeafletJS is a lightweight, open-source JavaScript library for creating interactive maps. The library is designed to work efficiently on both desktop and mobile platforms. One of the main advantages of the LeafletJS library is that it can be extended with multiple plugins. The library is easy to use and has a well-documented API \cite{bib:leaflet}. 
+
+An example of creating a map using the library is shown in Fig. \ref{fig:leafletMap}.
+
+\begin{figure}[H]
+\centering
+\begin{lstlisting}
+var map = L.map('map').setView([51.505, -0.09], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+\end{lstlisting}
+\caption{LeafletJS usage example.}
+\label{fig:leafletMap}
+\end{figure}
+
+
+\subsubsection{Leaflet Routing Machine}
+
+Leaflet Routing Machine is a library that extends LeafletJS map and adds routing to it. The library is easy to use and can be fully customised. It allows to draw a route from point A to point B on the map.
+
+The library was used in the project to draw routes on the map using real roads so that the application can be used in real situations. The backend server returns a route, and Leaflet Routing Machine draws paths between clients on a map based on the route.
+
 \subsection{App module}
+
+The app module is the main module of the client application. The main configuration of the frontend application is done in this module. In addition, this module contains views and services, therefore it is responsible for the appearance and main functionality of the client. 
+
+The app module is structured as follows: 
+
+\begin{itemize}
+    \item \textbf{benchmark} - responsible for the "Benchmarks" page.
+    \item \textbf{benchmark-results} - responsible for the "Solomon Benchmarks" page.
+    \item \textbf{error-handler} - configures the error handling functionality which displays toast notifications.
+    \item \textbf{interceptors} - HTTP requests interceptors (used for displaying the spinner while processing the request).
+    \item \textbf{map} - responsible for displaying the map.
+    \item \textbf{map-layout} - responsible for "Home" page.
+    \item \textbf{map-sidebar} - responsible for the sidebar on the "Home" page.
+    \item \textbf{nav-menu} - responsible for the navigation bar.
+    \item \textbf{services} - contains services used to transfer and process data.    
+\end{itemize}
 
 \subsection{Shared module}
 
+The shared module contains components, models and utility functions used throughout the application. It is designed to isolate those parts of the application that are reused in multiple places. 
+
+Components declared inside the shared module are, for example, route and marker details displayed in the sidebar on the home page. 
+
+Utility functions include custom date validators, pipes used to format distance and time values to a readable format, or functions used to get a random colour or remove an item from a list. 
+
+Models are custom interfaces that are only used inside the frontend application, for example to pass data between components using services. DTO and request objects are declared inside the API client.
+
+A shared module has the following structure:
+
+\begin{itemize}
+    \item \textbf{components} - contains the components reused across the application.
+    \item \textbf{models} - collection of custom interfaces.
+    \item \textbf{pipes} - utility functions in the form of custom Angular \lstinline{Pipes}.
+    \item \textbf{utils} - collection of utility functions.
+\end{itemize}
+
 \subsection{API client}
+
+The client application integrates with the backend server using an API client generated by NSwag. NSwag creates a typescript file \lstinline{web-api-client.ts} that contains the classes generated for each controller API. 
+
+The API client contains the interfaces (Fig. \ref{fig:controllerInterface}) for each controller and the classes that are implementations of those interfaces. Each controller class contains methods for sending requests to its endpoints.
+
+\begin{figure}[H]
+\centering
+\begin{lstlisting}
+export interface IBenchmarksClient {
+    getSolution(file: FileParameter | null | undefined): Observable<SolutionDto>;
+    getBenchmarkResults(): Observable<BenchmarkResultDto[]>;
+    getSolutionByBenchmarkResultId(benchmarkResultId: number): Observable<SolutionDto>;
+    getBestSolutionByBenchmarkResultId(benchmarkResultId: number): Observable<SolutionDto>;
+}
+\end{lstlisting}
+\caption{Interface generated by NSwag for the \lstinline{BenchmarksController}}
+\label{fig:controllerInterface}
+\end{figure}
+
+DTO objects and requests are also generated by the NSwag tool. Each DTO has its own interface (Fig. \ref{fig:dtoInterface}) and a class implementing this interface. This class provides a set of useful methods to deserialize and serialize the object. 
+
+\begin{figure}[H]
+\centering
+\begin{lstlisting}
+export interface ISolutionDto {
+    feasible?: boolean;
+    routes?: RouteDto[] | undefined;
+    depot?: DepotDto | undefined;
+    distance?: number;
+    time?: number;
+}
+\end{lstlisting}
+\caption{Interface generated by NSwag for the \lstinline{SolutionDto}}
+\label{fig:dtoInterface}
+\end{figure}
 
 \subsection{OSRM API}
 
+The frontend application is integrated with OSRM API. The API is used in the main functionality (home page) to get the distances and travel durations between selected locations on the map. As a result of the API call, two matrices are returned (Fig. \ref{fig:osrmAPI}). The first matrix contains the distances between locations in meters and the second one holds the durations of travel in seconds \cite{bib:osrmAPI}. 
+
+\begin{figure}
+\centering
+\begin{lstlisting}
+    "distances": [
+        [
+            0,
+            818.3,
+            416.5
+        ],
+        [
+            411,
+            0,
+            827.6
+        ],
+        [
+            416.5,
+            1234.8,
+            0
+        ]
+    ],
+    "durations": [
+        [
+            0,
+            110.7,
+            37.3
+        ],
+        [
+            40.1,
+            0,
+            77.4
+        ],
+        [
+            37.3,
+            148,
+            0
+        ]
+    ]
+\end{lstlisting}
+\caption{Distances and durations tables returned by OSRM API.}
+\label{fig:osrmAPI}
+\end{figure}
+
+The second call to the OSRM API is made by the Leaflet Routing Machine. When the problem is feasible, for each route from the solution returned from the backend server, the library calls the API to get the coordinates of the paths to draw on the map. 
+
 \section{Application workflow}
+
+When the user defines the problem using the map and clicks the "solve" button, the application will perform the following steps: 
+
+\begin{enumerate}
+    \item The problem data is collected into a single request object.
+    \item  The client calls the OSRM API to obtain the duration and distance tables.
+    \item The complete request object (with distance and duration tables) is sent to the backend server.
+    \item The algorithm attempts to solve the problem and returns a solution object.
+    \item If the problem is feasible, Leaflet Routing Machine makes calls to the OSRM API to draw routes. Otherwise, an appropriate message is displayed.
+    \item Routes are drawn on the map and solution details are displayed in the sidebar.
+\end{enumerate}
 
 
 \chapter{Verification and validation}
@@ -1666,102 +1829,27 @@ The algorithmic part of the application was completed without any major problems
 \item[$A$] Arcs connecting vertices from $V$
 \item[$W$] Set of vehicles
 \item[$Q$] Capacity of vehicle
+\item[HTTP] Hypertext Transfer Protocol
+\item[DTO] Data Transfer Object
+\item[API] Application Programming Interface
+\item[SQL] Structured Query Language
+\item[TCP] Transmission Control Protocol
+\item[OSRM] Open Source Routing Machine
+\item[CQRS] Command Query Responsibility Segregation
+\item[UI] User Interface
+\item[POCO] Plain Old CLR Object
+\item[DDD] Domain Driven Design
+\item[OOP] Object-Oriented Programming
+\item[CSS] Cascading Style Sheets
 \end{itemize}
-
-
-\chapter*{Listings}
-\addcontentsline{toc}{chapter}{Listings}
-
-(Put long listings in the appendix.)
-
-\begin{lstlisting}
-partition fcm_possibilistic::doPartition
-                             (const dataset & ds)
-{
-   try
-   {
-      if (_nClusters < 1)
-         throw std::string ("unknown number of clusters");
-      if (_nIterations < 1 and _epsilon < 0)
-         throw std::string ("You should set a maximal number of iteration or minimal difference -- epsilon.");
-      if (_nIterations > 0 and _epsilon > 0)
-         throw std::string ("Both number of iterations and minimal epsilon set -- you should set either number of iterations or minimal epsilon.");
-   
-      auto mX = ds.getMatrix();
-      std::size_t nAttr = ds.getNumberOfAttributes();
-      std::size_t nX    = ds.getNumberOfData();
-      std::vector<std::vector<double>> mV;
-      mU = std::vector<std::vector<double>> (_nClusters);
-      for (auto & u : mU)
-         u = std::vector<double> (nX);
-      randomise(mU);
-      normaliseByColumns(mU);
-      calculateEtas(_nClusters, nX, ds);
-      if (_nIterations > 0)
-      {
-         for (int iter = 0; iter < _nIterations; iter++)
-         {
-            mV = calculateClusterCentres(mU, mX);
-            mU = modifyPartitionMatrix (mV, mX);
-         }
-      }
-      else if (_epsilon > 0)
-      {
-         double frob;
-         do 
-         {
-            mV = calculateClusterCentres(mU, mX);
-            auto mUnew = modifyPartitionMatrix (mV, mX);
-            
-            frob = Frobenius_norm_of_difference (mU, mUnew);
-            mU = mUnew;
-         } while (frob > _epsilon);
-      }
-      mV = calculateClusterCentres(mU, mX);
-      std::vector<std::vector<double>> mS = calculateClusterFuzzification(mU, mV, mX);
-      
-      partition part;
-      for (int c = 0; c < _nClusters; c++)
-      {
-         cluster cl; 
-         for (std::size_t a = 0; a < nAttr; a++)
-         {
-            descriptor_gaussian d (mV[c][a], mS[c][a]);
-            cl.addDescriptor(d);
-         }
-         part.addCluster(cl);
-      }
-      return part;
-   }
-   catch (my_exception & ex)                                  
-   {                                                       
-      throw my_exception (__FILE__, __FUNCTION__, __LINE__, ex.what()); 
-   }                                                          
-   catch (std::exception & ex)                                 
-   {                                                            
-      throw my_exceptionn (__FILE__, __FUNCTION__, __LINE__, ex.what()); 
-   }                                                            
-   catch (std::string & ex)                                     
-   {                                                            
-      throw my_exception (__FILE__, __FUNCTION__, __LINE__, ex);        
-   }                                                             
-   catch (...)                                                   
-   {                                                             
-      throw my_exception (__FILE__, __FUNCTION__, __LINE__, "unknown expection");       
-   }  
-}
-\end{lstlisting} 
 
 \chapter*{List of additional files in electronic submission }
 \addcontentsline{toc}{chapter}{List of additional files in electronic submission (if applicable)}
 
 Additional files uploaded to the system include:
 \begin{itemize}
-																
-\item source code of the application,
-\item test data,
+\item source code of the application
 \item a video showing how software or hardware developed for thesis is used
-\item etc.
 \end{itemize}
  
 \listoffigures
