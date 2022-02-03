@@ -156,7 +156,7 @@ escapeinside={@*}{*@},%
 
 \newcommand{\Author}{Łukasz Kwiecień}
 \newcommand{\Supervisor}{Tomasz Jastrząb, PhD}
-\newcommand{\Title}{Design and implementation of web application used for solving vehicle routing problems with time windows.}
+\newcommand{\Title}{Design and implementation of web application used for solving vehicle routing problems with time windows}
 \newcommand{\Polsl}{Silesian University of Technology}
 \newcommand{\Faculty}{Faculty of Automatic Control, Electronics and Computer Science}
 \newcommand{\Programme}{Programme: Informatics}
@@ -239,9 +239,14 @@ escapeinside={@*}{*@},%
 
 \chapter*{Abstract}
 
-Transport is one of the most critical activities in the supply chain.  A good solution to the problem of vehicle routing is very important for improving logistics and its costs. The objective of this thesis is to design and implement a web application for solving the vehicle routing problem with time windows. The paper presents the process of creating a tool that allows the end user to easily define and solve the vehicle routing problem with time windows.
+Transportation is one of the most critical activities in the supply chain. A good solution to the problem of vehicle routing is very important for improving logistics and its costs. The objective of this thesis is to design and implement a web application for solving the vehicle routing problem with time windows. The paper presents the process of creating a tool that allows the end user to easily define and solve the vehicle routing problem with time windows.
 
-\bf{Keywords:} vehicle routing problem, vehicle routing problem with time windows, web application development
+The paper describes the design and development process of the application, reviews the literature on vehicle routing problems and the different methods used to solve them. The tools and technologies used in the project are also presented, as well as an insight into the application architecture and its modules. Finally, the results achieved and the perspectives and possibilities for further development of the project are discussed.
+
+
+
+
+{\bf Keywords:} vehicle routing, vehicle routing problem with time windows, web application development
 
 \addcontentsline{toc}{chapter}{Abstract}
 
@@ -258,7 +263,7 @@ Transport is one of the most critical activities in the supply chain.  A good so
  Transportation is one of the most critical activities in the supply chain. Its importance comes from the fact that the transportation costs can reach up to almost 40\% of the total logistics costs of a manufacturing company \cite{bib:article:sukiennik}. For that reason, the companies need to transport the goods or persons efficiently. That goal can be achieved by either minimizing the distance traveled by the vehicles or reducing the number of routes required to visit all destinations. The Vehicle Routing Problem (VRP) describes the problem of assigning loads to the vehicles and sequencing the customers assigned to each vehicle to obtain optimal routes.
 
 VRP is one of the most studied combinatorial optimization problems. Its popularity is due to the fact that VRP can be used in many real-life scenarios in the fields of distribution, collection, and logistics.
-In a VRP the fleet of vehicles has to visit a set of customers starting from a given depot and deliver commodities to them, taking into consideration all given constraints. There are various constraints that could be introduced to the problem, for example,the time windows for the customers or the capacity of vehicles.
+In a VRP, the fleet of vehicles has to visit a set of customers starting from a given depot and deliver commodities to them, taking into consideration all given constraints. There are various constraints that could be introduced to the problem, for example, the time windows for the customers or the capacity of vehicles.
 
 Depending on the problem variant, VRP is a combination of two or more NP-hard problems, which makes VRP also NP-hard. The fact that the problem is NP-hard makes the process of finding an exact solution very time-consuming. Therefore it is necessary to use a heuristic approach to get good solutions in an acceptable time.
 \section{Objective and scope of the thesis}
@@ -284,15 +289,15 @@ The problem concerns a set of customers to whom products need to be delivered in
 	\item The vehicle may not carry more goods than its capacity allows.	
 \end{enumerate}
 
-The VRP can be formally defined as a directed graph $\textit{G = (V,A)}$, where $\textit{V = $\lbrace$0,\ldots,n$\rbrace$}$ is the set of vertices representing customers and the depot, and \textit{A} is the set of arcs \textit{(i,j)} connecting these vertices. The set of vehicles is denoted by \textit{W}. The depot is marked as vertex 0. The number of vehicles is denoted by \textit{m}, and each vehicle has a capacity of \textit{Q}. The cost of travel between vertices \textit{i} and \textit{j} is denoted by \textit{$c_{ij}$}. The cost is the distance, duration or other costs that may occur during the travel between nodes. The demand of customer \textit{i} is represented as \textit{$q_{i}$}.
-The customer subset \textit{S $\subseteq$ V$\setminus$ $\lbrace$0$\rbrace$} can be served by a minimum of \textit{r(S)} vehicles. This number can be obtained by solving the Bin Packing Problem (BPP) with bin set \textit{S} with capacities \textit{Q}, but because BPP is an NP-hard problem, it can be approximated by its lower bound: $\lceil$ $\sum$\textsubscript{i$\in$S} $q_{i}$/Q $\rceil$ \cite{bib:article:CordeauVehicleRouting}.
+The VRP can be formally defined as a directed graph $G = (V, A)$, where $V = \lbrace0, \ldots, n\rbrace$ is the set of vertices representing customers and the depot, and $A$ is the set of arcs $(i, j)$ connecting these vertices. The set of vehicles is denoted by $W$. The depot is marked as vertex 0. The number of vehicles is denoted by $m$, and each vehicle has a capacity of $Q$. The cost of travel between vertices $i$ and $j$ is denoted by $c_{ij}$. The cost is the distance, duration or other costs that may occur during the travel between nodes. The demand of customer $i$ is denoted by $q_{i}$.
+The customer subset $S \subseteq V\setminus \lbrace0\rbrace$ can be served by a minimum of $r(S)$ vehicles. This number can be obtained by solving the Bin Packing Problem (BPP) with bin set $S$ with capacities $Q$, but because BPP is an NP-hard problem, it can be approximated by its lower bound: $\lceil \sum_{i \in S} q_{i}/Q \rceil$ \cite{bib:article:CordeauVehicleRouting}.
 
-The Integer Linear Programming formulation of the problem is as follows:\cite{bib:book:TothAndVigo}
+The Integer Linear Programming formulation of the problem is as follows \cite{bib:book:TothAndVigo}:
 \begin{equation}
-Minimize \sum_{i,j \in V} c_{ij}x_{ij}
+minimize \sum_{i,j \in V} c_{ij}x_{ij}
 \end{equation}
 
-\textit{subject to:}
+subject to:
 
 \begin{equation}
 \sum_{i \in V}x_{ij} = 1 \qquad \forall j \in V \setminus \lbrace 0 \rbrace
@@ -318,24 +323,24 @@ Minimize \sum_{i,j \in V} c_{ij}x_{ij}
 x_{ij} \in \lbrace 0,1 \rbrace \qquad \forall i,j \in V
 \end{equation}
 
-In this formula, $x_{ij}$  is a binary variable whose value indicates whether the arc between vertices i and j is traversed in the solution.  
-If the connection between these vertices belongs to the solution, then the variable $x_{ij}$ is equal to 1, otherwise it is equal to 0. \textit{Indegree} Eq. 2.2 and \textit{outdegree} Eq. 2.3 constraints guarantee that every customer is visited only once. Constraints 2.4 and 2.5 ensure that the solution has \textit{m} routes, one for each vehicle (the number of routes does not exceed the number of vehicles).
-Constraints 2.6 are called \textit{capacity-cut constraints} and refer to the minimum number of vehicles needed to serve a set of customers whose total demand is $\sum$\textsubscript{i$\in$S} $q_{i}$. These constraints ensure the connectivity of the solution and that there are no paths whose load would exceed the capacity of the vehicle. The last constraint 2.7 ensures the binarity of the variable $x_{ij}$. If $x_{0j}$ is equal to 1 it means that \textit{j} belongs to this route. Any route from the solution can be reconstructed in this way: the next customer in the route is customer \textit{i}, for whom $x_{ij}$ is equal to 1. The last customer is customer i for whom $x_{i0}$ is equal to 1 \cite{bib:book:TothAndVigo}.
+In this formula, $x_{ij}$ is a binary variable whose value indicates whether the arc between vertices $i$ and $j$ is traversed in the solution.  
+If the connection between these vertices belongs to the solution, then the variable $x_{ij}$ is equal to 1, otherwise it is equal to 0. The \textit{indegree} Eq. (2.2) and \textit{outdegree} Eq. (2.3) constraints guarantee that every customer is visited only once. Constraints (2.4) and (2.5) ensure that the solution has $m$ routes, one for each vehicle (the number of routes does not exceed the number of vehicles).
+Constraints (2.6) are called \textit{capacity-cut constraints} and refer to the minimum number of vehicles needed to serve a set of customers whose total demand is $\sum_{i \in S}  q_{i}$. These constraints ensure the connectivity of the solution and that there are no paths whose load exceeds the capacity of the vehicle. The last constraint (2.7) ensures that variables $x_{ij}$ are binary. If $x_{0j}$ is equal to 1 it means that $j$ belongs to this route. Any route from the solution can be reconstructed in this way: the next customer in the route is customer $i$, for whom $x_{ij}$ is equal to 1. The last customer is customer $i$ for whom $x_{i0}$ is equal to 1 \cite{bib:book:TothAndVigo}.
 
-The problem of vehicle routing was first introduced by Dantzig and Ramser in 1959 as "The truck dispatching problem" \cite{bib:article:TruckDispatching}. In the following years it became very popular, resulting in many studies, books and scientific publications exploring the topic. The problem is one of the most studied combinatorial optimisation problems, since it offers many benefits for logistics and transport companies. Different implementations can save as much as 5\% to 30\% of transport-related costs \cite{bib:book:GeometricModellingCostSavings}.
+The problem of vehicle routing was first introduced by Dantzig and Ramser in 1959 as "The truck dispatching problem" \cite{bib:article:TruckDispatching}. In the following years it became very popular, resulting in many studies, books and scientific publications exploring the topic. The problem is one of the most studied combinatorial optimisation problems since it offers many benefits for logistics and transport companies. Different implementations can save as much as 5\% to 30\% of transport-related costs \cite{bib:book:GeometricModellingCostSavings}.
 
 \section{Vehicle Routing Problem with Time Windows}
 
-The Vehicle Routing Problem with Time Windows (VRPTW) is a variant of VRP in which a constraint due to time windows is added. In this variant of the problem, each customer \textit{i} has a time window [$a_{i}$,$b_{i}$] in which it must be served. A customer cannot be served earlier than $a_{i}$ and later than $b_{i}$. In case the vehicle arrives earlier than $a_{i}$ it must wait until the window opens. Moreover, to each arc(i,j) the time \textit{$t_{ij}$} is assigned. For each vertex \textit{i} and vehicle \textit{k} a decision variable \textit{$s_{ik}$} is defined. This variable represents the time at which the vehicle \textit{k} starts to serve the customer \textit{i} \cite{bib:chapter:VRPTW}.
+The Vehicle Routing Problem with Time Windows (VRPTW) is a variant of VRP in which a constraint due to time windows is added. In this variant of the problem, each customer $i$ has a time window $[a_{i}, b_{i}]$ in which it must be served. A customer cannot be served earlier than $a_{i}$ and later than $b_{i}$. In case the vehicle arrives earlier than $a_{i}$ it must wait until the window opens. Moreover, to each arc $(i, j)$ the time $t_{ij}$ is assigned. For each vertex $i$ and vehicle $k$ a decision variable $s_{ik}$ is defined. This variable represents the time at which the vehicle $k$ starts to serve the customer $i$ \cite{bib:chapter:VRPTW}.
 This variant of VRP is also an NP-hard problem \cite{bib:article:Savelsbergh}.
 
-The VRPTW can be stated mathematically as multicommodity network flow formulation with time windows and capacity constraints:\cite{bib:chapter:VRPTW} 
+The VRPTW can be stated mathematically as multicommodity network flow formulation with time windows and capacity constraints \cite{bib:chapter:VRPTW}: 
 
 \begin{equation}
-min \sum_{k \in W}\sum_{i,j \in V} c_{ij}x_{ijk}
+minimize \sum_{k \in W}\sum_{i,j \in V} c_{ij}x_{ijk}
 \end{equation}
 
-\textit{subject to:}
+subject to:
 
 \begin{equation}
 \sum_{k \in W}\sum_{i \in V}x_{ijk} = 1 \qquad \forall j \in V \setminus \lbrace 0 \rbrace
@@ -369,7 +374,7 @@ a_{i}\leq s_{ik} \leq b_{i} \qquad \forall i \in V ,\forall k \in W
 x_{ijk} \in \lbrace 0,1 \rbrace \qquad \forall i,j \in V ,\forall k \in W
 \end{equation}
 
-Objective function 2.8 minimizes travel cost. Constraints 2.9 and 2.10 ensure that each customer is visited once and vehicle cannot surpass its capacity. Equations 2.11, 2.12 and 2.13 indicate that each vehicle must leave the depot, once it has reached the customer it must travel to the next location and finally return to the depot. Inequality 2.14 shows the relationship between vehicle departure time and its successor. Inequalities 2.15 provide that the time windows are observed. Constraints 2.16 are the integrality constraints \cite{bib:chapter:VRPTW}.
+Objective function (2.8) minimizes travel cost. Constraints (2.9) and (2.10) ensure that each customer is visited once and vehicle cannot surpass its capacity. Equations (2.11), (2.12), and (2.13) indicate that each vehicle must leave the depot, once it has reached the customer it must travel to the next location and finally return to the depot. Inequality (2.14) shows the relationship between vehicle departure time and its successor. Inequalities (2.15) provide that the time windows are observed. Constraints (2.16) are the integrality constraints \cite{bib:chapter:VRPTW}.
 
 \section{Solution approaches}
 
@@ -385,13 +390,13 @@ The Dynamic Programming solutions were, at first, able to solve problems up to 2
 The Integer Linear Programming methods produced some of the best exact solutions. This has been achieved by extending the set partitioning algorithm using the column generation method \cite{bib:article:ILP}. 
 
 \subsection{Heuristics}
-Heuristics do not guarantee the best solution, their aim is to obtain a solution close to the best, in a relatively short time. They make it possible to solve larger and more complex problems that would not be possible to solve with exact methods. For VRP, we can distinguish between two types of herustics: construction and improvement. The process of solving a VRP usually can be divided into two steps: an initial solution is created using the construction heuristic, and then the improvement heuristics improves the solution. 
+Heuristics do not guarantee the best solution---their aim is to obtain a solution close to the best, in a relatively short time. They make it possible to solve larger and more complex problems that would not be possible to solve with exact methods. For VRP, we can distinguish between two types of heuristics: construction and improvement. The process of solving a VRP usually can be divided into two steps: an initial solution is created using the construction heuristic, and then the improvement heuristics improves the solution. 
 \subsubsection{Construction heuristics}
-One of the best known construction heuristics is Clarke and Wright's savings algorithm. In the first step, separate routes are created for each customer, even if the number of vehicles is insufficient. Then, the  savings for all connections between edges (\textit{i,j}) are calculated using the formula \textit{$s_{ij}$ = $c_{i0}$ + $c_{0j}$ - $c_{ij}$}. After that, the savings are sorted in the descending order and algorithm tries to merge two routes that will reduce the total costs of travel. Routes are merged by connecting the customer from one route to the customer from the second route. A merge between \textit{i} and \textit{j} is only possible if they are the first or last vertices of their routes and the vehicle capacity constraint is not violated. The algorithm stops when there are no more possible connections.
+One of the best known construction heuristics is Clarke and Wright's savings algorithm. In the first step, separate routes are created for each customer, even if the number of vehicles is insufficient. Then, the  savings for all connections between edges $(i, j)$ are calculated using the formula $s_{ij} = c_{i0} + c_{0j} - c_{ij}$. After that, the savings are sorted in the descending order and the algorithm tries to merge two routes that will reduce the total costs of travel. Routes are merged by connecting the customer from one route to the customer from the second route. A merge between $i$ and $j$ is only possible if they are the first or last vertices of their routes and the vehicle capacity constraint is not violated. The algorithm stops when there are no more possible connections.
 
 Another type of Construction herustics is insertion heuristics. The Push forward insertion heuristics used in this thesis will be discussed in detail later in the chapter.
 
-The last type of design heuristics are two-phase heuristics. They divide the problem into two sub-problems and then solve each of them. One such method is cluster first, route second. In this approach, customers are clustered into a base set of routes. Each cluster is treated as a separate TSP instance. There are various methods of clustering customers, one of which is the sweep algorithm. The sweep algorithm builds routes by sweeping a ray, centered at the depot, clockwise adding each customer lying on the line of the circle to the cluster.
+The last type of construction heuristics are two-phase heuristics. They divide the problem into two sub-problems and then solve each of them. One such method is cluster first, route second. In this approach, customers are clustered into a base set of routes. Each cluster is treated as a separate TSP instance. There are various methods of clustering customers, one of which is the sweep algorithm. The sweep algorithm builds routes by sweeping a ray, centered at the depot, clockwise adding each customer lying on the line of the circle to the cluster.
 \subsubsection{Improvement heuristics}
 Once an initial solution is found using the construction heuristics, it is improved using the improvement heuristics. One type of such heuristics is the local search heuristic, in which the best solution is selected from the neighbourhood until a stopping criterion is reached. Neighbourhood solutions are created from the current one by applying operators that modify the original solution. 
 
@@ -399,42 +404,45 @@ Local search with $\lambda$ interchange heuristic will be discussed later in the
 
 Simulated annealing is another example. This method replicates the process of heating up a material and then slowly lowering the temperature to reduce defects. The main assumption of the algorithm is to infrequently accept worse solutions in order to avoid a local optimum. The solution is accepted with a probability calculated by means of a function depending on the difference in quality between the new and the current solution, and a parameter called the current temperature.
 
-Another method is Tabu search. Based on the initial solution, neighbouring solutions are determined and the best of these solutions is selected as the new best solution. The previous solutions are stored in a tabu list, it has a predefined length, and when it is full, adding another solution removes the oldest one from the list. Such a mechanism avoids a local optimum and a return to previous solutions. 
+Another method is Tabu search. Based on the initial solution, neighbouring solutions are determined and the best of these solutions is selected as the new best solution. The previous solutions are stored in a tabu list, which has a predefined length, and when it is full, adding another solution removes the oldest one from the list. Such a mechanism avoids a local optimum and the return to previous solutions. 
 
 VRP can be solved using many other heuristics, including: Large Neighbourhood Searches, Genetic Algorithms or Ant Colonies.
-\subsection{Push forward insertion heuristic}
-In this thesis, the initial solution is created using Push Forward Insertion Heuristic. It was introduced by Solomon \cite{bib:article:solomon} in 1987 and it is an efficient method to insert customers into routes. The algorithm creates a new route by selecting the starting customer furthest from the depot and then inserts each unassigned customer into the route until the capacity or time constraints are met. Then new route is created and the process repeats until all customers are routed. The feasibility check ensures that all constraints are not violated. This method generates a good starting solution for later improvements, in a short time.
 
-For the pseudocode for PFIH algorithm for VPRTW see figure \ref{fig:PFIH} \cite{bib:chapter:PFIH}.
-\begin{figure}
+\subsection{Push forward insertion heuristic}
+In this thesis, the initial solution is created using Push Forward Insertion Heuristic. It was introduced by Solomon \cite{bib:article:solomon} in 1987 and it is an efficient method to insert customers into routes. The algorithm creates a new route by selecting the starting customer furthest from the depot and then inserts each unassigned customer into the route until the capacity or time constraints are met. Then new route is created and the process repeats until all customers are routed. The feasibility check ensures that all constraints are not violated. This method generates a good starting solution for later improvements, in a short time. For the pseudocode for PFIH algorithm for VPRTW see Figure \ref{fig:PFIH} \cite{bib:chapter:PFIH}.
+\begin{figure}[tb]
 \centering
 \begin{lstlisting}[mathescape=true]
 Begin an empty route $r_{0}$ starting from the depot; $i := 0$;
-Among all unassigned customers, select the customer farthest from the depot and insert into the current route $r_{i}$;
+Among all unassigned customers, select the customer farthest from the depot inserting it into the current route $r_{i}$;
 if all customers are routed then goto line 13.
 else
     if the capacity $Q$ of the vehicle $k$ involved in the current route $r_{i}$ is exceeded then goto line 12.
 	else
     	foreach unassigned customer
-    		find the best position for insertion in $r_{i}$ without violating any specified time window to compare the cost of starting a new route against that for the best position found.   
-if there exists no feasible position for insertion into the current route $r_{i}$ then goto line 12.
+    		find the best insertion position in $r_{i}$ without violating any specified time window to compare the cost of starting a route against that of the best position found.   
+if there exists no feasible insertion position in the current route $r_{i}$ then goto line 12.
 else
-	Pick the customer with the greatest cost difference and insert it into $r_{i}$ and update the capacity $Q$ of the vehicle $k$ involved. goto line 3.
-Start a new route $r_{i+1}$ starting from the depot; $i := i+1$; goto line 2.
+	Pick the customer with the greatest cost difference, insert it into $r_{i}$ updating the capacity $Q$ of the vehicle $k$ involved. goto line 3.
+Start a route $r_{i+1}$ starting from the depot; $i := i+1$; goto line 2.
 Return the current solution
 \end{lstlisting}
 \caption{Push Forward Insertion Heuristic for Vehicle Routing Problem with Time Windows}
 \label{fig:PFIH}
 \end{figure}
 \subsection{Local search with $\lambda$ interchange}
-The $\lambda$ interchange neighbourhood generation method was introduced by Osman and Christofides \cite{bib:article:osman}. Local Search is performed by interchanging clients between routes. The interchanges are performed through operators whose number depends on the $\lambda$ parameter. In this work, this parameter is set to 2, which means that the maximum number of interchanged clients between routes will be 2. For this parameter value, we can distinguish 8 interchange operators: (0,1), (1,0), (1,1), (0,2), (2,0), (2,1), (1,2), (2,2). Operator (1,1) means that one customer will be transferred from route $R_{i}$ to $R_{j}$ and also one customer will be transferred from route $R_{j}$ to $R_{i}$. Operator 2,1 means that two customers will be moved from route $R_{i}$ to $R_{j}$ and only one customer will be moved from route $R_{j}$ to $R_{i}$. The other operators work on the same principle. If the solution has improved after the interchange of customers between routes, it is then accepted, otherwise such a solution is rejected \cite{bib:article:LocalSearchLambda}. 
+The $\lambda$ interchange neighbourhood generation method was introduced by Osman and Christofides \cite{bib:article:osman}. Local Search is performed by interchanging clients between routes. The interchanges are performed through operators whose number depends on the $\lambda$ parameter. In this work, this parameter is set to 2, which means that the maximum number of interchanged clients between routes will be 2. For this parameter value, we can distinguish 8 interchange operators: (0, 1), (1, 0), (1, 1), (0, 2), (2, 0), (2, 1), (1, 2), (2, 2). Operator (1, 1) means that one customer will be transferred from route $R_{i}$ to $R_{j}$ and also one customer will be transferred from route $R_{j}$ to $R_{i}$. Operator (2, 1) means that two customers will be moved from route $R_{i}$ to $R_{j}$ and only one customer will be moved from route $R_{j}$ to $R_{i}$. The other operators work on the same principle. If the solution has improved after the interchange of customers between routes, it is then accepted, otherwise such a solution is rejected \cite{bib:article:LocalSearchLambda}. 
 
 To select between the candidate solutions a global-best strategy was chosen. The global-best strategy searches all solutions in the neighbourhood of the current solution for all operators and selects the one that gives the greatest cost reduction. The local search is stopped after a fixed number of iterations or other specified stopping criterion \cite{bib:article:LocalSearchLambda}. 
 
-The algorithm can be summarised as follows: After generating a starting solution its entire neighbourhood (generated using the operators) is searched for a candidate solution. The candidate becomes the new current solution and its neighbourhood is searched to find a better solution. In case there are no more solutions in the neighbourhood that improve our current solution the algorithm is stopped.
+The algorithm can be summarised as follows: After generating a starting solution its entire neighbourhood (generated using the operators) is searched for a candidate solution. The candidate becomes the new current solution and its neighbourhood is searched to find a better solution. In case there are no more solutions in the neighbourhood that improve the current solution the algorithm is stopped.
 
 
 \chapter{Requirements and tools}
+
+Establishing software requirements is an important part of the software development process. They allow to outline the final effect that the created project should achieve. Requirements help to speed up the software development process and help to deliver a better product. 
+
+A functional requirement describes what the system should do, while a non-functional requirement describes how the system should do it. In this project, the following functional and non-functional requirements were defined:
 
 \section{Functional requirements}
 \begin{enumerate}
@@ -445,16 +453,13 @@ The algorithm can be summarised as follows: After generating a starting solution
     \item The user should be able to freely modify data at any stage of the problem definition process.
     \item The user should be able to go back and modify the problem, even if it has been resolved.
     \item The solution should be visualized on the map.
-    \item Details of each route in the solution should be displayed in a user-friendly way.
+    \item Details of each route in the solution should be displayable.
     \item The user should be able to upload and solve his own benchmark file.
     \item Every uploaded benchmark file must be a ".txt" file with data in a correct format.
     \item The user should be able to see the solutions calculated by the algorithm for each instance of Solomon Benchmark.
     \item The user should be able to compare solutions from the algorithm with the best known Solomon Benchmarks solutions.
     \item The algorithm should return the information if the problem is feasible or not.
-    \item The application should contain a navigation bar allowing the user to redirect between pages.
-    \item The application should display validation errors below HTML inputs.  
-    \item The application should display notifications in a toast pop-ups.
-    \item The system should be integrated with the OSRM API to solve problems using real routes.
+    \item The user should be able to navigate between application pages.
 \end{enumerate}
 
 \section{Non-functional requirements}
@@ -462,56 +467,50 @@ The algorithm can be summarised as follows: After generating a starting solution
     \item The application should be compatible with any of today's most popular web browsers (Firefox, Edge, Safari, Chrome, Opera (or other Chromium-based browser)).
     \item The application should work correctly on any desktop operating system.
     \item The system should be able to solve large problems in a reasonable time.
-    \item System functionalities should be easy to understand and use
+    \item System functionalities should be easy to understand and use.
     \item The application should be time zone independent.
+    \item The application should display validation errors below HTML inputs.  
+    \item The application should display notifications in a toast pop-ups.
+    \item The system should be integrated with the OSRM API to solve problems using real routes.
 \end{enumerate}
 
 \section{Tools and technologies}
 
-\subsection{.NET}
+\subsubsection{.NET}
 .NET is an open source software platform. It was created by Microsoft and allows developers to create many different types of applications. Applications developed using .NET are modern, flexible and cross-platform. The ASP.NET Framework, which is part of the .NET platform, offers a set of tools to help build web applications and APIs.
 
 The backend project used the then latest version of the .NET 5 platform. The .NET platform contains all the necessary tools needed to develop web applications, which made the development process easier.
 
-\subsection{C\#}
+\subsubsection{C\#}
 C\# is an open source, modern object-oriented programming language developed by Microsoft. The range of possibilities it offers is wide, and versatility is one of C\#'s strongest points. Many different types of applications can be created using this language, such as web, mobile, desktop and cloud applications. The C\# community is very large, which is why it is the 8th most popular programming language among professional programmers \cite{bib:stackSurvey}. Of all the languages available on the .NET platform, C\# is the most commonly selected one \cite{bib:netSurvey}.
 
 The backend project uses version 9 of the C\# language, which was the latest version of the language at the time. The cross-platform aspect of the language was also very important, as the application was not to be designed for just one operating system. 
 
-\subsection{NuGet}
-NuGet is the open source package manager for .NET plaftorm created by Microsoft. Contains almost 300 000 unique packages which can extend the standard .NET features \cite{bib:nuget}. It allows the developers to share and consume useful code easily.
+\subsubsection{NuGet}
+NuGet is the open source package manager for .NET plaftorm created by Microsoft. It contains almost 300 000 unique packages which can extend the standard .NET features \cite{bib:nuget}. It allows the developers to share and consume useful code easily.
 
-\subsection{Angular}
+\subsubsection{Angular}
 Angular is an open-source JavaScript framework maintained by Google. As of 2021, Angular was the third most popular web framework among professional developers \cite{bib:stackSurvey}. Angular provides a set of powerful features for efficient single-page application development. It allows developers to build web, mobile and even desktop applications.
 
 Angular was chosen as the framework for the front-end application because of the possibilities it offers. An important aspect for this project was the support for maintaining data through services, which facilitates the sharing of data between components \cite{bib:angular}.
 
-\subsection{Typescript}
-Typescript is a strongly typed and object-oriented language that is a super set of JavaScript. It was introduced by Microsoft and extends JavaScript with e.g. types and interfaces \cite{bib:typescript}.
+\subsubsection{Typescript}
+Typescript is a strongly typed and object-oriented language that is a super set of JavaScript. It was introduced by Microsoft and extends JavaScript with e.g. types and interfaces \cite{bib:typescript}. The frontend client is powered by TypeScript as the primary language for Angular.
 
-The frontend client is powered by TypeScript as the primary language for Angular.
+\subsubsection{Node.js}
+Node.js was created by Google as a open-source backend JavaScript runtime environment. Node.js uses Chrome v8 engine to convert JavaScript code to machine code \cite{bib:nodeJs}. For this project, Node.js was one of the dependencies required by Angular.
 
-\subsection{Node.js}
-Node.js was created by Google as a open-source backend javascript runtime environment. Node.js uses chrome v8 engine to convert javascript code to machine code \cite{bib:nodeJs}.
+\subsubsection{npm}
+The Node package manager (npm for short) is the package manager for the Node JavaScript platform. Npm is responsible for installing and managing the dependencies used by Node.js. Angular applications depend on npm packages, which is why it was used in the project.
 
-For this project, Node.js was one of the dependencies required by Angular.
-
-\subsection{npm}
-The Node package manager (npm for short) is the package manager for the Node JavaScript platform. Npm is responsible for installing and managing the dependencies used by Node.js.
-
-Angular applications depend on npm packages, which is why it was used in the project.
-
-\subsection{git}
+\subsubsection{git}
 Every software project needs a version control system to improve workflow and make it easier to manage multiple versions of source files. Git, created by Linus Torvalds, is the most popular of the version control systems, which is why it was chosen for use on the project \cite{bib:stackSurvey}. With the ability to store functionality in separate branches and control previous versions of each file, the entire software development process becomes more efficient.
 
-\subsection{Docker}
+\subsubsection{Docker}
 Docker is a virtualization software which simplifies the process of building and running applications. It separates the software from the host infrastructure by placing the application in an isolated environment (container). Inside the environment, the same version of each dependency needed by the application will be provided each time \cite{bib:dockerOverview}. As a result, only the installation of Docker on the host system is required to run the application.
 
-\subsection{PostgreSQL}
-PostgreSQL is an open source object-relational database system. This database offers a huge variety of features and capabilities. PostgreSQL is becoming more popular every year, according to the latest 2021 report PostgreSQL is the second most popular database management system \cite{bib:stackSurvey}.
-
-This database system was chosen because of the capabilities it offers.
-
+\subsubsection{PostgreSQL}
+PostgreSQL is an open source object-relational database system. This database offers a huge variety of features and capabilities. PostgreSQL is becoming more popular every year, according to the latest 2021 report PostgreSQL is the second most popular database management system \cite{bib:stackSurvey}. This database system was chosen because of the capabilities it offers.
 
 
 \chapter{External specification}
@@ -529,29 +528,29 @@ Docker installed and running.
 To start the application the following command must be run from the main directory of the application (docker-compose.yml file location):
 
 
-
+\noindent
 \framebox[\textwidth]{
 docker-compose up}
 
 
 The initialization of the application can be longer for the first time.
-On first start-up, the application may take a few minutes to initialise and may restart several times (waiting for the database to initialise).
+On the first start-up, the application may take a few minutes to initialise and may restart several times (waiting for the database to initialise). 
 
 Once the application has been successfully initialised, it should be available at http://localhost:5000.
 \section{User manual}
 \subsection{Navigation bar}
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{images/navbar.PNG}
+\includegraphics[width=\textwidth]{images/navbar_updated.png}
 \caption{Navigation bar}
 \label{fig:navbar}
 \end{figure}
 
 The navigation bar (Fig. \ref{fig:navbar}) is visible at the top of every page in the application, it contains 3 buttons:
 \begin{itemize}
-\item Home - redirects to the home page.
-\item Benchmark - redirects to a page where the user can upload the benchmark file and solve the problem found in the file.
-\item Solomon Benchmarks - redirects to a page with a table comparing OptiRoute solutions and the best known solutions for Solomon benchmark instances.
+\item Home -- redirects to the home page.
+\item Benchmark -- redirects to a page where the user can upload the benchmark file and solve the problem found in the file.
+\item Solomon Benchmarks -- redirects to a page with a table comparing OptiRoute (this project) solutions and the best known solutions for Solomon benchmark instances.
 \end{itemize}
 
 \subsection{Home Page}
@@ -562,9 +561,9 @@ The navigation bar (Fig. \ref{fig:navbar}) is visible at the top of every page i
 \label{fig:home}
 \end{figure}
 
-The home page (Fig. \ref{fig:home}) consist of map and the sidebar. The user can zoom in, zoom out, move freely around the map and add markers with a mouse click (Fig. \ref{fig:markers}). The sidebar consists of required inputs for data or details depending on the current step of the problem definition process.
+The home page (Fig. \ref{fig:home}) consist of the map and the sidebar. The user can zoom in, zoom out, move freely around the map and add markers with a mouse click (Fig. \ref{fig:markers}). The sidebar consists of required inputs for data or details depending on the current step of the problem definition process.
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
 \includegraphics[scale=0.5]{images/markers.jpg}
 \caption{Markers placed on the map}
@@ -574,49 +573,49 @@ The home page (Fig. \ref{fig:home}) consist of map and the sidebar. The user can
 \subsection{Sidebar}
 The sidebar is where the user can define the details of the problem as well as see the details of the solution. The whole process is divided into individual steps, so the content of the sidebar depends on which stage the user is currently at.
 \subsubsection{Getting started}
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
-\includegraphics[width=\textwidth]{images/gettingStarted.jpg}
+\includegraphics[scale=0.7]{images/gettingStarted_updated.jpg}
 \caption{Getting started step in the sidebar}
 \label{fig:gettingStarted}
 \end{figure}
-The "Getting Started" step in the sidebar (Fig. \ref{fig:gettingStarted}) provides a short user guide, explaining step-by-step how to use the application. Screenshots and short descriptions of the steps to follow make it easier for first-time users to use the app. After clicking the "Continue" button at the bottom of the sidebar, the contents of the sidebar will change to the "Depot" step.
+The ``Getting Started'' step in the sidebar (Fig. \ref{fig:gettingStarted}) provides a short user guide, explaining step-by-step how to use the application. Screenshots and short descriptions of the steps to follow make it easier for first-time users to use the application. After clicking the ``Continue'' button at the bottom of the sidebar, the contents of the sidebar will change to the "Depot" step.
 
 \subsubsection{Depot}
-In the "Depot" step, the user must place the depot marker by clicking on the desired location on the map and then specify the details in the input fields in the sidebar (Fig. \ref{fig:depot}).
+In the ``Depot'' step, the user must place the depot marker by clicking on the desired location on the map and then specify the details in the input fields in the sidebar (Fig. \ref{fig:depot}).
 
 
 
-At the bottom of the sidebar (Fig. \ref{fig:depot}) are two buttons, "Back" and "Continue", which allow the user to move on to the next step or return to the previous step.
+At the bottom of the sidebar (Fig. \ref{fig:depot}) there are two buttons, ``Back'' and ``Continue'', which allow the user to return to the previous step or move on to the next step.
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
-\includegraphics[width=\textwidth]{images/depot.jpg}
+\includegraphics[width=\textwidth]{images/depot_updated.jpg}
 \caption{Depot step}
 \label{fig:depot}
 \end{figure}
 
 The "Depot" form (Fig. \ref{fig:depot}) contains input fields:
 \begin{itemize}
-    \item Start date - time when the delivery should start.
-    \item Due date - the final time at which the vehicles should arrive at the depot.
-    \item Vehicles - number of vehicles used for delivery.
-    \item Capacity - the capacity of each vehicle.
+    \item Start date -- time when the delivery should start.
+    \item Due date -- the final time at which the vehicles should arrive at the depot.
+    \item Vehicles -- number of vehicles used for delivery.
+    \item Capacity -- the capacity of each vehicle.
 \end{itemize}
 
 
 
 The validation rules applied to the input data:
 \begin{itemize}
-    \item Start date - is required and cannot be greater than or equal to the Due date.
-    \item Due date - is required and cannot be less than or equal to the Start date.
-    \item Vehicles - is required and must be an integer.
-    \item Capacity - is required and must be an integer.
+    \item Start date -- is required and cannot be greater than or equal to the Due date.
+    \item Due date -- is required and cannot be less than or equal to the Start date.
+    \item Vehicles -- is required and must be an integer.
+    \item Capacity -- is required and must be an integer.
 \end{itemize}
-When the input data is invalid it will display appropriate message and disable the "Continue" button, preventing the user from proceeding to the next step (Fig. \ref{fig:invalidDepot}). The "Continue" button will also be inactive if the depot marker is not placed on the map.
-\begin{figure}[H]
+When the input data is invalid it will display appropriate message and disable the ``Continue'' button, preventing the user from proceeding to the next step (Fig. \ref{fig:invalidDepot}). The ``Continue'' button will also be inactive if the depot marker is not placed on the map.
+\begin{figure}[htb]
 \centering
-\includegraphics[width=\textwidth]{images/invalidDepot.jpg}
+\includegraphics[scale=0.7]{images/invalidDepot_updated.jpg}
 \caption{Depot form with invalid data}
 \label{fig:invalidDepot}
 \end{figure}
@@ -625,54 +624,54 @@ When the input data is invalid it will display appropriate message and disable t
 
 \subsubsection{Customers}
 
-The 'Customers' section allows the user to place customer markers on the map and specify the details of each customer. Customer markers are placed in the same way as depot markers. When a location is selected, a separate section for that customer will appear in the sidebar, marked with the customer number in the left corner (Fig. \ref{fig:customers}). 
+The ``Customers'' section allows the user to place customer markers on the map and specify the details of each customer. Customer markers are placed in the same way as depot markers. When a location is selected, a separate section for that customer will appear in the sidebar, marked with the customer number in the left corner (Fig. \ref{fig:customers}). 
 
 
 
-At the bottom of the sidebar (Fig. \ref{fig:customers}) there are two buttons, "Back" and "Solve", which allow the user to solve the problem and go to the presentation of the results or return to the "Depot" step.
+At the bottom of the sidebar (Fig. \ref{fig:customers}) there are two buttons, ``Back'' and ``Solve'', which allow the user to return to the "Depot" step or solve the problem and go to the presentation of the results.
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
-\includegraphics[width=\textwidth]{images/customers.jpg}
+\includegraphics[width=\textwidth]{images/customers_updated.jpg}
 \caption{Customers step}
 \label{fig:customers}
 \end{figure}
 
 Each customer form (Fig. \ref{fig:customers}) contains input fields:
 \begin{itemize}
-    \item Ready time - the earliest date on which the customer can take delivery.
-    \item Due date - final date on which the customer may take delivery.
-    \item Service time - time taken to accept delivery.
-    \item Demand - quantity of goods in delivery.
+    \item Ready time -- the earliest date on which the customer can take delivery.
+    \item Due date -- final date on which the customer may take delivery.
+    \item Service time -- time taken to accept delivery.
+    \item Demand -- quantity of goods in delivery.
 \end{itemize}
 
 
 
 The validation rules applied to the input data:
 \begin{itemize}
-    \item Ready time - is required, cannot be greater than or equal to the Due date and must be within the depot time window.
-    \item Due date - is required, cannot be less than or equal to the Ready time and must be within the depot time window.
-    \item Service time - is required.
-    \item Demand - is required and must greater than 0.
+    \item Ready time -- is required, cannot be greater than or equal to the Due date and must be within the depot time window.
+    \item Due date -- is required, cannot be less than or equal to the Ready time and must be within the depot time window.
+    \item Service time -- is required.
+    \item Demand -- is required and must greater than 0.
 \end{itemize}
 
-As with the "Depot" form, when the data entered is invalid, it will display appropriate message and disable the "Solve" button, preventing the user from solving the problem (Fig. \ref{fig:invalidCustomers}). The "Solve" button will also be inactive if there are no customers.
+As with the ``Depot'' form, when the data entered is invalid, it will display appropriate message and disable the ``Solve'' button, preventing the user from solving the problem (Fig. \ref{fig:invalidCustomers}). The ``Solve'' button will also be inactive if there are no customers.
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
-\includegraphics[width=\textwidth]{images/invalidCustomers.jpg}
+\includegraphics[scale=0.7]{images/invalidCustomers_updated.jpg}
 \caption{Customers forms with invalid data}
 \label{fig:invalidCustomers}
 \end{figure}
 
 \subsubsection{Solution}
-When the problem is feasible the solution (routes) is drawn on the map, and the details of the entire solution and each route are shown in the sidebar (Fig \ref{fig:solution}).
+When the problem is feasible, the solution (routes) is drawn on the map, and the details of the entire solution and each route are shown in the sidebar (Fig. \ref{fig:solution}).
 
 
 
-At the bottom of the sidebar (Fig. \ref{fig:solution}) there is "Back" button which allows the user to clear the routes from the map and come back to the previous step.
+At the bottom of the sidebar (Fig. \ref{fig:solution}) there is ``Back'' button which allows the user to clear the routes from the map and come back to the previous step.
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{images/solution.jpg}
 \caption{Solution}
@@ -681,50 +680,50 @@ At the bottom of the sidebar (Fig. \ref{fig:solution}) there is "Back" button wh
 
 The user can highlight one of the routes on the map by hovering the mouse over the route details in the sidebar (Fig. \ref{fig:solutionHover}).
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
-\includegraphics[width=\textwidth]{images/solutionHover.jpg}
+\includegraphics[width=\textwidth]{images/solutionHover_updated.jpg}
 \caption{Highlighted route}
 \label{fig:solutionHover}
 \end{figure}
 
 \subsection{Benchmark}
 
-The "Benchmark" page (Fig. \ref{fig:benchmark}) allows the user to solve a problem contained in a benchmark file. This file must be in .txt format and must match the Solomon Benchmark instance file structure \cite{bib:sintefDocumentation}. The "solve" button sends the problem to the backend server. If the format of the selected file is invalid, a message is displayed informing the user about the problem(Fig. \ref{fig:benchmarkInvalidFormat}). If the loaded text file does not match the Solomon Benchmark structure, a message is returned indicating the line where the validation error occurred (Fig. \ref{fig:benchmarkInvalidFile}).  When the file is successfully solved, the solution details are displayed along with a button to visualise the solution on the image (Fig. \ref{fig:benchmarkSolved}).
+The ``Benchmark'' page (Fig. \ref{fig:benchmark}) allows the user to solve a problem contained in a benchmark file. This file must be in .txt format and must match the Solomon Benchmark instance file structure \cite{bib:sintefDocumentation}. The ``Solve'' button sends the problem to the backend server. If the format of the selected file is invalid, a message is displayed informing the user about the problem (Fig. \ref{fig:benchmarkInvalidFormat}). If the loaded text file does not match the Solomon Benchmark structure, a message is returned indicating the line where the validation error occurred (Fig. \ref{fig:benchmarkInvalidFile}). When the file is successfully solved, the solution details are displayed along with a button to visualise the solution on the image (Fig. \ref{fig:benchmarkSolved}).
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{images/benchmark.jpg}
 \caption{Benchmark page}
 \label{fig:benchmark}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{images/benchmarkInvalidFormat.jpg}
+\includegraphics[width=\textwidth]{images/benchmarkInvalidFormat_updated.jpg}
 \caption{Invalid benchmark file format}
 \label{fig:benchmarkInvalidFormat}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{images/benchmarkInvalidFile.jpg}
+\includegraphics[width=\textwidth]{images/benchmarkInvalidFile_updated.jpg}
 \caption{Benchmark file validation error}
 \label{fig:benchmarkInvalidFile}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{images/benchmarkSolved.jpg}
+\includegraphics[width=\textwidth]{images/benchmarkSolved_updated.jpg}
 \caption{Details of the benchmark solution}
 \label{fig:benchmarkSolved}
 \end{figure}
 
 \subsection{Solomon Benchmarks}
 
-The "Solomon Benchmarks" page contains a table with the best known solutions and the solutions generated by the application for the Solomon benchmark problem instances (Fig. \ref{fig:solomonBenchmark}). The user can compare the "OptiRoute" solutions for each instance with the best solution. The table can be sorted and contains 6 pages with 10 records on each page (56 in total). Each row has two buttons "OptiRoute" and "Best", which allow the user to visualise the solutions of the current row on the image.
+The ``Solomon Benchmarks'' page contains a table with the best known solutions and the solutions generated by the application for the Solomon benchmark problem instances (Fig. \ref{fig:solomonBenchmark}). The user can compare the ``OptiRoute'' solutions for each instance with the best solution. The table can be sorted and contains 6 pages with a total of 56 records. Each row has two buttons ``OptiRoute'' and ``Best'', which allow the user to visualise the solutions of the current row on the image.
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{images/solomonBenchmark.jpg}
 \caption{Solomon Benchmarks page}
@@ -733,11 +732,11 @@ The "Solomon Benchmarks" page contains a table with the best known solutions and
 
 \subsection{Visualization}
 
-The "Visualisation" dialog, as mentioned earlier, can be displayed on the "Benchmark" and "Solomon Benchmarks" pages by clicking the appropriate button. 
+The ``Visualisation'' dialog, as mentioned earlier, can be displayed on the ``Benchmark'' and ``Solomon Benchmarks'' pages by clicking the appropriate button. 
 
 It contains a simple visualisation of the solution to the selected problem. Each customer is represented by a dot, customers belonging to the same route are connected by lines and have the same colour (Fig. \ref{fig:visualization}).
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{images/visualization.jpg}
 \caption{Visualization dialog}
@@ -748,7 +747,7 @@ It contains a simple visualisation of the solution to the selected problem. Each
 
 If an unexpected error occurs, a corresponding message is displayed in the top right corner of the page (Fig. \ref{fig:error}). After a short time, the entire page reloads and is ready to be used again.
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
 \includegraphics[scale=0.7]{images/error.jpg}
 \caption{Error message}
@@ -772,44 +771,44 @@ Working scenarios can be differentiated according to the functionality that will
 \end{itemize}
 
 \subsection{Main Functionality}
-The procedure for using the main functionality is always the same, the user must define the problem in the "Depot" (Figs. \ref{fig:depotScenario1} and \ref{fig:depotScenario2}) and "Customers" (Figs. \ref{fig:customersScenario1} and \ref{fig:customersScenario2}) steps. The problem is then sent to the backend server and processed by the algorithm. When the problem is feasible, an appropriate message is displayed and the solution is visualised on a map and described in detail in the sidebar (Fig. \ref{fig:solutionSuccess}). Otherwise the user is informed that the defined problem cannot be solved by an appropriate message appearing on the screen (Fig. \ref{fig:solutionFailed}). 
+The procedure for using the main functionality is always the same, the user must define the problem in the ``Depot'' (Figs. \ref{fig:depotScenario1} and \ref{fig:depotScenario2}) and ``Customers'' (Figs. \ref{fig:customersScenario1} and \ref{fig:customersScenario2}) steps. The problem is then sent to the backend server and processed by the algorithm. When the problem is feasible, an appropriate message is displayed and the solution is visualised on a map and described in detail in the sidebar (Fig. \ref{fig:solutionSuccess}). Otherwise the user is informed that the defined problem cannot be solved by an appropriate message appears on the screen (Fig. \ref{fig:solutionFailed}). 
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{images/depotScenario1.jpg}
+\includegraphics[width=\textwidth]{images/depotScenario1_updated.jpg}
 \caption{Usage example 1.1}
 \label{fig:depotScenario1}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{images/depotScenario2.jpg}
+\includegraphics[width=\textwidth]{images/depotScenario2_updated.jpg}
 \caption{Usage example 2.1}
 \label{fig:depotScenario2}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{images/customersScenario1.jpg}
+\includegraphics[width=\textwidth]{images/customersScenario1_updated.jpg}
 \caption{Usage example 1.2}
 \label{fig:customersScenario1}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{images/customersScenario2.jpg}
+\includegraphics[width=\textwidth]{images/customersScenario2_updated.jpg}
 \caption{Usage example 2.2}
 \label{fig:customersScenario2}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{images/solutionSuccess.jpg}
 \caption{Usage example 1.3}
 \label{fig:solutionSuccess}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{images/solutionFailed.jpg}
 \caption{Usage example 2.3}
@@ -817,30 +816,30 @@ The procedure for using the main functionality is always the same, the user must
 \end{figure}
 
 \subsection{Benchmark functionality}
-User uploads the benchmark file (Figs. \ref{fig:benchmarkFile1} and \ref{fig:benchmarkFile2}) and clicks the "Solve" button. The file is then sent to the backend server and processed by the algorithm. If the problem is solvable a corresponding message appears, details of the solution are displayed and a button to visualize the result (Fig. \ref{fig:benchmarkSuccess}). If the problem cannot be solved an appropriate message is displayed (Fig. \ref{fig:benchmarkFailed}).
+User uploads the benchmark file (Figs. \ref{fig:benchmarkFile1} and \ref{fig:benchmarkFile2}) and clicks the ``Solve'' button. The file is then sent to the backend server and processed by the algorithm. If the problem is solvable a corresponding message appears, details of the solution are displayed and a button to visualize the result (Fig. \ref{fig:benchmarkSuccess}). If the problem cannot be solved an appropriate message is displayed (Fig. \ref{fig:benchmarkFailed}).
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[scale=0.7]{images/benchmarkFile1.jpg}
 \caption{Usage example 3.1}
 \label{fig:benchmarkFile1}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[scale=0.7]{images/benchmarkFile2.jpg}
 \caption{Usage example 4.1}
 \label{fig:benchmarkFile2}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{images/benchmarkSuccess.jpg}
 \caption{Usage example 3.2}
 \label{fig:benchmarkSuccess}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{images/benchmarkFailed.jpg}
 \caption{Usage example 4.2}
@@ -851,9 +850,9 @@ User uploads the benchmark file (Figs. \ref{fig:benchmarkFile1} and \ref{fig:ben
 \chapter{Internal specification}
 
 \section{System architecture}
-The application implements a client-server architecture with containerized components. The overview of the architecture is presented in Fig. \ref{fig:architectureOverview}. Each component of the system is described in detail later in this chapter.
+The application implements a client-server architecture with containerised components. The overview of the architecture is presented in Fig. \ref{fig:architectureOverview}. Each component of the system is described in detail later in this chapter.
 
-\begin{figure}
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{images/Architecture.drawio.png}
 \caption{Architecture overview}
@@ -864,18 +863,18 @@ The application implements a client-server architecture with containerized compo
 The system was implemented with the use of the three main design patterns: the clean architecture, the command and query responsibility segregation (CQRS) and the mediator pattern. All patterns were used in the backend part of the application.
 
 \subsubsection{Clean architecture}
-The backend server is designed according to the clean architecture pattern. The main goal of this architecture is to make the application logic and domain independent from any framework. This approach allows to change any external dependencies e.g. database, web framework or UI while keeping the code of the project core intact. Thanks to the possibility of exchanging external dependencies, the application core can be easily reused in other systems. Moreover, such a system is easily testable, business rules can be tested without any external dependencies.  
-The main benefits of this architecture can be outlined as follows \cite{bib:cleanArchitecture}:
+The backend server is designed according to the clean architecture pattern. The main goal of this architecture is to make the application logic and domain independent from any framework. This approach allows to change any external dependencies e.g. database, web framework or user interface (UI) while keeping the code of the project core intact. Thanks to the possibility of exchanging external dependencies, the application core can be easily reused in other systems. Moreover, such a system is easily testable, business rules can be tested without any external dependencies.  
+The main benefits of this architecture are as follows \cite{bib:cleanArchitecture}:
 \begin{itemize}
-\item The system is independent of frameworks - the system can use libraries and frameworks as tools, rather than relying on them and adapting fully to them.
-\item Testable - the core of the application can be tested without the external dependencies.
-\item Independent of UI - the system may use, for example, a web-based or console UI, but any change to this can be made easily without changing the rest of the system code
-\item Independent of database - any database management system can be used, and changing such a system does not affect the core of the application
+\item The system is independent of frameworks -- the system can use libraries and frameworks as tools, rather than relying on them and adapting fully to them.
+\item Testable -- the core of the application can be tested without the external dependencies.
+\item Independent of UI -- the system may use, for example, a web-based or console UI, but any change to this can be made easily without changing the rest of the system code
+\item Independent of database -- any database management system can be used, and changing such a system does not affect the core of the application
 \end{itemize}
 This architecture was chosen to design a system that is modern, scalable and easily expandable.
 The structure of the architecture is visible in Fig. \ref{fig:cleanArchitecture}.
 
-\begin{figure}
+\begin{figure}[htbp]
 \centering
 \includegraphics[scale=1]{images/cleanArchitecture.drawio.png}
 \caption{Clean architecture}
@@ -885,25 +884,23 @@ The structure of the architecture is visible in Fig. \ref{fig:cleanArchitecture}
 \subsubsection{CQRS}
 The command and query responsibility segregation pattern focuses mainly on the separation of data read and write operations. This pattern separates how data is read and written into two models:  
 \begin{itemize}
-\item Queries - responsible for reading data.
-\item Commands - responsible for writing (updating) the data.
+\item Queries -- responsible for reading data.
+\item Commands -- responsible for writing (updating) the data.
 \end{itemize}
 
 Furthermore, the pattern abstracts communication between layers and, using the mediator pattern, allows command/query parameters to be separated from their handlers. This approach simplifies the code as a result of reducing the amount of boilerplate code, but most importantly it creates an execution pipeline that allows error handling, logging or validation functionality to be injected \cite{bib:CQRS}. 
 \paragraph{}
-The benefits of using CQRS pattern
+The benefits of using CQRS pattern are as follows
 \cite{bib:CQRS}: 
 \begin{itemize}
-\item Scalability - read operations can be scaled independently of write operations
-\item Performance - separate reads and writes can be optimised independently of each other
-\item Security - separation ensures that the right class will perform the task
-\item Easy to maintain - when the number of available operations is large, each operation is stored in its own source file and is easy to find
+\item Scalability -- read operations can be scaled independently of write operations
+\item Performance -- separate reads and writes can be optimised independently of each other
+\item Security -- separation ensures that the right class will perform the task
+\item Easy to maintain -- when the number of available operations is large, each operation is stored in its own source file and is easy to find
 \end{itemize}
 
 \subsubsection{Mediator}
-A mediator defines an object that encapsulates how a set of objects interact. Instead of communicating directly with each other, objects communicate through a special object called a mediator. The mediator centralises communication between objects, making them dependent only on the mediator, rather than on each object they wish to communicate with \cite{bib:mediator}.
-
-The main benefits of using the mediator design pattern: 
+A mediator defines an object that encapsulates how a set of objects interact. Instead of communicating directly with each other, objects communicate through a special object called a mediator. The mediator centralises communication between objects, making them dependent only on the mediator, rather than on each object they wish to communicate with \cite{bib:mediator}. The main benefits of using the mediator design pattern include: 
 \begin{itemize}
 \item Reduces the number of connections between classes
 \item Allows easier reuse of individual components
@@ -919,11 +916,11 @@ The mediator pattern in combination with CQRS provides a set of powerful feature
 \subsubsection{Entity Framework}
 Entity Framework is an open-source object-relational mapping (ORM) framework supported by Microsoft. It allows the developer to work with POCO (Plain Old CLR Object) entities without focusing on the underlying database. Entity Framework takes care of creating database connections and executing commands. It also automatically parses the results of queries to the application entities. Another feature of this framework is the ability to track changes to an object and persist those changes to the database \cite{bib:ef}. 
 
-Entity Framework introduces the \lstinline|Context| class, which implements the Unit Of Work and Repository patterns. The context class represents a database session and allows various operations to be performed on it. The context class contains \lstinline|DbSet| properties for each of the tables mapped to the application entities. \lstinline|DbSet| is an implementation of the repository pattern\cite{bib:efRepository}.  
+Entity Framework introduces the \lstinline|Context| class, which implements the Unit Of Work and Repository patterns. The \lstinline|Context| class represents a database session and allows various operations to be performed on it. It contains \lstinline|DbSet| properties for each of the tables mapped to the application entities. \lstinline|DbSet| is an implementation of the repository pattern \cite{bib:efRepository}.  
 
-Part of the \lstinline|ApplicationDbContext| class used in the project is shown in Fig. \ref{fig:context}.
+A part of the \lstinline|ApplicationDbContext| class used in the project is shown in Fig. \ref{fig:context}.
      
-\begin{figure}
+\begin{figure}[htb]
 \centering
 \begin{lstlisting}
         public class ApplicationDbContext : DbContext, IApplicationDbContext
@@ -950,14 +947,14 @@ Part of the \lstinline|ApplicationDbContext| class used in the project is shown 
 \subsubsection{MediatR}
 MediatR is an open-source library that is a simple implementation of the mediator pattern. The library allows in-process messaging without any dependencies. It separates requests from handlers, allowing the principle of single responsibility to be maintained in the code.
 MediatR also offers other functionality, such as sending notifications or injecting middlewares for requests called pipeline behaviours \cite{bib:mediatR}.
-The main benefits from using the MediatR library: 
+The main benefits from using the MediatR library are: 
 \begin{itemize}
 \item Less coupled code.
 \item Cleaner code because of the requests and handlers separation.
 \item Pipeline behaviours that allow data to be processed (e.g. logging) before or after a request is handled.
 \end{itemize}
 
-Exemplary request and handler classes used in the project are shown in Fig \ref{fig:mediatR}.
+Example request and handler classes used in the project are shown in Fig. \ref{fig:mediatR}.
 
 \begin{figure}
 \centering
@@ -991,7 +988,7 @@ Exemplary request and handler classes used in the project are shown in Fig \ref{
         }
     }
 \end{lstlisting}
-\caption{Exemplary request and handler classes.}
+\caption{Example request and handler classes.}
 \label{fig:mediatR}
 \end{figure}
 
@@ -999,12 +996,12 @@ Exemplary request and handler classes used in the project are shown in Fig \ref{
 \subsubsection{FluentValidation}
 FluentValidation is a library for building strongly typed validation rules. One of the most important features of fluent validation is the separation of validation logic from model and business logic. Each model that should be validated must have its own validator class with validation rules defined inside it \cite{bib:fluentValidation}. 
 
-The main advantages of using FluentValidation:
+The main advantages of using FluentValidation are:
 \begin{itemize}
 \item Easy to work with.
 \item Separation of validation rules and models.
 \item Clear syntax for validation rules.
-\item Speed of execution, allows you to increase the efficiency of the application.
+\item Speed of execution, which allows to increase the efficiency of the application.
 \item Easy to unit test.
 \end{itemize}
 
@@ -1043,7 +1040,7 @@ Sample validator class is shown in Fig. \ref{fig:validator}
 \subsubsection{AutoMapper}
 AutoMapper is an object-to-object mapping library. The mapping is performed by transforming an input object of one type to an output object of another type. Mappings between types are fully configurable and allow the programmer to perform complex transformations between types. 
 The library simplifies the object mapping process and separates the mapping configurations from the objects, which helps to maintain clean code. Furthermore, another advantage of the library is that it is fully testable \cite{bib:AutoMapper}.
-An example of type mapping configuration is shown in Fig. \ref{fig:autoMapper}.
+An example mapping configuration is shown in Fig. \ref{fig:autoMapper}.
 
 \begin{figure}
 \centering
@@ -1058,11 +1055,11 @@ profile.CreateMap<Route, RouteDto>()
 \end{figure}
 
 \subsubsection{NSwag}
-NSwag provides tools to generate OpenAPI specifications from within ASP.NET Web API controllers. Furthermore, NSwag can generate the typescript API client, reducing the amount of work required to integrate a frontend application with a backend server. The Swagger UI visual documentation (Fig. \ref{fig:swaggerEndpoint}) is also generated by NSwag allowing the developer to test and interact with the API without manually writing implementation logic \cite{bib:NSwag}.  
+NSwag provides tools to generate OpenAPI specifications from within ASP.NET Web API controllers. Furthermore, NSwag can generate the TypeScript API client, reducing the amount of work required to integrate a frontend application with a backend server. The Swagger UI visual documentation (Fig. \ref{fig:swaggerEndpoint}) is also generated by NSwag allowing the developer to test and interact with the API without manually writing implementation logic \cite{bib:NSwag}.  
 
 NSwag was used in the project to speed up the process of integrating the client application with the server and to provide a visual tool to interact and test the API in a convenient way.
 
-\begin{figure} [H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{images/swaggerUI.jpg}
 \caption{Swagger UI endpoint.}
@@ -1078,22 +1075,22 @@ The project domain layer contains all the entities and their logic specific to t
 
 There are two main approaches when it comes to implementing domain entities:
 \begin{itemize}
-    \item Anemic model - separates the logic from models. The logic is placed in separated classes (services, helpers etc.).
-    \item Rich model - each model has its own behavioural logic encapsulated inside an entity.  For example, the \lstinline|Cart| entity will contain an \lstinline|AddProductToCart| method inside the class.
+    \item Anemic model -- separates the logic from models. The logic is placed in separated classes (services, helpers etc.).
+    \item Rich model -- each model has its own behavioural logic encapsulated inside an entity.  For example, the \lstinline|Cart| entity will contain an \lstinline|AddProductToCart| method inside the class.
 \end{itemize}
 
 The rich domain model approach was chosen for the project because it preserves one of the most important aspects of object-oriented programming (OOP), which is encapsulation. With a rich domain model, the code is cleaner and more secure (because sensitive data is only stored and modified inside the model) than with an anemic model. Furthermore, the domain is easier to maintain, and a rich model prevents the application from creating invalid domain objects. The rich domain entities can be easily unit tested without the need to call any external services to apply business logic to them \cite{bib:richAnemic}.
 
 The domain project contains all the entities that are used in the application: 
 \begin{itemize}
-    \item \lstinline|BenchmarkInstance| - contains information about the instance of the Solomon benchmark problem.
-    \item \lstinline|BenchmarkResult| - stores the \lstinline|BenchmarkInstance| and the \lstinline|Solution| generated by the application and the best known \lstinline|Solution|.
-    \item \lstinline|Customer| - represents the customer in the CVRPTW. Includes methods for calculating the distance and duration of a travel to another \lstinline|Customer| or \lstinline|Depot|.
-    \item \lstinline|Depot| - represents the depot.
-    \item \lstinline|Problem| - defines the CVRPTW. It contains the details of the problem, the \lstinline|Depot|, the \lstinline|Customer| list and tables of distances and travel times between each location in the problem.
-    \item \lstinline|Route| -  represents a route. It contains methods for i.a. adding or removing a \lstinline|Customer| from the route, validating time and capacity limits (Fig. \ref{fig:routeMethod}).
-    \item \lstinline|Solution| - the solution produced by the algorithm.
-    \item \lstinline|Vehicle| -  represents the vehicle in the CVRPTW.   
+    \item \lstinline|BenchmarkInstance| -- contains information about the instance of the Solomon benchmark problem.
+    \item \lstinline|BenchmarkResult| -- stores the \lstinline|BenchmarkInstance| and the \lstinline|Solution| generated by the application and the best known \lstinline|Solution|.
+    \item \lstinline|Customer| -- represents the customer in the CVRPTW. Includes methods for calculating the distance and duration of a travel to another \lstinline|Customer| or \lstinline|Depot|.
+    \item \lstinline|Depot| -- represents the depot.
+    \item \lstinline|Problem| -- defines the CVRPTW. It contains the details of the problem, the \lstinline|Depot|, the \lstinline|Customer| list and tables of distances and travel times between each location in the problem.
+    \item \lstinline|Route| --  represents a route. It contains methods for i.a. adding or removing a \lstinline|Customer| from the route, validating time and capacity limits (Fig. \ref{fig:routeMethod}).
+    \item \lstinline|Solution| -- the solution produced by the algorithm.
+    \item \lstinline|Vehicle| --  represents the vehicle in the CVRPTW.   
 \end{itemize}
 
 The project domain layer does not depend on any external library and can be reused in other projects as the core of the system.
@@ -1141,7 +1138,7 @@ public class Route
 
 \subsection{Application}
 
-The application layer in the project depends only on the domain layer. It is responsible for the implementation of business rules for the application, in the case of this thesis it contains the algorithmic part of the system. Furthermore, besides the implementation of business rules, the application layer has a second responsibility, which is the abstraction of application concerns. This layer only contains the interfaces of external concerns, such as database or file system access, and the implementations of these interfaces are injected from the infrastructure layer. 
+The application layer in the project depends only on the domain layer. It is responsible for the implementation of business rules for the application---in the case of this thesis it contains the algorithmic part of the system. Furthermore, besides the implementation of business rules, the application layer has a second responsibility, which is the abstraction of application concerns. This layer only contains the interfaces of external concerns, such as database or file system access, and the implementations of these interfaces are injected from the infrastructure layer. 
 
 Decoupling is one of the main advantages of a clean architecture. For example, when querying data, the application does not need to know where the data comes from, it can be a database or even a flat text file. This approach allows to focus only on business rules and provides the flexibility to easily change the data source. Furthermore, the application layer is testable and can be reused together with the domain layer in other projects \cite{bib:cleanArchitectureApp}.
 
@@ -1149,34 +1146,34 @@ The application project is structured as follows:
 
 
 \begin{itemize}
-    \item \textbf{Benchmarks} - contains commands and queries connected with benchmarks. Each query and command folder contains request, handler, DTO and validator classes.
+    \item \textbf{Benchmarks} -- contains commands and queries connected with benchmarks. Each query and command folder contains request, handler, DTO and validator classes.
     \begin{itemize}
     \item \textbf{Commands}
         \begin{itemize}
-        \item \textbf{SolveBenchmarkProblemCommand} - responsible for solving the problem from the given benchmark file. 
+        \item \textbf{SolveBenchmarkProblemCommand} -- responsible for solving the problem from the given benchmark file. 
         \end{itemize}
     \item \textbf{Queries}
         \begin{itemize}
-        \item \textbf{GetBenchmarkResultsQuery} - responsible for fetching the data from the \lstinline{BenchmarkResult} table.
-        \item \textbf{GetBestSolutionByBenchmarkResultIdQuery} - returns the \lstinline{Solution} object with the best known solution from the \lstinline{BenchmarkResult} with the given identifier.
-        \item \textbf{GetSolutionByBenchmarkResultIdQuery} - returns the \lstinline{Solution} object with the thesis solution from the \lstinline{BenchmarkResult} with the given identifier.
+        \item \textbf{GetBenchmarkResultsQuery} -- responsible for fetching the data from the \lstinline{BenchmarkResult} table.
+        \item \textbf{GetBestSolutionByBenchmarkResultIdQuery} -- returns the \lstinline{Solution} object with the best known solution from the \lstinline{BenchmarkResult} with the given identifier.
+        \item \textbf{GetSolutionByBenchmarkResultIdQuery} -- returns the \lstinline{Solution} object with the thesis solution from the \lstinline{BenchmarkResult} with the given identifier.
         \end{itemize}
     \end{itemize}
-\item \textbf{Common} - collection of classes, methods and interfaces used across the application layer.
+\item \textbf{Common} -- collection of classes, methods and interfaces used across the application layer.
     \begin{itemize}
-        \item \textbf{Behaviours} - contains custom MediatR \lstinline{PipelineBehaviours} used for triggering validators or exception handling.
-        \item \textbf{Enums} - enumerators used across the system.
-        \item \textbf{Exceptions} - custom exception classes: \lstinline{NotFoundException} and \lstinline{ValidationException}.
-        \item \textbf{Extensions} - extension methods used to extend the functionality of a type.
-        \item \textbf{Interfaces} - interfaces used across the application layer.
-        \item \textbf{Mappings} - AutoMapper extensions and mapping configurations.
-        \item \textbf{Services} - algorithmic part of the application. It contains services responsible for solving the CVRPTW.
+        \item \textbf{Behaviours} -- contains custom MediatR \lstinline{PipelineBehaviours} used for triggering validators or exception handling.
+        \item \textbf{Enums} -- enumerators used across the system.
+        \item \textbf{Exceptions} -- custom exception classes used: \lstinline{NotFoundException} and \lstinline{ValidationException}.
+        \item \textbf{Extensions} -- extension methods used to extend the functionality of a type.
+        \item \textbf{Interfaces} -- interfaces used across the application layer.
+        \item \textbf{Mappings} -- AutoMapper extensions and mapping configurations.
+        \item \textbf{Services} -- algorithmic part of the application. It contains services responsible for solving the CVRPTW.
     \end{itemize}
-\item \textbf{CVRPTW} - contains the command responsible for solving the CVRPTW.
+\item \textbf{CVRPTW} -- contains the command responsible for solving the CVRPTW.
     \begin{itemize}
         \item \textbf{Commands}
         \begin{itemize}
-        \item \textbf{GetSolutionCommand} - contains request, handler, DTO and validator classes. Solves the CVRPTW defined in request.
+        \item \textbf{GetSolutionCommand} -- contains request, handler, DTO and validator classes. Solves the CVRPTW defined in the request.
     \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -1184,12 +1181,12 @@ The application project is structured as follows:
 \subsubsection{CVRPTW algorithm}
 The application defines 3 interfaces for the CVRPTW algorithm:
 \begin{itemize}
-    \item \lstinline{ISolver} (Fig. \ref{fig:iSolver}) - solves the CVRPTW by calling methods from the objects \lstinline{IMethod} and \lstinline{IImprovement}.
-    \item \lstinline{IMethod} (Fig. \ref{fig:iMethod}) - responsible for generating the initial solution.
-    \item \lstinline{IImprovement} (Fig. \ref{fig:iImprovement}) - improves the initial solution.
+    \item \lstinline{ISolver} (Fig. \ref{fig:iSolver}) -- solves the CVRPTW by calling methods from the objects \lstinline{IMethod} and \lstinline{IImprovement}.
+    \item \lstinline{IMethod} (Fig. \ref{fig:iMethod}) -- responsible for generating the initial solution.
+    \item \lstinline{IImprovement} (Fig. \ref{fig:iImprovement}) -- improves the initial solution.
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
 \begin{lstlisting}
   public interface ISolver
@@ -1208,7 +1205,7 @@ The application defines 3 interfaces for the CVRPTW algorithm:
 \label{fig:iSolver}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
 \begin{lstlisting}
  public interface IMethod
@@ -1220,7 +1217,7 @@ The application defines 3 interfaces for the CVRPTW algorithm:
 \label{fig:iMethod}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
 \begin{lstlisting}
  public interface IImprovement
@@ -1232,9 +1229,7 @@ The application defines 3 interfaces for the CVRPTW algorithm:
 \label{fig:iImprovement}
 \end{figure}
 
-The interfaces are implemented by the \lstinline{VRPTWSolver} (\lstinline{ISolver}), \lstinline{PFIHInitial} (\lstinline{IMethod}) and \lstinline{LocalSearchLambda} (\lstinline{IImprovement}) classes.
-
-The \lstinline{VRPTWSolver} class implements only the methods from the interface. Inside each method the corresponding functions from \lstinline{IMethod} or \lstinline{IImprovement} objects are called.
+The interfaces are implemented by the \lstinline{VRPTWSolver} (\lstinline{ISolver}), \lstinline{PFIHInitial} (\lstinline{IMethod}) and \lstinline{LocalSearchLambda} (\lstinline{IImprovement}) classes. The \lstinline{VRPTWSolver} class implements only the methods from the interface. Inside each method the corresponding functions from \lstinline{IMethod} or \lstinline{IImprovement} objects are called. 
 
 \lstinline{PFIHInitial} is an implementation of the Push Forward Insertion Heuristic algorithm. In addition to the methods implemented from the \lstinline{IMethod} interface, this class introduces a set of private methods for constructing the solution according to the algorithm. The main PFIH \lstinline{Construct} method is shown in Fig. \ref{fig:construct}.
 
@@ -1314,18 +1309,15 @@ The infrastructure layer implements the interfaces defined in the application la
 
 The infrastructure project contains implementations of file readers and file providers:
 \begin{itemize}
-    \item \lstinline{BenchmarkBestFileReader} - reads and processes the contents of the files with the best known solutions for Solomon benchmarks.
-    \item \lstinline{BenchmarkInstanceFileReader} -  reads and parses the contents of the benchmark file into the \lstinline{Problem} class.
-    \item \lstinline{SolomonInstancesFileProviderService} - used to access the file system to obtain Solomon benchmark files.
+    \item \lstinline{BenchmarkBestFileReader} -- reads and processes the contents of the files with the best known solutions for Solomon benchmarks.
+    \item \lstinline{BenchmarkInstanceFileReader} --  reads and parses the contents of the benchmark file into the \lstinline{Problem} class.
+    \item \lstinline{SolomonInstancesFileProviderService} -- used to access the file system to obtain Solomon benchmark files.
 \end{itemize}
 
 \subsubsection{Database}
 
-The infrastructure layer uses Entity Framework to connect to and operate on the database. Infrastructure provides an implementation of \lstinline{ApplicationDbContext}, separate classes for configuring Entity Framework and database tables, and a migrations folder containing SQL migration files generated by Entity Framework. Migrations, if required, are applied when a database connection is initiated, they ensure that the database schema is identical to that outlined in the code. 
-
-
-The schema of the database is presented in Fig. \ref{fig:erdDb}.
-\begin{figure}
+The infrastructure layer uses Entity Framework to connect to and operate on the database. It also provides an implementation of \lstinline{ApplicationDbContext}, separate classes for configuring Entity Framework and database tables, and a migrations folder containing SQL migration files generated by Entity Framework. Migrations, if required, are applied when a database connection is initiated, they ensure that the database schema is identical to that outlined in the code. The schema of the database is presented in Fig. \ref{fig:erdDb}.
+\begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{images/dbERD.png}
 \caption{Database entity relationship diagram.}
@@ -1334,9 +1326,7 @@ The schema of the database is presented in Fig. \ref{fig:erdDb}.
 
 \subsection{Presentation}
 
-The presentation layer (WebUI) presents the data to the outside world. In the case of the thesis, this layer contains API controllers that are used to interact with the application layer of the system. The presentation project interprets the data entered by the user and calls the appropriate functionality in the application layer. 
-
-The API endpoints exposed in the presentation layer:
+The presentation layer (WebUI) presents the data to the outside world. In the case of the thesis, this layer contains API controllers that are used to interact with the application layer of the system. The presentation project interprets the data entered by the user and calls the appropriate functionality in the application layer. The API endpoints exposed in the presentation layer as as follows:
 \begin{itemize}
     \item \textbf{POST api/Benchmarks}
      \begin{itemize}
@@ -1362,7 +1352,7 @@ The API endpoints exposed in the presentation layer:
 
 Each controller class is derived from the abstract class\lstinline{ApiControllerBase} (Fig. \ref{fig:apiBase}), which contains an instance of the MediatR object \lstinline{ISender}. In the controller, the HTTP request is converted into an appropriate command or query and sent via the \lstinline{ISender} object to the application layer (Fig. \ref{fig:controller}).
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \begin{lstlisting}
     [ApiController]
@@ -1385,7 +1375,7 @@ Each controller class is derived from the abstract class\lstinline{ApiController
 \label{fig:apiBase}
 \end{figure}
 
-\begin{figure} [H]
+\begin{figure} [htbp]
 \centering
 \begin{lstlisting}
     public class CVRPTWController : ApiControllerBase
@@ -1405,7 +1395,7 @@ The presentation layer also contains the ASP.NET classes \lstinline{Program} and
 
 Inside the WebUI project are the source files of the frontend client application, so the backend server can serve static html, js and css files that result from compiling the frontend application, eliminating the need to host the frontend application on a separate server.
 
-When any exception is thrown during request processing, the custom API filter \lstinline{ApiExceptionFilterAttribute} class filters and handles exceptions. The filter handles exceptions by catching them and checking their types. When the exception comes from the application layer (e.g. \lstinline{ValidationException}) it returns the corresponding HTTP response with the corresponding status code and an error message. Otherwise, a response with an internal server error (status code 500) is returned. 
+When any exception is thrown during request processing, the custom API filter \lstinline{ApiExceptionFilterAttribute} class filters and handles exceptions. The filter handles exceptions by catching them and checking their types. When the exception comes from the application layer (e.g., \lstinline{ValidationException}) it returns the corresponding HTTP response with the corresponding status code and an error message. Otherwise, a response with an internal server error (status code 500) is returned. 
 
 \section{Frontend client}
 
@@ -1425,11 +1415,9 @@ Toastr is a lightweight JavaScript library for displaying toast notifications. I
 
 \subsubsection{LeafletJS}
 
-LeafletJS is a lightweight, open-source JavaScript library for creating interactive maps. The library is designed to work efficiently on both desktop and mobile platforms. One of the main advantages of the LeafletJS library is that it can be extended with multiple plugins. The library is easy to use and has a well-documented API \cite{bib:leaflet}. 
+LeafletJS is a lightweight, open-source JavaScript library for creating interactive maps. The library is designed to work efficiently on both desktop and mobile platforms. One of the main advantages of the LeafletJS library is that it can be extended with multiple plugins. The library is easy to use and has a well-documented API \cite{bib:leaflet}. An example of creating a map using the library is shown in Fig. \ref{fig:leafletMap}.
 
-An example of creating a map using the library is shown in Fig. \ref{fig:leafletMap}.
-
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
 \begin{lstlisting}
 var map = L.map('map').setView([51.505, -0.09], 13);
@@ -1456,15 +1444,15 @@ The app module is the main module of the client application. The main configurat
 The app module is structured as follows: 
 
 \begin{itemize}
-    \item \textbf{benchmark} - responsible for the "Benchmarks" page.
-    \item \textbf{benchmark-results} - responsible for the "Solomon Benchmarks" page.
-    \item \textbf{error-handler} - configures the error handling functionality which displays toast notifications.
-    \item \textbf{interceptors} - HTTP requests interceptors (used for displaying the spinner while processing the request).
-    \item \textbf{map} - responsible for displaying the map.
-    \item \textbf{map-layout} - responsible for "Home" page.
-    \item \textbf{map-sidebar} - responsible for the sidebar on the "Home" page.
-    \item \textbf{nav-menu} - responsible for the navigation bar.
-    \item \textbf{services} - contains services used to transfer and process data.    
+    \item \textbf{benchmark} -- responsible for the ``Benchmarks'' page.
+    \item \textbf{benchmark-results} -- responsible for the ``Solomon Benchmarks'' page.
+    \item \textbf{error-handler} -- configures the error handling functionality which displays toast notifications.
+    \item \textbf{interceptors} -- HTTP requests interceptors (used for displaying the spinner while processing the request).
+    \item \textbf{map} -- responsible for displaying the map.
+    \item \textbf{map-layout} -- responsible for the ``Home'' page.
+    \item \textbf{map-sidebar} -- responsible for the sidebar on the ``Home'' page.
+    \item \textbf{nav-menu} -- responsible for the navigation bar.
+    \item \textbf{services} -- contains services used to transfer and process data.    
 \end{itemize}
 
 \subsection{Shared module}
@@ -1480,19 +1468,19 @@ Models are custom interfaces that are only used inside the frontend application,
 A shared module has the following structure:
 
 \begin{itemize}
-    \item \textbf{components} - contains the components reused across the application.
-    \item \textbf{models} - collection of custom interfaces.
-    \item \textbf{pipes} - utility functions in the form of custom Angular \lstinline{Pipes}.
-    \item \textbf{utils} - collection of utility functions.
+    \item \textbf{components} -- contains the components reused across the application.
+    \item \textbf{models} -- collection of custom interfaces.
+    \item \textbf{pipes} -- utility functions in the form of custom Angular \lstinline{Pipes}.
+    \item \textbf{utils} -- collection of utility functions.
 \end{itemize}
 
 \subsection{API client}
 
-The client application integrates with the backend server using an API client generated by NSwag. NSwag creates a typescript file \lstinline{web-api-client.ts} that contains the classes generated for each controller API. 
+The client application integrates with the backend server using an API client generated by NSwag. NSwag creates a TypeScript file \lstinline{web-api-client.ts} that contains the classes generated for each API controller. 
 
 The API client contains the interfaces (Fig. \ref{fig:controllerInterface}) for each controller and the classes that are implementations of those interfaces. Each controller class contains methods for sending requests to its endpoints.
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
 \begin{lstlisting}
 export interface IBenchmarksClient {
@@ -1508,7 +1496,7 @@ export interface IBenchmarksClient {
 
 DTO objects and requests are also generated by the NSwag tool. Each DTO has its own interface (Fig. \ref{fig:dtoInterface}) and a class implementing this interface. This class provides a set of useful methods to deserialize and serialize the object. 
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
 \begin{lstlisting}
 export interface ISolutionDto {
@@ -1527,7 +1515,7 @@ export interface ISolutionDto {
 
 The frontend application is integrated with OSRM API. The API is used in the main functionality (home page) to get the distances and travel durations between selected locations on the map. As a result of the API call, two matrices are returned (Fig. \ref{fig:osrmAPI}). The first matrix contains the distances between locations in meters and the second one holds the durations of travel in seconds \cite{bib:osrmAPI}. 
 
-\begin{figure}
+\begin{figure}[htb]
 \centering
 \begin{lstlisting}
     "distances": [
@@ -1573,7 +1561,7 @@ The second call to the OSRM API is made by the Leaflet Routing Machine. When the
 
 \section{Application workflow}
 
-When the user defines the problem using the map and clicks the "solve" button, the application will perform the following steps: 
+When the user defines the problem using the map and clicks the ``Solve'' button, the application will perform the following steps: 
 
 \begin{enumerate}
     \item The problem data is collected into a single request object.
@@ -1596,7 +1584,7 @@ At the beginning of the application development process, when only the algorithm
 
 The tool was also useful after the heuristic part of the algorithm was completed. It was easy to observe the improvement in the solutions (Fig. \ref{fig:visualizationTestExample}).
 
-\begin{figure}[H]
+\begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{images/visualizationTestExample.png}
 \caption{Initial and improved solutions visualized by the tool}
@@ -1607,12 +1595,9 @@ The tool was also useful after the heuristic part of the algorithm was completed
 Solomon benchmark instances were used not only to evaluate the performance of the algorithm, but also to test and validate its operation. This was achieved by comparing the routes produced by the algorithm with the ones from the best known solutions. After comparison, it was observed that in most cases the routes were similar and differed by only a few customers. The difference in customers was reflected in the total distance and number of vehicles used in the solutions developed by the algorithm.
 
 \subsubsection{Unit tests}
-Unit tests played a key role in eliminating errors in the algorithmic part of the application. Each domain object has corresponding unit tests, and every functionality within each object is fully covered by unit tests. Unit tests have facilitated the software development process by allowing to check that all functionality works correctly after each change. Furthermore, during the development of the unit tests, it was discovered that the algorithm calculated the total time of each route without taking into account the waiting time before the time window. The error was quickly fixed, which would have been much more difficult and time-consuming without the help of unit tests.
+Unit tests played a key role in eliminating errors in the algorithmic part of the application. Each domain object has corresponding unit tests, and every functionality within each object is fully covered by unit tests. Unit tests have facilitated the software development process by allowing to check that all functionality works correctly after each change. Furthermore, during the development of the unit tests, it was discovered that the algorithm calculated the total time of each route without taking into account the waiting time before the time window. The error was quickly fixed, which would have been much more difficult and time-consuming without the help of unit tests.An example part of unit tests class for the \lstinline|Route| object is shown in Fig. \ref{fig:routeUnitTests}. An example run of domain unit tests is visible in Fig \ref{fig:unitTestsRun}.
 
-An exemplary part of unit tests class for the \lstinline|Route| object is shown in Fig. \ref{fig:routeUnitTests}.
-An exemplary run of domain unit tests is visible in Fig \ref{fig:unitTestsRun}.
-
-\begin{figure}
+\begin{figure}[htbp]
 \centering
 \begin{lstlisting}
    public class RouteTests
@@ -1656,7 +1641,7 @@ An exemplary run of domain unit tests is visible in Fig \ref{fig:unitTestsRun}.
 \label{fig:routeUnitTests}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{images/domainTests.jpg}
 \caption{Domain unit tests}
@@ -1664,9 +1649,9 @@ An exemplary run of domain unit tests is visible in Fig \ref{fig:unitTestsRun}.
 \end{figure}
 
 \subsubsection{Manual tests}
-The algorithm and the entire backend part of the application were also tested manually. The API was tested using the Swagger UI (Fig. \ref{fig:swagger}). During development, each endpoint was tested by sending various valid and invalid requests, by observing the responses it was possible to determine if the functionality was working correctly or not. 
+The algorithm and the entire backend part of the application were also tested manually. The API was tested using the Swagger UI (Fig. \ref{fig:swagger}). During development, each endpoint was tested by sending various valid and invalid requests---by observing the responses it was possible to determine if the functionality was working correctly or not. 
 
-\begin{figure}
+\begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{images/swagger.jpg}
 \caption{Swagger UI}
@@ -1678,10 +1663,10 @@ In a further stage of development, the algorithm was tested manually using a fro
 In addition, each API endpoint used in the frontend client was also manually tested along with the request data validation mechanisms. 
 
 \subsection{Client}
-The specifics of creating a front-end application allows the developer to test functionality at every stage of its development, from the visual side to the logic of individual components. The client application was tested on different screen resolutions in order to achieve responsiveness. The request data is also validated on the client side of the application, so it was checked whether the information about the incorrect data is displayed correctly. In addition, toast pop-ups were tested to check the readability of messages and the correct implementation of the error handling mechanism. 
+The specifics of creating a frontend application allows the developer to test functionality at every stage of its development, from the visual side to the logic of individual components. The client application was tested on different screen resolutions in order to achieve responsiveness. The request data is also validated on the client side of the application, so it was checked whether the information about the incorrect data is displayed correctly. In addition, toast pop-ups were tested to check the readability of messages and the correct implementation of the error handling mechanism. 
 
 \section{Solomon benchmark results}
-In order to evaluate the performance of the algorithm, it was tested on all Solomon benchmark instances. A comparison of the best known solutions with the solutions obtained by the algorithm is shown in the tables \ref{tab:solomonPart1} and \ref{tab:solomonPart2} \cite{bib:solomonSintef}.
+In order to evaluate the performance of the algorithm, it was tested on all Solomon benchmark instances. A comparison of the best known solutions with the solutions obtained by the algorithm is shown in the Tables \ref{tab:solomonPart1} and \ref{tab:solomonPart2} \cite{bib:solomonSintef}.
 
 
 \begin{table}
@@ -1778,15 +1763,13 @@ The primary objective of the work was to design and implement a tool that would 
 \section{Further development}
 Although the application has met the requirements and expectations, there is room for improvement. One of the biggest areas with possibilities to extend the system is the VRP itself, there are many variations of the problem that take into account more constraints. In addition, the algorithmic part of the application could be extended to implement other heuristic and meta-heuristic methods that could potentially improve the performance of the algorithm.
 
-The application could also be extended to include users and their management. Users would be able to save a problem, view the history of their previous problems and solutions, or upload their own benchmark files and share them with other users.
-
-A mobile version of the application could also be a significant improvement. A portable version of the application would increase its usability.
+The application could also be extended to include users and their management. Users would be able to save a problem, view the history of their previous problems and solutions, or upload their own benchmark files and share them with other users. A mobile version of the application could also be a significant improvement. A portable version of the application would increase its usability.
 
 There are still opportunities for further enhancements in the testing part of the application. Integration tests or end-to-end tests could be implemented to make the application more reliable and the development process even easier.
 The prospects for future development are broad and, thanks to the way the application has been designed, would not require rebuilding the existing code base and the system could be easily extended without much effort.
 
 \section{Encountered difficulties and problems}
-The most difficult problem encountered during the development process was adapting the LeafletJS and Leaflet Routing Machine libraries to the needs of the project. There is not much information on the internet about redrawing multiple routes on the map or removing them. In the end, the desired effect was achieved and there was no need to change any of the libraries. 
+The most difficult problem encountered during the development process was adapting the LeafletJS and Leaflet Routing Machine libraries to the needs of the project. There is not much information on the Internet about redrawing multiple routes on the map or removing them. In the end, the desired effect was achieved and there was no need to change any of the libraries. 
 
 The process of containerising the application was very time consuming and required extensive research. The most difficult task was to create a correct docker file and to integrate the process of building both the server and client parts of the application.
 
@@ -1844,12 +1827,13 @@ The algorithmic part of the application was completed without any major problems
 \end{itemize}
 
 \chapter*{List of additional files in electronic submission }
-\addcontentsline{toc}{chapter}{List of additional files in electronic submission (if applicable)}
+\addcontentsline{toc}{chapter}{List of additional files in electronic submission}
 
 Additional files uploaded to the system include:
 \begin{itemize}
 \item source code of the application
-\item a video showing how software or hardware developed for thesis is used
+\item test benchmark files
+\item a video showing how software developed for thesis is used
 \end{itemize}
  
 \listoffigures

@@ -1,0 +1,63 @@
+<div class="card h-100 w-100 border-0 shadowed">
+  <div class="card-header">
+    <h2 class="text-center">Depot</h2>
+  </div>
+  <div class="h-100 hidden-scroll p-2">
+    <div [formGroup]="depotInfoForm" class="d-flex flex-column depot-wrapper shadowed">     
+      <div class="depot-times d-flex flex-column flex-wrap">
+        <label>Start date</label>
+        <input type="datetime-local" formControlName="readyTime" [min]="this.minDate"
+          [ngClass]="{'ng-invalid': depotInfoForm.errors?.dateValid }">
+        <small
+          *ngIf="!depotInfoForm.controls.readyTime.valid  && (depotInfoForm.controls.readyTime.touched ||depotInfoForm.controls.readyTime.dirty)">
+          Start date is required
+        </small>
+        <label>Due date</label>
+        <input type="datetime-local" formControlName="dueDate" [min]="this.minDate"
+          [ngClass]="{'ng-invalid': depotInfoForm.errors?.dateValid }">
+        <small
+          *ngIf="!depotInfoForm.controls.dueDate.valid  && (depotInfoForm.controls.dueDate.touched ||depotInfoForm.controls.dueDate.dirty)">
+          Due date is required
+        </small>
+        <small *ngIf="depotInfoForm.errors?.dateValid  && (depotInfoForm.touched ||depotInfoForm.dirty)">
+          Due date must be greater than Start Date
+        </small>
+      </div>
+      <div class="d-flex flex-row flex-wrap">
+        <div class="vehicles">
+          <label>Vehicles</label>
+          <input type="text" formControlName="vehicles">
+          <!--display error message if street is not valid-->
+          <small
+            *ngIf="!depotInfoForm.controls.vehicles.valid && (depotInfoForm.controls.vehicles.touched ||depotInfoForm.controls.vehicles.dirty)">
+            Vehicles are required
+          </small>
+        </div>
+        <div class="capacity">
+          <label>Capacity</label>
+          <input type="text" formControlName="capacity">
+          <!--display error message if street is not valid-->
+          <small
+            *ngIf="!depotInfoForm.controls.capacity.valid && (depotInfoForm.controls.capacity.touched ||depotInfoForm.controls.capacity.dirty)">
+            Capacity is required
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="d-flex flex-row flex-wrap">
+      <div class="btn-left">
+        <button (click)="onBackClick()" class="btn btn-primary">
+          Back
+        </button>
+      </div>
+      <div class="btn-right">
+        <button class="btn" (click)="onClick()" [disabled]="!depotInfoForm.valid || !depot"
+          [ngClass]="(depotInfoForm.valid && depot) ? 'btn-primary' : 'btn-secondary'">
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

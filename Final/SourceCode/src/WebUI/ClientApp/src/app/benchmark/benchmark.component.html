@@ -1,0 +1,57 @@
+<div class="h-100 w-100 d-flex justify-content-center align-items-center">
+  <app-loader></app-loader>
+  <div class="wrapper">
+    <h2>Benchmark</h2>
+    <div class="section file-upload">
+      <div class="upload-btn-container">
+        <button mat-mini-fab color="primary" class="upload-btn" (click)="fileButtonClick()">
+          <mat-icon>attach_file</mat-icon>
+        </button>
+      </div>
+      <input #fileInput type="file" #file placeholder="Choose file" (input)="fileSelected(file.files)"
+        style="display:none;">
+      <div class="file-info">
+        {{fileName || "No file uploaded yet."}}
+        <br>
+        <small *ngFor="let error of errors">
+          {{error}}
+        </small>
+      </div>
+      <div class="upload-btn-container">
+        <button class="btn btn-primary" (click)="uploadFile()"
+          [attr.disabled]="(!this.fileName || errors.length > 0)? '' : null">Solve</button>
+      </div>
+    </div>
+    <div *ngIf="solution && solution.feasible" class="section solution">
+      <div class="solution-header  d-flex flex-row flex-wrap">
+        <div class="solution-header-detail">
+          <b>Total time: </b>
+          <label>{{solution.time | timeFormatted}}</label>
+        </div>
+        <div class="solution-header-detail">
+          <b>Total distance: </b>
+          <label>{{solution.distance | distanceFormatted}}</label>
+        </div>
+        <div class="solution-header-detail">
+          <b>Routes: </b>
+          <label>{{solution.routes.length}}</label>
+        </div>   
+        <div class="solution-header-detail">
+          <button class="btn btn-primary" (click)="visualizeDialogOpen()">Visualize</button>
+        </div>       
+      </div>
+      <div class="solution-routes-container hidden-scroll">
+        <div class="route" *ngFor="let route of solution.routes; let i = index">
+          <div class="route-details">
+            <b>{{i + 1}}:</b>
+          </div>
+          <div class="route-clients-container">
+            <div class="client" *ngFor="let client of route.customers; let j = index">
+              {{client.id}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

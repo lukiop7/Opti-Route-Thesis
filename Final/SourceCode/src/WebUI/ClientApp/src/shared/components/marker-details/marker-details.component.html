@@ -1,0 +1,53 @@
+<div class="card card-body position-relative">
+  <div class="d-flex flex-column customer-container">
+    <div class="customer-header d-flex flex-row">
+      <div class="client">
+        {{this.id}}
+      </div>
+      <button type="button" class="close close-button" aria-label="Close" (click)="closeOnClick()">
+        <fa-icon [icon]="faTimes" class="fa-sm"></fa-icon>
+      </button>
+    </div>
+    <div [formGroup]="customerInfoForm" class="customer-details d-flex flex-column flex-wrap">
+      <div class="customer-times d-flex flex-column flex-wrap">
+        <label>Ready time</label>
+        <input type="datetime-local" formControlName="readyTime"
+          [ngClass]="{'ng-invalid': (customerInfoForm.errors?.dateValid || customerInfoForm.errors?.depotDateValid) }">
+        <small *ngIf="!customerInfoForm.controls.readyTime.valid && (customerInfoForm.controls.readyTime.touched)">
+          Ready Time is required
+        </small>
+        <label>Due date</label>
+        <input type="datetime-local" formControlName="dueDate"
+          [ngClass]="{'ng-invalid': (customerInfoForm.errors?.dateValid || customerInfoForm.errors?.depotDateValid) }">
+        <small *ngIf="!customerInfoForm.controls.dueDate.valid && (customerInfoForm.controls.dueDate.touched)">
+          Due Date is required
+        </small>
+        <small *ngIf="customerInfoForm.errors?.dateValid  && (customerInfoForm.touched)">
+          Due date must be greater than Ready Time
+        </small>
+        <small *ngIf="customerInfoForm.errors?.depotDateValid  && (customerInfoForm.touched)">
+          Ready time and due date must be between depot start and due times
+        </small>
+      </div>     
+      <div class="d-flex flex-row flex-wrap">
+        <div class="customer-service">
+          <label>Service time</label>
+          <input type="time" formControlName="serviceTime"
+            [ngClass]="{'is-invalid': !customerInfoForm.controls.serviceTime.valid}">
+          <small
+            *ngIf="!customerInfoForm.controls.serviceTime.valid && (customerInfoForm.controls.serviceTime.touched)">
+            Service Time is required
+          </small>
+        </div>
+        <div class="customer-demand">
+          <label>Demand</label>
+          <input type="text" formControlName="demand"
+            [ngClass]="{'is-invalid': !customerInfoForm.controls.demand.valid}">
+          <small *ngIf="!customerInfoForm.controls.demand.valid && (customerInfoForm.controls.demand.touched)">
+            Demand is required
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<app-loader></app-loader>
+<div class="h-100 w-100 d-flex justify-content-center align-items-center">
+  <div class="wrapper d-flex flex-column">
+    <h2>Solomon Benchmarks</h2>
+    <div class="section d-flex flex-column">
+      <mat-table mat-table matSort class="table hidden-scroll" [dataSource]="dataSource">
+        <ng-container matColumnDef="name">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="distance">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> OptiRoute Distance </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element"> {{element.distance}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="vehicles">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> OptiRoute Vehicles </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element"> {{element.vehicles }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="bestDistance">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Best Distance </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element"> {{element.bestDistance}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="bestVehicles">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Best Vehicles </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element"> {{element.bestVehicles}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell mat-header-cell *matHeaderCellDef>Visualize</mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element">
+            <div class="d-flex flex-row w-100">
+              <div class="btn-left">
+                <button class="btn btn-primary" (click)="onVisualizeClicked(element.dbId)">OptiRoute
+                </button>
+              </div>       
+              <div class="btn-right">
+                <button class="btn btn-primary" (click)="onVisualizeBestClicked(element.dbId)" [disabled]="!element.bestSolutionDbId">Best
+                </button>
+              </div>   
+          </div>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator sticky [pageSize]="10" showFirstLastButtons aria-label="Select page">
+      </mat-paginator>
+    </div>
+  </div>
+</div>
